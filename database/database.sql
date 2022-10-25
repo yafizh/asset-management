@@ -40,7 +40,6 @@ CREATE TABLE aset(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     id_jenis_aset BIGINT UNSIGNED REFERENCES jenis_aset(id),
     id_sifat_aset BIGINT UNSIGNED REFERENCES sifat_aset(id),
-    kode VARCHAR(255) UNIQUE,
     nama VARCHAR(255),
     tanggal_masuk DATE,
     detail JSON,
@@ -76,10 +75,8 @@ CREATE TABLE peminjaman_aset(
     id_aset BIGINT UNSIGNED REFERENCES aset(id),
     alasan_peminjaman VARCHAR(255),
     timestamp_pengajuan TIMESTAMP NULL DEFAULT NULL,
-    timestamp_keputusan_pengajuan TIMESTAMP NULL DEFAULT NULL,
-    keterangan_keputusan_pengajuan VARCHAR(255),
+    timestamp_pengajuan_disetujui TIMESTAMP NULL DEFAULT NULL,
     alasan_pengembalian VARCHAR(255),
     timestamp_pengembalian TIMESTAMP NULL DEFAULT NULL,
-    timestamp_keputusan_pengembalian TIMESTAMP NULL DEFAULT NULL,
-    keterangan_keputusan_pengembalian VARCHAR(255)
+    timestamp_pengembalian_disetujui TIMESTAMP NULL DEFAULT NULL
 );
