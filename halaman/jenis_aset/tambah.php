@@ -1,8 +1,17 @@
 <?php
 
 if (isset($_POST['submit'])) {
-    $nama = $_POST['nama'];
-    $keterangan = $_POST['keterangan'];
+    $nama = $mysqli->real_escape_string($_POST['nama']);
+    $keterangan = $mysqli->real_escape_string($_POST['keterangan']);
+
+    $q = "INSERT INTO jenis_aset (nama, keterangan) VALUES ('$nama', '$keterangan')";
+    if ($mysqli->query($q)) {
+        echo "<script>alert('Tambah Data Berhasil!')</script>";
+        echo "<script>location.href = '?h=jenis_aset';</script>";
+    } else {
+        echo "<script>alert('Tambah Data Gagal!')</script>";
+        die($mysqli->error);
+    }
 }
 
 
@@ -12,7 +21,7 @@ if (isset($_POST['submit'])) {
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                    <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
                         <h6 class="text-white text-capitalize m-0">Tambah Jenis Aset</h6>
                     </div>
                 </div>
@@ -31,8 +40,8 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-secondary">Kembali</a>
-                            <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
+                            <a href="?h=jenis_aset" class="btn btn-secondary">Kembali</a>
+                            <button type="submit" name="submit" class="btn btn-success">Tambah</button>
                         </div>
                     </form>
                 </div>
