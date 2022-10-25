@@ -1,0 +1,63 @@
+Jenis Aset
+- nama (example: aset berwujud, aset tidak berwujud)
+- keterangan
+
+Sifat Aset
+- nama (example: hibah)
+- keterangan
+
+User
+- username
+- password
+- status (example: pegawai, admin, petugas)
+
+Pegawai
+- id user
+- nip
+- nama
+- tanggal lahir
+- tempat lahir
+- jabatan
+- tmt
+- dokumen tmt
+- pendidikan terakhir
+- dokumen pendidikan terakhir
+- foto
+
+Aset
+- id jenis aset
+- id sifat aset
+- kode (generate manual, example: mobil pertama = MB1, mobil ke dua = MB2)
+- nama
+- tanggal_masuk
+- detail aset (json)
+- foto aset
+- keterangan
+
+Aset Rusak
+- id aset
+- tanggal
+- keterangan
+
+Aset Hilang
+- id aset
+- tanggal
+- keterangan
+
+Pemeliharaan Aset
+- id aset
+- tanggal mulai
+- tanggal selesai
+- keterangan
+
+Peminjaman Aset
+- id pegawai
+- id aset
+- alasan peminjaman
+- timestamp pengajuan
+- timestamp keputusan pengajuan (diterima/ditolak)
+- keterangan keputusan pengajuan (diterima/ditolak)
+- alasan pengembalian
+- timestamp pengembalian
+- timestamp keputusan pengembalian (diterima/ditolak)
+- keterangan keputusan pengembalian (diterima/ditolak)
