@@ -17,6 +17,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="./assets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+
+    <style>
+        .small-td {
+            width: 1%;
+            white-space: nowrap;
+            padding-right: 2rem !important;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -25,11 +33,108 @@
         <?php include_once('komponen/navbar.php'); ?>
         <div class="container-fluid py-4">
             <?php
-
+            // include_once('database/koneksi.php');
             if (isset($_GET['h'])) {
                 switch ($_GET['h']) {
                     case 'dashboard':
                         include_once('halaman/dashboard/index.php');
+                        break;
+                        // Pengguna
+                    case 'pengguna':
+                        include_once('halaman/pengguna/index.php');
+                        break;
+                    case 'tambah_pengguna':
+                        include_once('halaman/pengguna/tambah.php');
+                        break;
+                    case 'edit_pengguna':
+                        include_once('halaman/pengguna/edit.php');
+                        break;
+                    case 'hapus_pengguna':
+                        include_once('halaman/pengguna/hapus.php');
+                        break;
+                        // Jenis Aset
+                    case 'jenis_aset':
+                        include_once('halaman/jenis_aset/index.php');
+                        break;
+                    case 'tambah_jenis_aset':
+                        include_once('halaman/jenis_aset/tambah.php');
+                        break;
+                    case 'edit_jenis_aset':
+                        include_once('halaman/jenis_aset/edit.php');
+                        break;
+                    case 'hapus_jenis_aset':
+                        include_once('halaman/jenis_aset/hapus.php');
+                        break;
+                        // Sifat Aset
+                    case 'sifat_aset':
+                        include_once('halaman/sifat_aset/index.php');
+                        break;
+                    case 'tambah_sifat_aset':
+                        include_once('halaman/sifat_aset/tambah.php');
+                        break;
+                    case 'edit_sifat_aset':
+                        include_once('halaman/sifat_aset/edit.php');
+                        break;
+                    case 'hapus_sifat_aset':
+                        include_once('halaman/sifat_aset/hapus.php');
+                        break;
+                        // Aset
+                    case 'aset':
+                        include_once('halaman/aset/index.php');
+                        break;
+                    case 'detail_aset':
+                        include_once('halaman/aset/detail_aset.php');
+                        break;
+                    case 'detail_per_aset':
+                        include_once('halaman/aset/detail_per_aset.php');
+                        break;
+                    case 'tambah_aset':
+                        include_once('halaman/aset/tambah.php');
+                        break;
+                    case 'edit_aset':
+                        include_once('halaman/aset/edit.php');
+                        break;
+                    case 'hapus_aset':
+                        include_once('halaman/aset/hapus.php');
+                        break;
+                        // Aset Rusak
+                    case 'aset_rusak':
+                        include_once('halaman/aset_rusak/index.php');
+                        break;
+                    case 'tambah_aset_rusak':
+                        include_once('halaman/aset_rusak/tambah.php');
+                        break;
+                    case 'edit_aset_rusak':
+                        include_once('halaman/aset_rusak/edit.php');
+                        break;
+                    case 'hapus_aset_rusak':
+                        include_once('halaman/aset_rusak/hapus.php');
+                        break;
+                        // Aset Hilang
+                    case 'aset_hilang':
+                        include_once('halaman/aset_hilang/index.php');
+                        break;
+                    case 'tambah_aset_hilang':
+                        include_once('halaman/aset_hilang/tambah.php');
+                        break;
+                    case 'edit_aset_hilang':
+                        include_once('halaman/aset_hilang/edit.php');
+                        break;
+                    case 'hapus_aset_hilang':
+                        include_once('halaman/aset_hilang/hapus.php');
+                        break;
+                        // Pemeliharaan Aset
+                    case 'pemeliharaan_aset':
+                        include_once('halaman/pemeliharaan_aset/index.php');
+                        break;
+                    case 'tambah_pemeliharaan_aset':
+                        include_once('halaman/pemeliharaan_aset/tambah.php');
+                        break;
+                    case 'edit_pemeliharaan_aset':
+                        include_once('halaman/pemeliharaan_aset/edit.php');
+                        break;
+                    case 'hapus_pemeliharaan_aset':
+                        include_once('halaman/pemeliharaan_aset/hapus.php');
                         break;
                     default:
                         include_once('halaman/dashboard/index.php');
