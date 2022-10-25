@@ -17,12 +17,29 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="./assets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+    <!-- Data Tables -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 
+    <?php include_once('komponen/js.php'); ?>
     <style>
         .small-td {
             width: 1%;
             white-space: nowrap;
             padding-right: 2rem !important;
+        }
+
+        .pagination>li.active>a,
+        .pagination>li.active>span {
+            background-color: #66BB6A;
+            border: #66BB6A;
+        }
+
+        .pagination>li:not(.active)>a:hover,
+        .pagination>li:not(.active)>span:hover,
+        .pagination>li>a:focus,
+        .pagination>li>span:focus {
+            color: #66BB6A;
         }
     </style>
 </head>
@@ -33,7 +50,7 @@
         <?php include_once('komponen/navbar.php'); ?>
         <div class="container-fluid py-4">
             <?php
-            // include_once('database/koneksi.php');
+            include_once('database/koneksi.php');
             if (isset($_GET['h'])) {
                 switch ($_GET['h']) {
                     case 'dashboard':
@@ -145,7 +162,6 @@
             <?php include_once('komponen/footer.php'); ?>
         </div>
     </main>
-    <?php include_once('komponen/js.php'); ?>
 </body>
 
 </html>
