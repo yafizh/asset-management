@@ -88,10 +88,19 @@ if (isset($_POST['submit'])) {
                             ?>
                             <label for="id_jenis_aset" class="form-label">Jenis Aset</label>
                             <select class="form-control p-2" id="id_jenis_aset" name="id_jenis_aset" required>
-                                <option selected value="" disabled>Pilih</option>
-                                <?php while ($row = $result->fetch_assoc()) : ?>
-                                    <option value="<?= $row['id']; ?>"><?= $row['nama']; ?></option>
-                                <?php endwhile; ?>
+                                <?php if (isset($_GET['id_jenis_aset'])) : ?>
+                                    <?php while ($row = $result->fetch_assoc()) : ?>
+                                        <?php if ($_GET['id_jenis_aset'] === $row['id']) : ?>
+                                            <option value="<?= $row['id']; ?>" selected><?= $row['nama']; ?></option>
+                                            <?php break; ?>
+                                        <?php endif; ?>
+                                    <?php endwhile; ?>
+                                <?php else : ?>
+                                    <option selected value="" disabled>Pilih</option>
+                                    <?php while ($row = $result->fetch_assoc()) : ?>
+                                        <option value="<?= $row['id']; ?>"><?= $row['nama']; ?></option>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -135,7 +144,11 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="?h=aset" class="btn btn-secondary">Kembali</a>
+                            <?php if (isset($_GET['id_jenis_aset'])) : ?>
+                                <a href="?h=aset_per_jenis_aset&id=<?= $_GET['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
+                            <?php else : ?>
+                                <a href="?h=aset" class="btn btn-secondary">Kembali</a>
+                            <?php endif; ?>
                             <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
                         </div>
                     </form>

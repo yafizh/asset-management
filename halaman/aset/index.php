@@ -13,27 +13,32 @@
                         <table id="datatable" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">No</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jumlah</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Rusak</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Hilang</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sedang Pemeliharaan</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Dipesan</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sedang Dipinjam</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tersedia</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Total</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
                             <?php
                             $q = "
                                 SELECT 
-                                    ja.nama AS jenis_aset, 
-                                    COUNT(a.id) AS jumlah,
-                                    (SELECT COUNT(id) FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) AND (pa.timestamp_pengembalian_disetujui IS NULL)) AS sedang_dipinjam
+                                    ja.id, 
+                                    ja.nama, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset) AS rusak, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset) AS hilang, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL) AS sedang_pemeliharaan, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5) AS sedang_dipinjam, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS dipesan,
+                                    (SELECT COUNT(a.id) FROM aset AS a LEFT JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status NOT BETWEEN 1 AND 5 OR pa.status IS NULL) AS tersedia,
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id) AS total 
                                 FROM 
-                                    aset AS a 
-                                INNER JOIN 
-                                    jenis_aset AS ja 
-                                ON 
-                                    a.id_jenis_aset=ja.id 
-                                GROUP BY 
-                                    id_jenis_aset
+                                    jenis_aset AS ja
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;
@@ -45,16 +50,63 @@
                                             <p class="text-secondary mb-0"><?= $no++; ?></p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-secondary mb-0"><?= $row['jenis_aset']; ?></p>
+                                            <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="badge badge-sm bg-gradient-success p-2"><?= $row['jumlah']; ?></span>
+                                            <a href="#" class="btn btn-sm m-0 btn-danger text-white">
+                                                <span class="badge badge-sm bg-gradient-danger p-2">
+                                                    <?= $row['rusak']; ?>
+                                                </span>
+                                                Lihat
+                                            </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="badge badge-sm bg-gradient-info p-2"><?= $row['sedang_dipinjam']; ?></span>
+                                            <a href="#" class="btn btn-sm m-0 btn-danger text-white">
+                                                <span class="badge badge-sm bg-gradient-danger p-2">
+                                                    <?= $row['hilang']; ?>
+                                                </span>
+                                                Lihat
+                                            </a>
                                         </td>
-                                        <td class="small-td">
-                                            <a href="?h=detail_aset&id=" class="btn btn-sm btn-info text-white">Lihat</a>
+                                        <td class="align-middle text-center">
+                                            <a href="#" class="btn btn-sm m-0 btn-warning text-white">
+                                                <span class="badge badge-sm bg-gradient-warning p-2">
+                                                    <?= $row['sedang_pemeliharaan']; ?>
+                                                </span>
+                                                Lihat
+                                            </a>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <a href="#" class="btn btn-sm m-0 btn-warning text-white">
+                                                <span class="badge badge-sm bg-gradient-warning p-2">
+                                                    <?= $row['dipesan']; ?>
+                                                </span>
+                                                Lihat
+                                            </a>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <a href="#" class="btn btn-sm m-0 btn-info text-white">
+                                                <span class="badge badge-sm bg-gradient-info p-2">
+                                                    <?= $row['sedang_dipinjam']; ?>
+                                                </span>
+                                                Lihat
+                                            </a>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <a href="?h=aset_per_jenis_aset&id=<?= $row['id'] ?>" class="btn btn-sm m-0 btn-success text-white">
+                                                <span class="badge badge-sm bg-gradient-success p-2">
+                                                    <?= $row['tersedia']; ?>
+                                                </span>
+                                                Lihat
+                                            </a>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <a href="?h=aset_per_jenis_aset&id=<?= $row['id'] ?>" class="btn btn-sm m-0 btn-info text-white">
+                                                <span class="badge badge-sm bg-gradient-info p-2">
+                                                    <?= $row['total']; ?>
+                                                </span>
+                                                Lihat
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
