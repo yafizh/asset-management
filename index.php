@@ -26,7 +26,6 @@
         .small-td {
             width: 1%;
             white-space: nowrap;
-            padding-right: 2rem !important;
         }
 
         .pagination>li.active>a,
@@ -51,6 +50,7 @@
         <div class="container-fluid py-4">
             <?php
             include_once('database/koneksi.php');
+            include_once('helper/date.php');
             if (isset($_GET['h'])) {
                 switch ($_GET['h']) {
                     case 'dashboard':
@@ -102,8 +102,8 @@
                     case 'detail_aset':
                         include_once('halaman/aset/detail_aset.php');
                         break;
-                    case 'detail_per_aset':
-                        include_once('halaman/aset/detail_per_aset.php');
+                    case 'aset_per_jenis_aset':
+                        include_once('halaman/aset/index_per_jenis_aset.php');
                         break;
                     case 'tambah_aset':
                         include_once('halaman/aset/tambah.php');
