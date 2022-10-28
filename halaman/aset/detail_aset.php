@@ -27,6 +27,7 @@ $data = $result->fetch_assoc();
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
                             <h6 class="text-white text-capitalize m-0">Gambar Aset</h6>
+                            <button class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailGambarModal">Lihat</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -43,6 +44,19 @@ $data = $result->fetch_assoc();
                         </div>
                     </div>
                     <style>
+                        .fade-scale {
+                            transform: scale(0);
+                            opacity: 0;
+                            -webkit-transition: all .25s linear;
+                            -o-transition: all .25s linear;
+                            transition: all .25s linear;
+                        }
+
+                        .fade-scale.in {
+                            opacity: 1;
+                            transform: scale(1);
+                        }
+
                         #qrcode canvas {
                             height: 100% !important;
                         }
@@ -119,6 +133,16 @@ $data = $result->fetch_assoc();
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade animate__animated animate__zoomIn" id="detailGambarModal" tabindex="-1" aria-labelledby="detailGambarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <img src="<?= $data['foto']; ?>" style="width: 100%; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     const qrCode = new QRCodeStyling({
         width: 1000,
@@ -138,7 +162,6 @@ $data = $result->fetch_assoc();
     qrCode.append(document.getElementById("qrcode"));
 
     document.getElementById('cetak').addEventListener('click', () => {
-        qrCode.download({
-        });
+        qrCode.download({});
     });
 </script>
