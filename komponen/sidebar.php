@@ -40,7 +40,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Aset</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'aset_per_jenis_aset']) ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=aset">
+                <a class="nav-link <?= isset($_GET['h']) ? (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'aset_per_jenis_aset', 'detail_aset']) ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
                     </div>
