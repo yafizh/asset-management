@@ -1,4 +1,10 @@
 <?php
+
+
+$q = "SELECT * FROM aset WHERE id=" . $_GET['id'];
+$result = $mysqli->query($q);
+$data = $result->fetch_assoc();
+
 if (isset($_POST['submit'])) {
     $id_jenis_aset = $mysqli->real_escape_string($_POST['id_jenis_aset']);
     $id_sifat_aset = $mysqli->real_escape_string($_POST['id_sifat_aset']);
@@ -39,38 +45,26 @@ if (isset($_POST['submit'])) {
             if (!move_uploaded_file($foto["tmp_name"], $target_file))
                 echo "<script>alert('Gagal meng-upload gambar!')</script>";
         }
-    }
+    } else $target_file = $data['foto'];
 
     if ($uploadOk) {
         $q = "
-            INSERT INTO aset (
-                id_jenis_aset, 
-                id_sifat_aset, 
-                nama, 
-                tanggal_masuk, 
-                detail, 
-                foto, 
-                keterangan
-            ) VALUES (
-                '$id_jenis_aset', 
-                '$id_sifat_aset', 
-                '$nama', 
-                '$tanggal_masuk', 
-                '" . json_encode($detail) . "', 
-                '$target_file',
-                '$keterangan'
-            )";
+            UPDATE aset SET 
+                id_jenis_aset='$id_jenis_aset', 
+                id_sifat_aset='$id_sifat_aset', 
+                nama='$nama', 
+                tanggal_masuk='$tanggal_masuk', 
+                detail='" . json_encode($detail) . "', 
+                foto='$target_file', 
+                keterangan='$keterangan' 
+            WHERE 
+                id=" . $data['id'];
 
         if ($mysqli->query($q)) {
-            echo "<script>alert('Tambah Data Berhasil!')</script>";
-            echo
-            isset($_GET['id_jenis_aset'])
-                ?
-                "<script>location.href = '?h=aset_per_jenis_aset&id=" . $_GET['id_jenis_aset'] . "';</script>"
-                :
-                "<script>location.href = '?h=aset';</script>";
+            echo "<script>alert('Edit Data Berhasil!')</script>";
+            echo "<script>location.href = '?h=detail_aset&id=" . $data['id'] . "';</script>";
         } else {
-            echo "<script>alert('Tambah Data Gagal!')</script>";
+            echo "<script>alert('Edit Data Gagal!')</script>";
             die($mysqli->error);
         }
     }
@@ -82,7 +76,7 @@ if (isset($_POST['submit'])) {
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Tambah Aset</h6>
+                        <h6 class="text-white text-capitalize m-0">Edit Aset</h6>
                     </div>
                 </div>
                 <div class="card-body">
@@ -94,19 +88,13 @@ if (isset($_POST['submit'])) {
                             ?>
                             <label for="id_jenis_aset" class="form-label">Jenis Aset</label>
                             <select class="form-control p-2" id="id_jenis_aset" name="id_jenis_aset" required>
-                                <?php if (isset($_GET['id_jenis_aset'])) : ?>
-                                    <?php while ($row = $result->fetch_assoc()) : ?>
-                                        <?php if ($_GET['id_jenis_aset'] === $row['id']) : ?>
-                                            <option value="<?= $row['id']; ?>" selected><?= $row['nama']; ?></option>
-                                            <?php break; ?>
-                                        <?php endif; ?>
-                                    <?php endwhile; ?>
-                                <?php else : ?>
-                                    <option selected value="" disabled>Pilih</option>
-                                    <?php while ($row = $result->fetch_assoc()) : ?>
+                                <?php while ($row = $result->fetch_assoc()) : ?>
+                                    <?php if ($row['id'] === $data['id_jenis_aset']) : ?>
+                                        <option value="<?= $row['id']; ?>" selected><?= $row['nama']; ?></option>
+                                    <?php else : ?>
                                         <option value="<?= $row['id']; ?>"><?= $row['nama']; ?></option>
-                                    <?php endwhile; ?>
-                                <?php endif; ?>
+                                    <?php endif; ?>
+                                <?php endwhile; ?>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -118,29 +106,41 @@ if (isset($_POST['submit'])) {
                             <select class="form-control p-2" id="id_sifat_aset" name="id_sifat_aset" required>
                                 <option selected value="" disabled>Pilih</option>
                                 <?php while ($row = $result->fetch_assoc()) : ?>
-                                    <option value="<?= $row['id']; ?>"><?= $row['nama']; ?></option>
+                                    <?php if ($row['id'] === $data['id_sifat_aset']) : ?>
+                                        <option value="<?= $row['id']; ?>" selected><?= $row['nama']; ?></option>
+                                    <?php else : ?>
+                                        <option value="<?= $row['id']; ?>"><?= $row['nama']; ?></option>
+                                    <?php endif; ?>
                                 <?php endwhile; ?>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control p-2" name="nama" id="nama" autocomplete="off" required>
+                            <input type="text" class="form-control p-2" name="nama" id="nama" autocomplete="off" required value="<?= $data['nama']; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_masuk" class="form-label">Tanggal Masuk</label>
-                            <input type="date" class="form-control p-2" name="tanggal_masuk" id="tanggal_masuk" autocomplete="off" required value="<?= Date("Y-m-d"); ?>">
+                            <input type="date" class="form-control p-2" name="tanggal_masuk" id="tanggal_masuk" autocomplete="off" required value="<?= $data['tanggal_masuk']; ?>">
                         </div>
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto</label>
-                            <input class="form-control" type="file" name="foto" id="foto" required>
+                            <input class="form-control" type="file" name="foto" id="foto">
                         </div>
                         <div class="mb-3">
                             <label for="keterangan" class="form-label">Keterangan</label>
-                            <textarea class="form-control p-2" rows="5" id="keterangan" name="keterangan" required autocomplete="off"></textarea>
+                            <textarea class="form-control p-2" rows="5" id="keterangan" name="keterangan" required autocomplete="off"><?= $data['keterangan']; ?></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Detail</label>
                             <div class="row" id="detail">
+                                <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
+                                    <div class="col-6 mb-3">
+                                        <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
+                                    </div>
+                                <?php endforeach; ?>
                                 <div class="col-6 mb-3">
                                     <input type="text" class="form-control p-2" name="detail[]" autocomplete="off">
                                 </div>
@@ -150,12 +150,8 @@ if (isset($_POST['submit'])) {
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <?php if (isset($_GET['id_jenis_aset'])) : ?>
-                                <a href="?h=aset_per_jenis_aset&id=<?= $_GET['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
-                            <?php else : ?>
-                                <a href="?h=aset" class="btn btn-secondary">Kembali</a>
-                            <?php endif; ?>
-                            <button type="submit" name="submit" class="btn btn-success">Tambah</button>
+                            <a href="?h=detail_aset&id=<?= $data['id']; ?>" class="btn btn-secondary">Kembali</a>
+                            <button type="submit" name="submit" class="btn btn-success">Simpan</button>
                         </div>
                     </form>
                 </div>

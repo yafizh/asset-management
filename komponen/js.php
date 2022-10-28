@@ -20,6 +20,10 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- QR CODE Generator -->
+<script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#datatable').DataTable({
