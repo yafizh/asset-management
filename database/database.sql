@@ -44,7 +44,7 @@ CREATE TABLE aset(
     tanggal_masuk DATE,
     detail JSON,
     foto VARCHAR(255),
-    keterangan VARCHAR(255)
+    keterangan TEXT
 );
 
 CREATE TABLE aset_rusak(
@@ -75,8 +75,11 @@ CREATE TABLE peminjaman_aset(
     id_aset BIGINT UNSIGNED REFERENCES aset(id),
     alasan_peminjaman VARCHAR(255),
     timestamp_pengajuan TIMESTAMP NULL DEFAULT NULL,
-    timestamp_pengajuan_disetujui TIMESTAMP NULL DEFAULT NULL,
+    timestamp_pengajuan_ditentukan TIMESTAMP NULL DEFAULT NULL,
+    keterangan_pengajuan TEXT,
     alasan_pengembalian VARCHAR(255),
     timestamp_pengembalian TIMESTAMP NULL DEFAULT NULL,
-    timestamp_pengembalian_disetujui TIMESTAMP NULL DEFAULT NULL
+    timestamp_pengembalian_ditentukan TIMESTAMP NULL DEFAULT NULL,
+    keterangan_pengembalian TEXT,
+    status TINYINT UNSIGNED NULL DEFAULT NULL COMMENT '1 = MENGAJUKAN PEMINJAMAN, 2 = PENGAJUAN DITOLAK, 3 = PENGAJUAN DITERIMA, 4 = MENGAJUKAN PENGEMBALIAN, 5 = PENGEMBALIAN DITOLAK, 6 = PENGAMBALIAN DITERIMA'
 );
