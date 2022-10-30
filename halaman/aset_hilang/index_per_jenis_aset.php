@@ -8,7 +8,7 @@
                 ?>
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Data Aset <strong><?= $result->fetch_assoc()['nama']; ?></strong> Rusak</h6>
+                        <h6 class="text-white text-capitalize m-0">Data Aset <strong><?= $result->fetch_assoc()['nama']; ?></strong> Hilang</h6>
                     </div>
                 </div>
 
@@ -19,7 +19,7 @@
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tanggal Rusak</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tanggal Hilang</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -34,7 +34,7 @@
                                 FROM 
                                     aset AS a 
                                 INNER JOIN 
-                                    aset_rusak AS ar  
+                                    aset_hilang AS ar  
                                 ON 
                                     ar.id_aset=a.id 
                                 WHERE 
@@ -59,7 +59,7 @@
                                             <p class="text-secondary mb-0"><?= $row['keterangan']; ?></p>
                                         </td>
                                         <td class="small-td">
-                                            <a href="?h=detail_aset_rusak&id=<?= $row['id'] ?>" class="btn btn-sm btn-info text-white m-0">Lihat</a>
+                                            <a href="?h=detail_aset_hilang&id=<?= $row['id'] ?>" class="btn btn-sm btn-info text-white m-0">Lihat</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

@@ -75,15 +75,15 @@ if (isset($_POST['submit'])) {
                         <hr>
                         <div class="mb-3">
                             <label for="tanggal" class="form-label">Tanggal Rusak</label>
-                            <input type="date" class="form-control p-2" name="tanggal" id="tanggal" value="<?= Date("Y-m-d"); ?>">
+                            <input type="date" class="form-control p-2" name="tanggal" id="tanggal" required value="<?= Date("Y-m-d"); ?>">
                         </div>
                         <div class="mb-3">
                             <label for="keterangan" class="form-label">Keterangan</label>
-                            <textarea name="keterangan" id="keterangan" rows="5" class="form-control"></textarea>
+                            <textarea name="keterangan" id="keterangan" rows="5" class="form-control" required autocomplete="off" autofocus></textarea>
                         </div>
                         <div class="d-flex justify-content-between">
                             <a href="?h=detail_aset&id=<?= $data['id'] ?>" class="btn btn-secondary">Kembali</a>
-                            <button type="submit" name="submit" class="btn btn-success">Tambah</button>
+                            <button type="submit" name="submit" class="btn btn-success" onclick="return confirm('Yakin?')">Lakukan Pelaporan</button>
                         </div>
                     </form>
                 </div>
@@ -91,22 +91,3 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
-<script>
-    $(document).on('input', '#detail input', () => {
-        let add_detail = false;
-        $("#detail input").each((index, input) => {
-            if (input.value) add_detail = true;
-            else add_detail = false;
-        });
-        if (add_detail) {
-            $("#detail").append(`
-                <div class="col-6 mb-3">
-                    <input type="text" class="form-control p-2" name="detail[]" autocomplete="off">
-                </div>
-                <div class="col-6 mb-3">
-                    <input type="text" class="form-control p-2" name="detail[]" autocomplete="off">
-                </div>
-            `);
-        }
-    });
-</script>

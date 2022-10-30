@@ -80,8 +80,8 @@ $data = $result->fetch_assoc();
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <a href="?h=aset_rusak_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
-                                <a href="?h=hapus_aset_rusak&id=<?= $data['id']; ?>&id_jenis_aset=<?= $data['id_jenis_aset']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Hapus</a>
+                                <a href="?h=aset_hilang_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
+                                <a href="?h=hapus_aset_hilang&id=<?= $data['id']; ?>&id_jenis_aset=<?= $data['id_jenis_aset']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Hapus</a>
                             </div>
                         </div>
                     </div>

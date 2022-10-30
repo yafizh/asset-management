@@ -8,7 +8,7 @@ $q = "
         (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset) AS hilang, 
         (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL) AS sedang_pemeliharaan, 
         (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5) AS sedang_dipinjam, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS dipesan 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS sedang_dipesan  
     FROM 
         aset AS a 
     INNER JOIN 
@@ -144,7 +144,7 @@ $data = $result->fetch_assoc();
                                         </div>
                                     <?php else : ?>
                                         <a href="?h=tambah_aset_rusak&id=<?= $data['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Laporkan Rusak</a>
-                                        <a href="#" class="btn btn-danger">Laporkan Hilang</a>
+                                        <a href="?h=tambah_aset_hilang&id=<?= $data['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Laporkan Hilang</a>
                                         <a href="#" class="btn btn-warning text-white">Lakukan Pemeliharaan</a>
                                     <?php endif; ?>
                                 </div>

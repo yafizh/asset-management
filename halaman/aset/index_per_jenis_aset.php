@@ -99,12 +99,3 @@
         </div>
     </div>
 </div>
-
-<!-- if(aset ada di dalam tabel kerusakan)
-
-if(aset ada di dalam tabel kehilangan)
-
-if(aset ada di dalam tabel pemeliharaan)
-if(aset dalam masa pemeliharaan)
-
-if (aset ada di dalam peminjaman) -->
