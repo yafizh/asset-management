@@ -105,7 +105,7 @@ $data = $result->fetch_assoc();
                                 <textarea class="form-control p-2" rows="5" disabled><?= $data['keterangan'] ?></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="tanggal_masuk" class="form-label">Detail</label>
+                                <label class="form-label">Detail</label>
                                 <div class="row" id="detail">
                                     <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
                                         <div class="col-6 mb-3">
@@ -124,28 +124,28 @@ $data = $result->fetch_assoc();
                                 <div class="d-flex justify-content-center align-items-center flex-wrap gap-1 flex-grow-1">
                                     <?php if ($data['rusak']) : ?>
                                         <div class="alert alert-danger text-white" role="alert">
-                                            Barang Sedang Dalam Keadaan <strong>Rusak</strong>
+                                            Aset Sedang Dalam Keadaan <strong>Rusak</strong>
                                         </div>
                                     <?php elseif ($data['hilang']) : ?>
                                         <div class="alert alert-danger text-white" role="alert">
-                                            Barang Sedang Dalam Keadaan <strong>Hilang</strong>
+                                            Aset Sedang Dalam Keadaan <strong>Hilang</strong>
                                         </div>
                                     <?php elseif ($data['sedang_pemeliharaan']) : ?>
                                         <div class="alert alert-warning text-white" role="alert">
-                                            Barang Sedang Dalam Keadaan <strong>Masa Pemeliharaan</strong>
+                                            Aset Sedang Dalam Keadaan <strong>Masa Pemeliharaan</strong>
                                         </div>
                                     <?php elseif ($data['sedang_dipesan']) : ?>
                                         <div class="alert alert-info text-white" role="alert">
-                                            Barang Sedang Dalam Keadaan <strong>Dipesan</strong>. Tolak terlebih dahulu pemesanan untuk melakukan aksi lainnya.
+                                            Aset Sedang Dalam Keadaan <strong>Dipesan</strong>. Tolak terlebih dahulu pemesanan untuk melakukan aksi lainnya.
                                         </div>
                                     <?php elseif ($data['sedang_dipinjam']) : ?>
                                         <div class="alert alert-info text-white" role="alert">
-                                            Barang Sedang Dalam Keadaan <strong>Dipinjam</strong>. Tunggu pengembalian terlebih dahulu untuk melakukan aksi lainnya.
+                                            Aset Sedang Dalam Keadaan <strong>Dipinjam</strong>. Tunggu pengembalian terlebih dahulu untuk melakukan aksi lainnya.
                                         </div>
                                     <?php else : ?>
                                         <a href="?h=tambah_aset_rusak&id=<?= $data['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Laporkan Rusak</a>
                                         <a href="?h=tambah_aset_hilang&id=<?= $data['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Laporkan Hilang</a>
-                                        <a href="#" class="btn btn-warning text-white">Lakukan Pemeliharaan</a>
+                                        <a href="?h=tambah_pemeliharaan_aset&id=<?= $data['id']; ?>" class="btn btn-warning text-white">Lakukan Pemeliharaan</a>
                                     <?php endif; ?>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center flex-wrap gap-1 flex-grow-1">
