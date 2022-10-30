@@ -30,12 +30,12 @@
                                 SELECT 
                                     ja.id, 
                                     ja.nama, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset) AS rusak, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset) AS hilang, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL) AS sedang_pemeliharaan, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5) AS sedang_dipinjam, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS dipesan,
-                                    (SELECT COUNT(a.id) FROM aset AS a LEFT JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status NOT BETWEEN 1 AND 5 OR pa.status IS NULL) AS tersedia,
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id FROM aset_rusak)) AS rusak, 
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id FROM aset_hilang)) AS hilang, 
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id FROM pemeliharaan_aset AS plhra WHERE plhra.tanggal_selesai IS NULL)) AS sedang_pemeliharaan, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status BETWEEN 2 AND 5 AND a.id NOT IN (SELECT id FROM aset_rusak UNION ALL SELECT id FROM aset_hilang UNION ALL SELECT id FROM pemeliharaan_aset)) AS sedang_dipinjam, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status = 1 AND a.id NOT IN (SELECT id FROM aset_rusak UNION ALL SELECT id FROM aset_hilang UNION ALL SELECT id FROM pemeliharaan_aset)) AS dipesan,
+                                    (SELECT COUNT(a.id) FROM aset AS a LEFT JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status NOT BETWEEN 1 AND 5 OR pa.status IS NULL AND a.id NOT IN (SELECT id FROM aset_rusak UNION ALL SELECT id FROM aset_hilang UNION ALL SELECT id FROM pemeliharaan_aset)) AS tersedia,
                                     (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id) AS total 
                                 FROM 
                                     jenis_aset AS ja

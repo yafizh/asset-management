@@ -3,7 +3,12 @@ $q = "
     SELECT 
         ja.nama AS jenis_aset,
         sa.nama AS sifat_aset,
-        a.* 
+        a.*,
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset) AS rusak, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset) AS hilang, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL) AS sedang_pemeliharaan, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5) AS sedang_dipinjam, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS dipesan 
     FROM 
         aset AS a 
     INNER JOIN 
@@ -117,9 +122,31 @@ $data = $result->fetch_assoc();
                                     <a href="?h=aset_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
                                 </div>
                                 <div class="d-flex justify-content-center align-items-center flex-wrap gap-1 flex-grow-1">
-                                    <a href="#" class="btn btn-danger">Laporkan Rusak</a>
-                                    <a href="#" class="btn btn-danger">Laporkan Hilang</a>
-                                    <a href="#" class="btn btn-warning text-white">Lakukan Pemeliharaan</a>
+                                    <?php if ($data['rusak']) : ?>
+                                        <div class="alert alert-danger text-white" role="alert">
+                                            Barang Sedang Dalam Keadaan <strong>Rusak</strong>
+                                        </div>
+                                    <?php elseif ($data['hilang']) : ?>
+                                        <div class="alert alert-danger text-white" role="alert">
+                                            Barang Sedang Dalam Keadaan <strong>Hilang</strong>
+                                        </div>
+                                    <?php elseif ($data['sedang_pemeliharaan']) : ?>
+                                        <div class="alert alert-warning text-white" role="alert">
+                                            Barang Sedang Dalam Keadaan <strong>Masa Pemeliharaan</strong>
+                                        </div>
+                                    <?php elseif ($data['sedang_dipesan']) : ?>
+                                        <div class="alert alert-info text-white" role="alert">
+                                            Barang Sedang Dalam Keadaan <strong>Dipesan</strong>. Tolak terlebih dahulu pemesanan untuk melakukan aksi lainnya.
+                                        </div>
+                                    <?php elseif ($data['sedang_dipinjam']) : ?>
+                                        <div class="alert alert-info text-white" role="alert">
+                                            Barang Sedang Dalam Keadaan <strong>Dipinjam</strong>. Tunggu pengembalian terlebih dahulu untuk melakukan aksi lainnya.
+                                        </div>
+                                    <?php else : ?>
+                                        <a href="?h=tambah_aset_rusak&id=<?= $data['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Laporkan Rusak</a>
+                                        <a href="#" class="btn btn-danger">Laporkan Hilang</a>
+                                        <a href="#" class="btn btn-warning text-white">Lakukan Pemeliharaan</a>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center flex-wrap gap-1 flex-grow-1">
                                     <a href="?h=edit_aset&id=<?= $data['id']; ?>" class="btn btn-warning text-white">Edit</a>
