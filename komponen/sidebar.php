@@ -36,6 +36,22 @@
                     <span class="nav-link-text ms-1">Sifat Aset</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">person</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Pegawai</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">login</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Pengguna</span>
+                </a>
+            </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Aset</h6>
             </li>
@@ -45,14 +61,6 @@
                         <i class="material-icons opacity-10">table_view</i>
                     </div>
                     <span class="nav-link-text ms-1">Aset</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?= $active === 'peminjaman_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=peminjaman_aset">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Peminjaman Aset</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -77,6 +85,52 @@
                         <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
                     </div>
                     <span class="nav-link-text ms-1">Pemeliharaan Aset</span>
+                </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Peminjaman Aset</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">notifications</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Tersedia</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">notifications</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Dipinjam</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">notifications</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Pengajuan Peminjaman</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">notifications</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Pengajuan Pengembalian</span>
+                </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Pengaturan</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="#">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">login</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Ganti Password</span>
                 </a>
             </li>
             <li class="nav-item">

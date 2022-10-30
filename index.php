@@ -95,6 +95,17 @@
         elseif ($_GET['h'] === 'hapus_aset_hilang') $page = 'halaman/aset_hilang/hapus.php';
         elseif ($_GET['h'] === 'detail_aset_hilang') $page = 'halaman/aset_hilang/detail_aset.php';
         elseif ($_GET['h'] === 'aset_hilang_per_jenis_aset') $page = 'halaman/aset_hilang/index_per_jenis_aset.php';
+
+        // Pemeliharaan Aset
+        if (in_array($_GET['h'], ['pemeliharaan_aset', 'tambah_pemeliharaan_aset', 'aset_sedang_pemeliharaan', 'aset_selesai_pemeliharaan', 'detail_pemeliharaan_aset', 'pemeliharaan_aset_selesai'])) $active = 'pemeliharaan_aset';
+
+        if ($_GET['h'] === 'pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/index.php';
+        elseif ($_GET['h'] === 'tambah_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/tambah.php';
+        elseif ($_GET['h'] === 'edit_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/edit.php';
+        elseif ($_GET['h'] === 'detail_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/detail_aset.php';
+        elseif ($_GET['h'] === 'aset_sedang_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_sedang_pemeliharaan.php';
+        elseif ($_GET['h'] === 'aset_selesai_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_selesai_pemeliharaan.php';
+        elseif ($_GET['h'] === 'pemeliharaan_aset_selesai') $page = 'halaman/pemeliharaan_aset/pemeliharaan_selesai.php';
     } else {
         $active = 'dashboard';
         $page = 'halaman/dashboard/index.php';
