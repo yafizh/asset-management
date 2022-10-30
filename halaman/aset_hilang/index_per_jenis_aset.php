@@ -27,16 +27,16 @@
                             <?php
                             $q = "
                                 SELECT 
-                                    a.id,
+                                    ah.id,
                                     a.nama,
-                                    ar.tanggal,
-                                    ar.keterangan 
+                                    ah.tanggal,
+                                    ah.keterangan 
                                 FROM 
-                                    aset AS a 
+                                    aset_hilang AS ah  
                                 INNER JOIN 
-                                    aset_hilang AS ar  
+                                    aset AS a 
                                 ON 
-                                    ar.id_aset=a.id 
+                                    ah.id_aset=a.id 
                                 WHERE 
                                     id_jenis_aset=" . $_GET['id'] . "
                             ";

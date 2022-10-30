@@ -3,9 +3,19 @@ $q = "
     SELECT 
         ja.nama AS jenis_aset,
         sa.nama AS sifat_aset,
-        a.* 
+        a.id_jenis_aset,
+        a.nama,
+        a.detail,
+        a.foto,
+        ah.id,  
+        ah.tanggal,  
+        ah.keterangan 
     FROM 
+        aset_hilang AS ah 
+    INNER JOIN 
         aset AS a 
+    ON 
+        ah.id_aset=a.id 
     INNER JOIN 
         jenis_aset AS ja 
     ON 
@@ -13,9 +23,9 @@ $q = "
     INNER JOIN 
         sifat_aset AS sa 
     ON 
-        sa.id=a.id_sifat_aset 
+        sa.id=a.id_sifat_aset   
     WHERE 
-        a.id=" . $_GET['id'];
+        ah.id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
 ?>
@@ -59,15 +69,7 @@ $data = $result->fetch_assoc();
                                 <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Tanggal Masuk</label>
-                                <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesiaString($data['tanggal_masuk']); ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Keterangan</label>
-                                <textarea class="form-control p-2" rows="5" disabled><?= $data['keterangan'] ?></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="tanggal_masuk" class="form-label">Detail</label>
+                                <label class="form-label">Detail</label>
                                 <div class="row" id="detail">
                                     <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
                                         <div class="col-6 mb-3">
@@ -78,6 +80,15 @@ $data = $result->fetch_assoc();
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
+                            </div>
+                            <hr>
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal Pelaporan</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesiaString($data['tanggal']); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Keterangan Hilang</label>
+                                <textarea class="form-control p-2" rows="5" disabled><?= $data['keterangan'] ?></textarea>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <a href="?h=aset_hilang_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>

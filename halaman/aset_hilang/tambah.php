@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
                             <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="tanggal_masuk" class="form-label">Detail</label>
+                            <label class="form-label">Detail</label>
                             <div class="row" id="detail">
                                 <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
                                     <div class="col-6 mb-3">
