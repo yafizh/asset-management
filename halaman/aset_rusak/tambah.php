@@ -1,50 +1,89 @@
 <?php
+$q = "
+SELECT 
+    ja.nama AS jenis_aset,
+    sa.nama AS sifat_aset,
+    a.* 
+FROM 
+    aset AS a 
+INNER JOIN 
+    jenis_aset AS ja 
+ON 
+    ja.id=a.id_jenis_aset 
+INNER JOIN 
+    sifat_aset AS sa 
+ON 
+    sa.id=a.id_sifat_aset 
+WHERE 
+    a.id=" . $_GET['id'];
+$result = $mysqli->query($q);
+$data = $result->fetch_assoc();
 
 if (isset($_POST['submit'])) {
-    $nama = $_POST['nama'];
-    $keterangan = $_POST['keterangan'];
+    $id = $mysqli->real_escape_string($_GET['id']);
+    $tanggal = $mysqli->real_escape_string($_POST['tanggal']);
+    $keterangan = $mysqli->real_escape_string($_POST['keterangan']);
+
+    $q = "
+    INSERT INTO aset_rusak (
+        id_aset, 
+        tanggal, 
+        keterangan 
+    ) VALUES (
+        '$id',
+        '$tanggal',
+        '$keterangan'
+    )";
+
+    if ($mysqli->query($q)) {
+        echo "<script>alert('Pelaporan Aset Rusak Berhasil!')</script>";
+        echo "<script>location.href = '?h=detail_aset&id=$id';</script>";
+    } else {
+        echo "<script>alert('Pelaporan Aset Rusak Gagal!')</script>";
+        die($mysqli->error);
+    }
 }
-
-
 ?>
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-12">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Tambah Jenis Aset</h6>
+                    <div class="bg-gradient-danger shadow-danger border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                        <h6 class="text-white text-capitalize m-0">Pelaporan Aset Rusak</h6>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST">
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Kode Aset</label>
-                            <div class="input-group input-group-outline">
-                                <select class="form-control" id="exampleFormControlSelect1" required>
-                                    <option selected value="" disabled>Pilih</option>
-                                    <option>Mobil</option>
-                                    <option>Kursi</option>
-                                    <option>Meja</option>
-                                    <option>Kamera</option>
-                                </select>
-                            </div>
+                            <label class="form-label">Nama</label>
+                            <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama</label>
-                            <div class="input-group input-group-outline">
-                                <input type="text" class="form-control" name="nama" id="nama" autocomplete="off" autofocus required>
+                            <label for="tanggal_masuk" class="form-label">Detail</label>
+                            <div class="row" id="detail">
+                                <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
+                                    <div class="col-6 mb-3">
+                                        <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="tanggal" class="form-label">Tanggal Rusak</label>
+                            <input type="date" class="form-control p-2" name="tanggal" id="tanggal" value="<?= Date("Y-m-d"); ?>">
                         </div>
                         <div class="mb-3">
                             <label for="keterangan" class="form-label">Keterangan</label>
-                            <div class="input-group input-group-outline">
-                                <textarea class="form-control" rows="5" id="keterangan" name="keterangan" required autocomplete="off"></textarea>
-                            </div>
+                            <textarea name="keterangan" id="keterangan" rows="5" class="form-control"></textarea>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-secondary">Kembali</a>
-                            <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
+                            <a href="?h=detail_aset&id=<?= $data['id'] ?>" class="btn btn-secondary">Kembali</a>
+                            <button type="submit" name="submit" class="btn btn-success">Tambah</button>
                         </div>
                     </form>
                 </div>
@@ -52,3 +91,22 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </div>
+<script>
+    $(document).on('input', '#detail input', () => {
+        let add_detail = false;
+        $("#detail input").each((index, input) => {
+            if (input.value) add_detail = true;
+            else add_detail = false;
+        });
+        if (add_detail) {
+            $("#detail").append(`
+                <div class="col-6 mb-3">
+                    <input type="text" class="form-control p-2" name="detail[]" autocomplete="off">
+                </div>
+                <div class="col-6 mb-3">
+                    <input type="text" class="form-control p-2" name="detail[]" autocomplete="off">
+                </div>
+            `);
+        }
+    });
+</script>

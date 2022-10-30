@@ -83,7 +83,6 @@
 
         if ($_GET['h'] === 'aset_rusak') $page = 'halaman/aset_rusak/index.php';
         elseif ($_GET['h'] === 'tambah_aset_rusak') $page = 'halaman/aset_rusak/tambah.php';
-        elseif ($_GET['h'] === 'edit_aset_rusak') $page = 'halaman/aset_rusak/edit.php';
         elseif ($_GET['h'] === 'hapus_aset_rusak') $page = 'halaman/aset_rusak/hapus.php';
         elseif ($_GET['h'] === 'detail_aset_rusak') $page = 'halaman/aset_rusak/detail_aset.php';
         elseif ($_GET['h'] === 'aset_rusak_per_jenis_aset') $page = 'halaman/aset_rusak/index_per_jenis_aset.php';
