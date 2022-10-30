@@ -27,14 +27,14 @@
                             <?php
                             $q = "
                                 SELECT 
-                                    a.id,
                                     a.nama,
+                                    ar.id,
                                     ar.tanggal,
                                     ar.keterangan 
                                 FROM 
-                                    aset AS a 
-                                INNER JOIN 
                                     aset_rusak AS ar  
+                                INNER JOIN 
+                                    aset AS a 
                                 ON 
                                     ar.id_aset=a.id 
                                 WHERE 
