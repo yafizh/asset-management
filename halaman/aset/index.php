@@ -30,12 +30,12 @@
                                 SELECT 
                                     ja.id, 
                                     ja.nama, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id FROM aset_rusak)) AS rusak, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id FROM aset_hilang)) AS hilang, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id FROM pemeliharaan_aset AS plhra WHERE plhra.tanggal_selesai IS NULL)) AS sedang_pemeliharaan, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status BETWEEN 2 AND 5 AND a.id NOT IN (SELECT id FROM aset_rusak UNION ALL SELECT id FROM aset_hilang UNION ALL SELECT id FROM pemeliharaan_aset)) AS sedang_dipinjam, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status = 1 AND a.id NOT IN (SELECT id FROM aset_rusak UNION ALL SELECT id FROM aset_hilang UNION ALL SELECT id FROM pemeliharaan_aset)) AS dipesan,
-                                    (SELECT COUNT(a.id) FROM aset AS a LEFT JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status NOT BETWEEN 1 AND 5 OR pa.status IS NULL AND a.id NOT IN (SELECT id FROM aset_rusak UNION ALL SELECT id FROM aset_hilang UNION ALL SELECT id FROM pemeliharaan_aset)) AS tersedia,
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id_aset FROM aset_rusak)) AS rusak, 
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id_aset FROM aset_hilang)) AS hilang, 
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id=ja.id AND a.id IN (SELECT id_aset FROM pemeliharaan_aset AS plhra WHERE plhra.tanggal_selesai IS NULL)) AS sedang_pemeliharaan, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status BETWEEN 2 AND 5 AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS sedang_dipinjam, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND pa.status = 1 AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS dipesan,
+                                    (SELECT COUNT(a.id) FROM aset AS a LEFT JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id=ja.id AND (pa.status NOT BETWEEN 1 AND 5 OR pa.status IS NULL) AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS tersedia,
                                     (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id) AS total 
                                 FROM 
                                     jenis_aset AS ja
@@ -53,7 +53,7 @@
                                             <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-danger text-white">
+                                            <a href="?h=aset_rusak" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
                                                     <?= $row['rusak']; ?>
                                                 </span>
@@ -61,7 +61,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-danger text-white">
+                                            <a href="?h=aset_hilang" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
                                                     <?= $row['hilang']; ?>
                                                 </span>
@@ -69,7 +69,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-warning text-white">
+                                            <a href="?h=pemeliharaan_aset" class="btn btn-sm m-0 btn-warning text-white">
                                                 <span class="badge badge-sm bg-gradient-warning p-2">
                                                     <?= $row['sedang_pemeliharaan']; ?>
                                                 </span>
