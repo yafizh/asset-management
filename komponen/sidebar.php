@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? ($_GET['h'] === 'dashboard' ? 'active bg-gradient-success text-white' : 'text-dark') : 'active text-white bg-gradient-success' ?>" href="?h=dashboard">
+                <a class="nav-link <?= $active === 'dashboard' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=dashboard">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dashboard</i>
                     </div>
@@ -21,7 +21,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Master</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? (in_array($_GET['h'], ['jenis_aset', 'tambah_jenis_aset', 'edit_jenis_aset', 'hapus_jenis_aset']) ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=jenis_aset">
+                <a class="nav-link <?= $active === 'jenis_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=jenis_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">person</i>
                     </div>
@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? (in_array($_GET['h'], ['sifat_aset', 'tambah_sifat_aset', 'edit_sifat_aset', 'hapus_sifat_aset']) ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=sifat_aset">
+                <a class="nav-link <?= $active === 'sifat_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=sifat_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">login</i>
                     </div>
@@ -40,7 +40,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Aset</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'aset_per_jenis_aset', 'detail_aset']) ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=aset">
+                <a class="nav-link <?= $active === 'aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">table_view</i>
                     </div>
@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? ($_GET['h'] === 'peminjaman_aset' ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=peminjaman_aset">
+                <a class="nav-link <?= $active === 'peminjaman_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=peminjaman_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">notifications</i>
                     </div>
@@ -56,7 +56,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? ($_GET['h'] === 'aset_rusak' ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=aset_rusak">
+                <a class="nav-link <?= $active === 'aset_rusak' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_rusak">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">receipt_long</i>
                     </div>
@@ -64,7 +64,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark <?= isset($_GET['h']) ? ($_GET['h'] === 'aset_hilang' ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=aset_hilang">
+                <a class="nav-link text-dark <?= $active === 'aset_hilang' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_hilang">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">view_in_ar</i>
                     </div>
@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= isset($_GET['h']) ? ($_GET['h'] === 'pemeliharaan_aset' ? 'active bg-gradient-success text-white' : 'text-dark') : 'text-dark' ?>" href="?h=pemeliharaan_aset">
+                <a class="nav-link <?= $active === 'pemeliharaan_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pemeliharaan_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
                     </div>

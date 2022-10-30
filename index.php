@@ -44,120 +44,63 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
+    <?php
+    if (isset($_GET['h'])) {
+        // Dashboard
+        if ($_GET['h'] === 'dashboard') {
+            $active = 'dashboard';
+            $page = 'halaman/dashboard/index.php';
+        }
+
+        // Jenis Aset
+        if (in_array($_GET['h'], ['jenis_aset', 'tambah_jenis_aset', 'edit_jenis_aset', 'hapus_jenis_aset'])) $active = 'jenis_aset';
+
+        if ($_GET['h'] === 'jenis_aset') $page = 'halaman/jenis_aset/index.php';
+        elseif ($_GET['h'] === 'tambah_jenis_aset') $page = 'halaman/jenis_aset/tambah.php';
+        elseif ($_GET['h'] === 'edit_jenis_aset') $page = 'halaman/jenis_aset/edit.php';
+        elseif ($_GET['h'] === 'hapus_jenis_aset') $page = 'halaman/jenis_aset/hapus.php';
+
+        // Sifat Aset
+        if (in_array($_GET['h'], ['sifat_aset', 'tambah_sifat_aset', 'edit_sifat_aset', 'hapus_sifat_aset'])) $active = 'sifat_aset';
+
+        if ($_GET['h'] === 'sifat_aset') $page = 'halaman/sifat_aset/index.php';
+        elseif ($_GET['h'] === 'tambah_sifat_aset') $page = 'halaman/sifat_aset/tambah.php';
+        elseif ($_GET['h'] === 'edit_sifat_aset') $page = 'halaman/sifat_aset/edit.php';
+        elseif ($_GET['h'] === 'hapus_sifat_aset') $page = 'halaman/sifat_aset/hapus.php';
+
+        // Aset
+        if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'hapus_aset', 'detail_aset', 'aset_per_jenis_aset'])) $active = 'aset';
+
+        if ($_GET['h'] === 'aset') $page = 'halaman/aset/index.php';
+        elseif ($_GET['h'] === 'tambah_aset') $page = 'halaman/aset/tambah.php';
+        elseif ($_GET['h'] === 'edit_aset') $page = 'halaman/aset/edit.php';
+        elseif ($_GET['h'] === 'hapus_aset') $page = 'halaman/aset/hapus.php';
+        elseif ($_GET['h'] === 'detail_aset') $page = 'halaman/aset/detail_aset.php';
+        elseif ($_GET['h'] === 'aset_per_jenis_aset') $page = 'halaman/aset/index_per_jenis_aset.php';
+
+        // Aset Rusak
+        if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'edit_aset_rusak', 'hapus_aset_rusak', 'detail_aset_rusak', 'aset_rusak_per_jenis_aset'])) $active = 'aset_rusak';
+
+        if ($_GET['h'] === 'aset_rusak') $page = 'halaman/aset_rusak/index.php';
+        elseif ($_GET['h'] === 'tambah_aset_rusak') $page = 'halaman/aset_rusak/tambah.php';
+        elseif ($_GET['h'] === 'edit_aset_rusak') $page = 'halaman/aset_rusak/edit.php';
+        elseif ($_GET['h'] === 'hapus_aset_rusak') $page = 'halaman/aset_rusak/hapus.php';
+        elseif ($_GET['h'] === 'detail_aset_rusak') $page = 'halaman/aset_rusak/detail_aset.php';
+        elseif ($_GET['h'] === 'aset_rusak_per_jenis_aset') $page = 'halaman/aset_rusak/index_per_jenis_aset.php';
+    } else {
+        $active = 'dashboard';
+        $page = 'halaman/dashboard/index.php';
+    }
+    ?>
     <?php include_once('komponen/sidebar.php'); ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <?php # include_once('komponen/navbar.php'); ?>
+        <?php # include_once('komponen/navbar.php'); 
+        ?>
         <div class="container-fluid py-4">
             <?php
             include_once('database/koneksi.php');
             include_once('helper/date.php');
-            if (isset($_GET['h'])) {
-                switch ($_GET['h']) {
-                    case 'dashboard':
-                        include_once('halaman/dashboard/index.php');
-                        break;
-                        // Pengguna
-                    case 'pengguna':
-                        include_once('halaman/pengguna/index.php');
-                        break;
-                    case 'tambah_pengguna':
-                        include_once('halaman/pengguna/tambah.php');
-                        break;
-                    case 'edit_pengguna':
-                        include_once('halaman/pengguna/edit.php');
-                        break;
-                    case 'hapus_pengguna':
-                        include_once('halaman/pengguna/hapus.php');
-                        break;
-                        // Jenis Aset
-                    case 'jenis_aset':
-                        include_once('halaman/jenis_aset/index.php');
-                        break;
-                    case 'tambah_jenis_aset':
-                        include_once('halaman/jenis_aset/tambah.php');
-                        break;
-                    case 'edit_jenis_aset':
-                        include_once('halaman/jenis_aset/edit.php');
-                        break;
-                    case 'hapus_jenis_aset':
-                        include_once('halaman/jenis_aset/hapus.php');
-                        break;
-                        // Sifat Aset
-                    case 'sifat_aset':
-                        include_once('halaman/sifat_aset/index.php');
-                        break;
-                    case 'tambah_sifat_aset':
-                        include_once('halaman/sifat_aset/tambah.php');
-                        break;
-                    case 'edit_sifat_aset':
-                        include_once('halaman/sifat_aset/edit.php');
-                        break;
-                    case 'hapus_sifat_aset':
-                        include_once('halaman/sifat_aset/hapus.php');
-                        break;
-                        // Aset
-                    case 'aset':
-                        include_once('halaman/aset/index.php');
-                        break;
-                    case 'detail_aset':
-                        include_once('halaman/aset/detail_aset.php');
-                        break;
-                    case 'aset_per_jenis_aset':
-                        include_once('halaman/aset/index_per_jenis_aset.php');
-                        break;
-                    case 'tambah_aset':
-                        include_once('halaman/aset/tambah.php');
-                        break;
-                    case 'edit_aset':
-                        include_once('halaman/aset/edit.php');
-                        break;
-                    case 'hapus_aset':
-                        include_once('halaman/aset/hapus.php');
-                        break;
-                        // Aset Rusak
-                    case 'aset_rusak':
-                        include_once('halaman/aset_rusak/index.php');
-                        break;
-                    case 'tambah_aset_rusak':
-                        include_once('halaman/aset_rusak/tambah.php');
-                        break;
-                    case 'edit_aset_rusak':
-                        include_once('halaman/aset_rusak/edit.php');
-                        break;
-                    case 'hapus_aset_rusak':
-                        include_once('halaman/aset_rusak/hapus.php');
-                        break;
-                        // Aset Hilang
-                    case 'aset_hilang':
-                        include_once('halaman/aset_hilang/index.php');
-                        break;
-                    case 'tambah_aset_hilang':
-                        include_once('halaman/aset_hilang/tambah.php');
-                        break;
-                    case 'edit_aset_hilang':
-                        include_once('halaman/aset_hilang/edit.php');
-                        break;
-                    case 'hapus_aset_hilang':
-                        include_once('halaman/aset_hilang/hapus.php');
-                        break;
-                        // Pemeliharaan Aset
-                    case 'pemeliharaan_aset':
-                        include_once('halaman/pemeliharaan_aset/index.php');
-                        break;
-                    case 'tambah_pemeliharaan_aset':
-                        include_once('halaman/pemeliharaan_aset/tambah.php');
-                        break;
-                    case 'edit_pemeliharaan_aset':
-                        include_once('halaman/pemeliharaan_aset/edit.php');
-                        break;
-                    case 'hapus_pemeliharaan_aset':
-                        include_once('halaman/pemeliharaan_aset/hapus.php');
-                        break;
-                    default:
-                        include_once('halaman/dashboard/index.php');
-                }
-            } else
-                include_once('halaman/dashboard/index.php');
+            include_once($page);
             ?>
         </div>
     </main>
