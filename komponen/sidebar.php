@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                <a class="nav-link <?= $active === 'pegawai' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pegawai">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">person</i>
                     </div>
@@ -45,7 +45,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                <a class="nav-link <?= $active === 'pengguna' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengguna">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">login</i>
                     </div>

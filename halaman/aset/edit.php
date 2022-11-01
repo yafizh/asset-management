@@ -1,6 +1,5 @@
 <?php
 
-
 $q = "SELECT * FROM aset WHERE id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
