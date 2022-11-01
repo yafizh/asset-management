@@ -54,6 +54,7 @@ if (!isset($_SESSION['user'])) {
 
 <body class="g-sidenav-show bg-gray-200">
     <?php
+    // Route for Admin and Petugas
     if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') {
         if (isset($_GET['h'])) {
             // Dashboard
@@ -136,11 +137,14 @@ if (!isset($_SESSION['user'])) {
             $active = 'dashboard';
             $page = 'halaman/dashboard/index.php';
         }
-    } else {
-        $page = 'halaman/peminjaman_aset/index.php';
     }
 
-    if ($_GET['h'] === 'logout') $page = 'halaman/logout/index.php';
+    // Route for Pegawai
+    if ($_SESSION['user']['status'] === 'pegawai') {
+        if (isset($_GET['h'])) {
+        } else
+            $page = 'halaman/peminjaman_aset/index.php';
+    }
     ?>
     <?php
     if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') include_once('komponen/sidebar.php'); ?>
