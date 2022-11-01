@@ -52,13 +52,21 @@
             $page = 'halaman/dashboard/index.php';
         }
 
-        // Pegawai
-        if (in_array($_GET['h'], ['pegawai', 'tambah_pegawai', 'edit_pegawai', 'hapus_pegawai'])) $active = 'pegawai';
+        // Pengguna
+        if (in_array($_GET['h'], ['pengguna', 'tambah_pengguna', 'edit_pengguna', 'hapus_pengguna'])) $active = 'pengguna';
 
-        if ($_GET['h'] === 'pegawai') $page = 'halaman/pegawai/index.php';
-        elseif ($_GET['h'] === 'tambah_pegawai') $page = 'halaman/pegawai/tambah.php';
-        elseif ($_GET['h'] === 'edit_pegawai') $page = 'halaman/pegawai/edit.php';
-        elseif ($_GET['h'] === 'hapus_pegawai') $page = 'halaman/pegawai/hapus.php';
+        if ($_GET['h'] === 'pengguna') $page = 'halaman/pengguna/index.php';
+        elseif ($_GET['h'] === 'tambah_pengguna') $page = 'halaman/pengguna/tambah.php';
+        elseif ($_GET['h'] === 'edit_pengguna') $page = 'halaman/pengguna/edit.php';
+        elseif ($_GET['h'] === 'hapus_pengguna') $page = 'halaman/pengguna/hapus.php';
+
+         // Pegawai
+         if (in_array($_GET['h'], ['pegawai', 'tambah_pegawai', 'edit_pegawai', 'hapus_pegawai'])) $active = 'pegawai';
+
+         if ($_GET['h'] === 'pegawai') $page = 'halaman/pegawai/index.php';
+         elseif ($_GET['h'] === 'tambah_pegawai') $page = 'halaman/pegawai/tambah.php';
+         elseif ($_GET['h'] === 'edit_pegawai') $page = 'halaman/pegawai/edit.php';
+         elseif ($_GET['h'] === 'hapus_pegawai') $page = 'halaman/pegawai/hapus.php';
 
         // Jenis Aset
         if (in_array($_GET['h'], ['jenis_aset', 'tambah_jenis_aset', 'edit_jenis_aset', 'hapus_jenis_aset'])) $active = 'jenis_aset';
