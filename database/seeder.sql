@@ -1,3 +1,10 @@
+INSERT INTO pengguna (
+    username,
+    password,
+    status
+) VALUES 
+('admin', 'admin', 'admin');
+
 INSERT INTO jenis_aset(
     nama, 
     keterangan
