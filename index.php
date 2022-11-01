@@ -1,3 +1,12 @@
+<?php session_start(); ?>
+<?php
+
+if (!isset($_SESSION['user'])) {
+    echo "<script>location.href = 'halaman/login/index.php';</script>";
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,94 +52,100 @@
     </style>
 </head>
 
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show bg-gray-200">
     <?php
-    if (isset($_GET['h'])) {
-        // Dashboard
-        if ($_GET['h'] === 'dashboard') {
+    if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') {
+        if (isset($_GET['h'])) {
+            // Dashboard
+            if ($_GET['h'] === 'dashboard') {
+                $active = 'dashboard';
+                $page = 'halaman/dashboard/index.php';
+            }
+
+            // Pengguna
+            if (in_array($_GET['h'], ['pengguna', 'tambah_pengguna', 'edit_pengguna', 'hapus_pengguna'])) $active = 'pengguna';
+
+            if ($_GET['h'] === 'pengguna') $page = 'halaman/pengguna/index.php';
+            elseif ($_GET['h'] === 'tambah_pengguna') $page = 'halaman/pengguna/tambah.php';
+            elseif ($_GET['h'] === 'edit_pengguna') $page = 'halaman/pengguna/edit.php';
+            elseif ($_GET['h'] === 'hapus_pengguna') $page = 'halaman/pengguna/hapus.php';
+
+            // Pegawai
+            if (in_array($_GET['h'], ['pegawai', 'tambah_pegawai', 'edit_pegawai', 'hapus_pegawai'])) $active = 'pegawai';
+
+            if ($_GET['h'] === 'pegawai') $page = 'halaman/pegawai/index.php';
+            elseif ($_GET['h'] === 'tambah_pegawai') $page = 'halaman/pegawai/tambah.php';
+            elseif ($_GET['h'] === 'edit_pegawai') $page = 'halaman/pegawai/edit.php';
+            elseif ($_GET['h'] === 'hapus_pegawai') $page = 'halaman/pegawai/hapus.php';
+
+            // Jenis Aset
+            if (in_array($_GET['h'], ['jenis_aset', 'tambah_jenis_aset', 'edit_jenis_aset', 'hapus_jenis_aset'])) $active = 'jenis_aset';
+
+            if ($_GET['h'] === 'jenis_aset') $page = 'halaman/jenis_aset/index.php';
+            elseif ($_GET['h'] === 'tambah_jenis_aset') $page = 'halaman/jenis_aset/tambah.php';
+            elseif ($_GET['h'] === 'edit_jenis_aset') $page = 'halaman/jenis_aset/edit.php';
+            elseif ($_GET['h'] === 'hapus_jenis_aset') $page = 'halaman/jenis_aset/hapus.php';
+
+            // Sifat Aset
+            if (in_array($_GET['h'], ['sifat_aset', 'tambah_sifat_aset', 'edit_sifat_aset', 'hapus_sifat_aset'])) $active = 'sifat_aset';
+
+            if ($_GET['h'] === 'sifat_aset') $page = 'halaman/sifat_aset/index.php';
+            elseif ($_GET['h'] === 'tambah_sifat_aset') $page = 'halaman/sifat_aset/tambah.php';
+            elseif ($_GET['h'] === 'edit_sifat_aset') $page = 'halaman/sifat_aset/edit.php';
+            elseif ($_GET['h'] === 'hapus_sifat_aset') $page = 'halaman/sifat_aset/hapus.php';
+
+            // Aset
+            if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'hapus_aset', 'detail_aset', 'aset_per_jenis_aset'])) $active = 'aset';
+
+            if ($_GET['h'] === 'aset') $page = 'halaman/aset/index.php';
+            elseif ($_GET['h'] === 'tambah_aset') $page = 'halaman/aset/tambah.php';
+            elseif ($_GET['h'] === 'edit_aset') $page = 'halaman/aset/edit.php';
+            elseif ($_GET['h'] === 'hapus_aset') $page = 'halaman/aset/hapus.php';
+            elseif ($_GET['h'] === 'detail_aset') $page = 'halaman/aset/detail_aset.php';
+            elseif ($_GET['h'] === 'aset_per_jenis_aset') $page = 'halaman/aset/index_per_jenis_aset.php';
+
+            // Aset Rusak
+            if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak', 'detail_aset_rusak', 'aset_rusak_per_jenis_aset'])) $active = 'aset_rusak';
+
+            if ($_GET['h'] === 'aset_rusak') $page = 'halaman/aset_rusak/index.php';
+            elseif ($_GET['h'] === 'tambah_aset_rusak') $page = 'halaman/aset_rusak/tambah.php';
+            elseif ($_GET['h'] === 'hapus_aset_rusak') $page = 'halaman/aset_rusak/hapus.php';
+            elseif ($_GET['h'] === 'detail_aset_rusak') $page = 'halaman/aset_rusak/detail_aset.php';
+            elseif ($_GET['h'] === 'aset_rusak_per_jenis_aset') $page = 'halaman/aset_rusak/index_per_jenis_aset.php';
+
+            // Aset Hilang
+            if (in_array($_GET['h'], ['aset_hilang', 'tambah_aset_hilang', 'hapus_aset_hilang', 'detail_aset_hilang', 'aset_hilang_per_jenis_aset'])) $active = 'aset_hilang';
+
+            if ($_GET['h'] === 'aset_hilang') $page = 'halaman/aset_hilang/index.php';
+            elseif ($_GET['h'] === 'tambah_aset_hilang') $page = 'halaman/aset_hilang/tambah.php';
+            elseif ($_GET['h'] === 'hapus_aset_hilang') $page = 'halaman/aset_hilang/hapus.php';
+            elseif ($_GET['h'] === 'detail_aset_hilang') $page = 'halaman/aset_hilang/detail_aset.php';
+            elseif ($_GET['h'] === 'aset_hilang_per_jenis_aset') $page = 'halaman/aset_hilang/index_per_jenis_aset.php';
+
+            // Pemeliharaan Aset
+            if (in_array($_GET['h'], ['pemeliharaan_aset', 'tambah_pemeliharaan_aset', 'aset_sedang_pemeliharaan', 'aset_selesai_pemeliharaan', 'detail_pemeliharaan_aset', 'pemeliharaan_aset_selesai'])) $active = 'pemeliharaan_aset';
+
+            if ($_GET['h'] === 'pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/index.php';
+            elseif ($_GET['h'] === 'tambah_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/tambah.php';
+            elseif ($_GET['h'] === 'edit_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/edit.php';
+            elseif ($_GET['h'] === 'detail_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/detail_aset.php';
+            elseif ($_GET['h'] === 'aset_sedang_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_sedang_pemeliharaan.php';
+            elseif ($_GET['h'] === 'aset_selesai_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_selesai_pemeliharaan.php';
+            elseif ($_GET['h'] === 'pemeliharaan_aset_selesai') $page = 'halaman/pemeliharaan_aset/pemeliharaan_selesai.php';
+        } else {
             $active = 'dashboard';
             $page = 'halaman/dashboard/index.php';
         }
-
-        // Pengguna
-        if (in_array($_GET['h'], ['pengguna', 'tambah_pengguna', 'edit_pengguna', 'hapus_pengguna'])) $active = 'pengguna';
-
-        if ($_GET['h'] === 'pengguna') $page = 'halaman/pengguna/index.php';
-        elseif ($_GET['h'] === 'tambah_pengguna') $page = 'halaman/pengguna/tambah.php';
-        elseif ($_GET['h'] === 'edit_pengguna') $page = 'halaman/pengguna/edit.php';
-        elseif ($_GET['h'] === 'hapus_pengguna') $page = 'halaman/pengguna/hapus.php';
-
-         // Pegawai
-         if (in_array($_GET['h'], ['pegawai', 'tambah_pegawai', 'edit_pegawai', 'hapus_pegawai'])) $active = 'pegawai';
-
-         if ($_GET['h'] === 'pegawai') $page = 'halaman/pegawai/index.php';
-         elseif ($_GET['h'] === 'tambah_pegawai') $page = 'halaman/pegawai/tambah.php';
-         elseif ($_GET['h'] === 'edit_pegawai') $page = 'halaman/pegawai/edit.php';
-         elseif ($_GET['h'] === 'hapus_pegawai') $page = 'halaman/pegawai/hapus.php';
-
-        // Jenis Aset
-        if (in_array($_GET['h'], ['jenis_aset', 'tambah_jenis_aset', 'edit_jenis_aset', 'hapus_jenis_aset'])) $active = 'jenis_aset';
-
-        if ($_GET['h'] === 'jenis_aset') $page = 'halaman/jenis_aset/index.php';
-        elseif ($_GET['h'] === 'tambah_jenis_aset') $page = 'halaman/jenis_aset/tambah.php';
-        elseif ($_GET['h'] === 'edit_jenis_aset') $page = 'halaman/jenis_aset/edit.php';
-        elseif ($_GET['h'] === 'hapus_jenis_aset') $page = 'halaman/jenis_aset/hapus.php';
-
-        // Sifat Aset
-        if (in_array($_GET['h'], ['sifat_aset', 'tambah_sifat_aset', 'edit_sifat_aset', 'hapus_sifat_aset'])) $active = 'sifat_aset';
-
-        if ($_GET['h'] === 'sifat_aset') $page = 'halaman/sifat_aset/index.php';
-        elseif ($_GET['h'] === 'tambah_sifat_aset') $page = 'halaman/sifat_aset/tambah.php';
-        elseif ($_GET['h'] === 'edit_sifat_aset') $page = 'halaman/sifat_aset/edit.php';
-        elseif ($_GET['h'] === 'hapus_sifat_aset') $page = 'halaman/sifat_aset/hapus.php';
-
-        // Aset
-        if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'hapus_aset', 'detail_aset', 'aset_per_jenis_aset'])) $active = 'aset';
-
-        if ($_GET['h'] === 'aset') $page = 'halaman/aset/index.php';
-        elseif ($_GET['h'] === 'tambah_aset') $page = 'halaman/aset/tambah.php';
-        elseif ($_GET['h'] === 'edit_aset') $page = 'halaman/aset/edit.php';
-        elseif ($_GET['h'] === 'hapus_aset') $page = 'halaman/aset/hapus.php';
-        elseif ($_GET['h'] === 'detail_aset') $page = 'halaman/aset/detail_aset.php';
-        elseif ($_GET['h'] === 'aset_per_jenis_aset') $page = 'halaman/aset/index_per_jenis_aset.php';
-
-        // Aset Rusak
-        if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak', 'detail_aset_rusak', 'aset_rusak_per_jenis_aset'])) $active = 'aset_rusak';
-
-        if ($_GET['h'] === 'aset_rusak') $page = 'halaman/aset_rusak/index.php';
-        elseif ($_GET['h'] === 'tambah_aset_rusak') $page = 'halaman/aset_rusak/tambah.php';
-        elseif ($_GET['h'] === 'hapus_aset_rusak') $page = 'halaman/aset_rusak/hapus.php';
-        elseif ($_GET['h'] === 'detail_aset_rusak') $page = 'halaman/aset_rusak/detail_aset.php';
-        elseif ($_GET['h'] === 'aset_rusak_per_jenis_aset') $page = 'halaman/aset_rusak/index_per_jenis_aset.php';
-
-        // Aset Hilang
-        if (in_array($_GET['h'], ['aset_hilang', 'tambah_aset_hilang', 'hapus_aset_hilang', 'detail_aset_hilang', 'aset_hilang_per_jenis_aset'])) $active = 'aset_hilang';
-
-        if ($_GET['h'] === 'aset_hilang') $page = 'halaman/aset_hilang/index.php';
-        elseif ($_GET['h'] === 'tambah_aset_hilang') $page = 'halaman/aset_hilang/tambah.php';
-        elseif ($_GET['h'] === 'hapus_aset_hilang') $page = 'halaman/aset_hilang/hapus.php';
-        elseif ($_GET['h'] === 'detail_aset_hilang') $page = 'halaman/aset_hilang/detail_aset.php';
-        elseif ($_GET['h'] === 'aset_hilang_per_jenis_aset') $page = 'halaman/aset_hilang/index_per_jenis_aset.php';
-
-        // Pemeliharaan Aset
-        if (in_array($_GET['h'], ['pemeliharaan_aset', 'tambah_pemeliharaan_aset', 'aset_sedang_pemeliharaan', 'aset_selesai_pemeliharaan', 'detail_pemeliharaan_aset', 'pemeliharaan_aset_selesai'])) $active = 'pemeliharaan_aset';
-
-        if ($_GET['h'] === 'pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/index.php';
-        elseif ($_GET['h'] === 'tambah_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/tambah.php';
-        elseif ($_GET['h'] === 'edit_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/edit.php';
-        elseif ($_GET['h'] === 'detail_pemeliharaan_aset') $page = 'halaman/pemeliharaan_aset/detail_aset.php';
-        elseif ($_GET['h'] === 'aset_sedang_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_sedang_pemeliharaan.php';
-        elseif ($_GET['h'] === 'aset_selesai_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_selesai_pemeliharaan.php';
-        elseif ($_GET['h'] === 'pemeliharaan_aset_selesai') $page = 'halaman/pemeliharaan_aset/pemeliharaan_selesai.php';
     } else {
-        $active = 'dashboard';
-        $page = 'halaman/dashboard/index.php';
+        $page = 'halaman/peminjaman_aset/index.php';
     }
+
+    if ($_GET['h'] === 'logout') $page = 'halaman/logout/index.php';
     ?>
-    <?php include_once('komponen/sidebar.php'); ?>
+    <?php
+    if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') include_once('komponen/sidebar.php'); ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <?php # include_once('komponen/navbar.php'); 
-        ?>
+        <?php if ($_SESSION['user']['status'] === 'pegawai') include_once('komponen/navbar.php'); ?>
         <div class="container-fluid py-4">
             <?php
             include_once('database/koneksi.php');

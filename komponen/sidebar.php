@@ -17,41 +17,43 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Master</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?= $active === 'jenis_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=jenis_aset">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">person</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Jenis Aset</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?= $active === 'sifat_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=sifat_aset">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">login</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Sifat Aset</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?= $active === 'pegawai' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pegawai">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">person</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Pegawai</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?= $active === 'pengguna' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengguna">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">login</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Pengguna</span>
-                </a>
-            </li>
+            <?php if ($_SESSION['user']['status'] === 'admin') : ?>
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Master</h6>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $active === 'jenis_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=jenis_aset">
+                        <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">person</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Jenis Aset</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $active === 'sifat_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=sifat_aset">
+                        <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">login</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Sifat Aset</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $active === 'pegawai' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pegawai">
+                        <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">person</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Pegawai</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $active === 'pengguna' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengguna">
+                        <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">login</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Pengguna</span>
+                    </a>
+                </li>
+            <?php endif; ?>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Aset</h6>
             </li>
@@ -134,7 +136,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="#">
+                <a class="nav-link text-dark" href="?h=logout">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">login</i>
                     </div>

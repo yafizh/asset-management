@@ -3,7 +3,8 @@ INSERT INTO pengguna (
     password,
     status
 ) VALUES 
-('admin', 'admin', 'admin');
+('admin', 'admin', 'admin'),
+('petugas', 'petugas', 'petugas');
 
 INSERT INTO jenis_aset(
     nama, 
