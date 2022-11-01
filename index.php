@@ -2,7 +2,7 @@
 <?php
 
 if (!isset($_SESSION['user'])) {
-    echo "<script>location.href = 'halaman/login/index.php';</script>";
+    echo "<script>location.href = 'halaman/login';</script>";
     exit;
 }
 
