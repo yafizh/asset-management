@@ -174,7 +174,7 @@ $data = $result->fetch_assoc();
     const qrCode = new QRCodeStyling({
         width: 1000,
         height: 1000,
-        data: "https://www.facebook.asdjs;ladfalfhaskfjhkasdfjhskfhklcom/",
+        data: JSON.stringify(<?= json_encode($data); ?>),
         image: "assets/img/favicon.png",
         backgroundOptions: {
             color: "#ffffff",
@@ -183,7 +183,7 @@ $data = $result->fetch_assoc();
             crossOrigin: "anonymous",
             margin: 30
         },
-        margin: 8
+        margin: 0
     });
 
     qrCode.append(document.getElementById("qrcode"));
