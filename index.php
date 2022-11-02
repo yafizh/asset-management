@@ -49,6 +49,43 @@ if (!isset($_SESSION['user'])) {
         .pagination>li>span:focus {
             color: #66BB6A;
         }
+
+        table {
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+        }
+
+        table tr th,
+        table tr td {
+            border-right: 1px solid #dee2e6 !important;
+            border-bottom: 1px solid #dee2e6 !important;
+        }
+
+        table tr th:first-child,
+        table tr td:first-child {
+            border-left: 1px solid #dee2e6 !important;
+        }
+
+        table tr th {
+            border-top: 1px solid #dee2e6 !important;
+        }
+
+
+        table tr:first-child th:first-child {
+            border-top-left-radius: 0.5rem !important;
+        }
+
+        table tr:first-child th:last-child {
+            border-top-right-radius: 0.5rem !important;
+        }
+
+        table tr:last-child td:first-child {
+            border-bottom-left-radius: 0.5rem !important;
+        }
+
+        table tr:last-child td:last-child {
+            border-bottom-right-radius: 0.5rem !important;
+        }
     </style>
 </head>
 
@@ -142,6 +179,10 @@ if (!isset($_SESSION['user'])) {
     // Route for Pegawai
     if ($_SESSION['user']['status'] === 'pegawai') {
         if (isset($_GET['h'])) {
+            if ($_GET['h'] === 'pengajuan_peminjaman')
+                $page = "halaman/peminjaman_aset/tambah.php";
+            else
+                $page = 'halaman/peminjaman_aset/index.php';
         } else
             $page = 'halaman/peminjaman_aset/index.php';
     }
