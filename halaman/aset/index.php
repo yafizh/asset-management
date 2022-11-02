@@ -22,7 +22,6 @@
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sedang Dipinjam</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tersedia</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Total</th>
-                                    <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
                             <?php

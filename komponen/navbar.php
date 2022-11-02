@@ -50,7 +50,7 @@
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="javascript:;">
+                            <a class="dropdown-item border-radius-md" href="halaman/logout/index.php">
                                 <i class="fa fa-user me-1"></i> Keluar
                             </a>
                         </li>

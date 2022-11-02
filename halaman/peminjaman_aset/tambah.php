@@ -35,6 +35,16 @@ $data = $result->fetch_assoc();
                             <h6 class="text-white text-capitalize m-0">Scan QR Code Aset</h6>
                         </div>
                     </div>
+                    <style>
+                        #reader__dashboard {
+                            display: none;
+                        }
+
+                        video {
+                            width: 100% !important;
+                            height: 100% !important;
+                        }
+                    </style>
                     <div class="card-body">
                         <div style="aspect-ratio: 1 / 1;">
                             <div id="reader" style="height: 100%;"></div>
@@ -43,29 +53,37 @@ $data = $result->fetch_assoc();
                 </div>
             </div>
             <script>
-                function onScanSuccess(decodedText, decodedResult) {
-                    // handle the scanned code as you like, for example:
-                    console.log(`Code matched = ${decodedText}`, decodedResult);
-                }
+                Html5Qrcode.getCameras().then(devices => {
+                    if (devices && devices.length) {
+                        var cameraId = devices[0].id;
+                        html5QrCode.start(
+                                cameraId, {
+                                    fps: 10,
+                                    qrbox: 250
+                                },
+                                (decodedText, decodedResult) => {
+                                    // do something when code is read
+                                    console.log(decodedText)
+                                    console.log(decodedResult)
 
-                function onScanFailure(error) {
-                    // handle scan failure, usually better to ignore and keep scanning.
-                    // for example:
-                    console.warn(`Code scan error = ${error}`);
-                }
-
-                let html5QrcodeScanner = new Html5QrcodeScanner(
-                    "reader", {
-                        fps: 10,
-                        qrbox: {
-                            width: 250,
-                            height: 250
-                        }
-                    },
-                    /* verbose= */
-                    false);
-                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-                console.log(html5QrcodeScanner);
+                                    html5QrCode.stop().then((ignore) => {
+                                        // QR Code scanning is stopped.
+                                        console.log(ignore)
+                                    }).catch((err) => {
+                                        // Stop failed, handle it.
+                                    });
+                                },
+                                (errorMessage) => {
+                                    // parse error, ignore it.
+                                })
+                            .catch((err) => {
+                                // Start failed, handle it.
+                            });
+                    }
+                }).catch(err => {
+                    console.log(err);
+                });
+                const html5QrCode = new Html5Qrcode("reader", false);
             </script>
             <div class="col-12 mb-5">
                 <div class="card my-4">
