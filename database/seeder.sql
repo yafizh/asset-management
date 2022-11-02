@@ -14,6 +14,7 @@ INSERT INTO jenis_aset(
 ('Kamera', 'Kamera jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
 ('Kursi', 'Kursi jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
 ('Meja', 'Meja jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
+('Motor', 'Motor jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
 ('Mobil', 'Mobil jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.');
 
 INSERT INTO sifat_aset(
@@ -22,6 +23,25 @@ INSERT INTO sifat_aset(
 ) VALUES 
 ('Pemberian', 'Barang pemberian dari pihak manapun.'),
 ('Milik Kantor', 'Barang hasil beli dengan uang kas kantor');
+
+INSERT INTO aset(
+    id_jenis_aset,
+    id_sifat_aset,
+    nama,
+    tanggal_masuk,
+    detail,
+    foto,
+    keterangan 
+) VALUES 
+(1, 2, 'Kamera 1', CURRENT_DATE(), '{"Merk": "Sony", "Warna": "Hitam", "Lensa": "Canon 50mm"}', 'uploads/gambar_aset/kamera1.jpg', ''),
+(1, 2, 'Kamera 2', CURRENT_DATE(), '{"Merk": "Fujifilm", "Warna": "Hitam Silver", "Lensa": "Fujinon 35mm"}', 'uploads/gambar_aset/kamera2.jpg', ''),
+(1, 2, 'Kamera 3', CURRENT_DATE(), '{"Warna": "Hitam Silver", "Lensa": "Fujinon 23mm"}', 'uploads/gambar_aset/kamera3.jpg', ''),
+(4, 2, 'Motor 1', CURRENT_DATE(), '{"Merk": "BMW", "Warna": "Putih Cokelat", "Plat": "CR 7", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor1.jpg', ''),
+(4, 2, 'Motor 2', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Hitam", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor2.jpg', ''),
+(4, 2, 'Motor 3', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Merah", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor3.jpg', ''),
+(5, 2, 'Mobil 1', CURRENT_DATE(), '{"Warna": "Kuning", "Roda": "4 Roda", "Kondisi": "Lama"}', 'uploads/gambar_aset/mobil1.jpg', ''),
+(5, 2, 'Mobil 2', CURRENT_DATE(), '{"Warna": "Biru", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil2.jpg', ''),
+(5, 2, 'Mobil 3', CURRENT_DATE(), '{"Merk": "Ford", "Warna": "Putih", "Plat": "8CPP419", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil3.jpg', '');
 
 INSERT INTO pegawai(
     id_pengguna,
