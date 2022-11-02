@@ -1,3 +1,7 @@
 material-dashboard-master
 material-dashboard-master.zip
-uploads
+
+uploads/gambar_aset/*
+!uploads/gambar_aset/kamera*
+!uploads/gambar_aset/mobil*
+!uploads/gambar_aset/motor*
