@@ -23,7 +23,7 @@
                                 SELECT 
                                     ja.id, 
                                     ja.nama, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset WHERE ja.id=a.id) AS rusak 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset WHERE ja.id=a.id_jenis_aset) AS rusak 
                                 FROM 
                                     jenis_aset AS ja
                             ";
