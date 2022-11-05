@@ -4,11 +4,11 @@ $q = "
         ja.nama AS jenis_aset,
         sa.nama AS sifat_aset,
         a.*,
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset) AS rusak, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset) AS hilang, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL) AS sedang_pemeliharaan, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5) AS sedang_dipinjam, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS sedang_dipesan  
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset WHERE a.id=" . $_GET['id'] . ") AS rusak, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset WHERE a.id=" . $_GET['id'] . ") AS hilang, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL AND a.id=" . $_GET['id'] . ") AS sedang_pemeliharaan, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5 AND a.id=" . $_GET['id'] . ") AS sedang_dipinjam, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1 AND a.id=" . $_GET['id'] . ") AS sedang_dipesan  
     FROM 
         aset AS a 
     INNER JOIN 
@@ -119,7 +119,7 @@ $data = $result->fetch_assoc();
                             </div>
                             <div class="d-flex justify-content-between flex-wrap">
                                 <div class="d-flex align-items-center flex-grow-1">
-                                    <a href="?h=aset_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
+                                    <a href="?h=aset_tersedia_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center flex-wrap gap-1 flex-grow-1">
                                     <?php if ($data['rusak']) : ?>

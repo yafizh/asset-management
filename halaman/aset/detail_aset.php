@@ -4,11 +4,11 @@ $q = "
         ja.nama AS jenis_aset,
         sa.nama AS sifat_aset,
         a.*,
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset) AS rusak, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset) AS hilang, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL) AS sedang_pemeliharaan, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5) AS sedang_dipinjam, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS sedang_dipesan  
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset WHERE a.id=" . $_GET['id'] . ") AS rusak, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset WHERE a.id=" . $_GET['id'] . ") AS hilang, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL AND a.id=" . $_GET['id'] . ") AS sedang_pemeliharaan, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5 AND a.id=" . $_GET['id'] . ") AS sedang_dipinjam, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1 AND a.id=" . $_GET['id'] . ") AS sedang_dipesan  
     FROM 
         aset AS a 
     INNER JOIN 
@@ -16,7 +16,7 @@ $q = "
     ON 
         ja.id=a.id_jenis_aset 
     INNER JOIN 
-        sifat_aset AS sa 
+            sifat_aset AS sa 
     ON 
         sa.id=a.id_sifat_aset 
     WHERE 
