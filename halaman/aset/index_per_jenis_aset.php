@@ -48,7 +48,7 @@
                                         FALSE
                                     ) AS sedang_dipesan,
                                     IFNULL(
-                                        (SELECT pa.id FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) AND pa.status BETWEEN 2 AND 5), 
+                                        (SELECT pa.id FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) AND pa.status BETWEEN 3 AND 5), 
                                         FALSE 
                                     ) AS sedang_dipinjam 
                                 FROM 

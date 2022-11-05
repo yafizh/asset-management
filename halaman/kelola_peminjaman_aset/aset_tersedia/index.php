@@ -35,7 +35,7 @@
                                         WHERE 
                                             a.id_jenis_aset=ja.id 
                                             AND 
-                                            (pa.status NOT BETWEEN 1 AND 5 OR pa.status IS NULL) 
+                                            (pa.status = 2 OR pa.status = 6 OR pa.status IS NULL) 
                                             AND 
                                             a.id NOT IN (
                                                 SELECT 
