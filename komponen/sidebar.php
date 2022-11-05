@@ -93,7 +93,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Peminjaman Aset</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                <a class="nav-link <?= $active === 'aset_tersedia' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_tersedia">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">notifications</i>
                     </div>
@@ -101,7 +101,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                <a class="nav-link <?= $active === 'aset_dipinjam' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_dipinjam">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">notifications</i>
                     </div>
@@ -109,7 +109,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                <a class="nav-link <?= $active === 'pengajuan_peminjaman_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengajuan_peminjaman_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">notifications</i>
                     </div>
@@ -117,7 +117,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === '' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=">
+                <a class="nav-link <?= $active === 'pengajuan_pengembalian_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengajuan_pengembalian_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">notifications</i>
                     </div>

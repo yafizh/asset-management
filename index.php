@@ -50,40 +50,40 @@ if (!isset($_SESSION['user'])) {
             color: #66BB6A;
         }
 
-        table {
+        .modal table {
             border-collapse: separate !important;
             border-spacing: 0 !important;
         }
 
-        table tr th,
-        table tr td {
+        .modal table tr th,
+        .modal table tr td {
             border-right: 1px solid #dee2e6 !important;
             border-bottom: 1px solid #dee2e6 !important;
         }
 
-        table tr th:first-child,
-        table tr td:first-child {
+        .modal table tr th:first-child,
+        .modal table tr td:first-child {
             border-left: 1px solid #dee2e6 !important;
         }
 
-        table tr th {
+        .modal table tr th {
             border-top: 1px solid #dee2e6 !important;
         }
 
 
-        table tr:first-child th:first-child {
+        .modal table tr:first-child th:first-child {
             border-top-left-radius: 0.5rem !important;
         }
 
-        table tr:first-child th:last-child {
+        .modal table tr:first-child th:last-child {
             border-top-right-radius: 0.5rem !important;
         }
 
-        table tr:last-child td:first-child {
+        .modal table tr:last-child td:first-child {
             border-bottom-left-radius: 0.5rem !important;
         }
 
-        table tr:last-child td:last-child {
+        .modal table tr:last-child td:last-child {
             border-bottom-right-radius: 0.5rem !important;
         }
     </style>
@@ -170,6 +170,27 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'aset_sedang_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_sedang_pemeliharaan.php';
             elseif ($_GET['h'] === 'aset_selesai_pemeliharaan') $page = 'halaman/pemeliharaan_aset/index_aset_selesai_pemeliharaan.php';
             elseif ($_GET['h'] === 'pemeliharaan_aset_selesai') $page = 'halaman/pemeliharaan_aset/pemeliharaan_selesai.php';
+
+            // Kelola Peminjaman Aset
+            if (in_array($_GET['h'], ['aset_tersedia', 'aset_tersedia_per_jenis_aset', 'detail_aset_tersedia'])) $active = 'aset_tersedia';
+            if ($_GET['h'] === 'aset_tersedia') $page = 'halaman/kelola_peminjaman_aset/aset_tersedia/index.php';
+            elseif ($_GET['h'] === 'detail_aset_tersedia') $page = 'halaman/kelola_peminjaman_aset/aset_tersedia/detail.php';
+            elseif ($_GET['h'] === 'aset_tersedia_per_jenis_aset') $page = 'halaman/kelola_peminjaman_aset/aset_tersedia/index_per_jenis_aset.php';
+
+            if (in_array($_GET['h'], ['aset_dipinjam', 'aset_dipinjam_per_jenis_aset', 'detail_aset_dipinjam'])) $active = 'aset_dipinjam';
+            if ($_GET['h'] === 'aset_dipinjam') $page = 'halaman/kelola_peminjaman_aset/aset_dipinjam/index.php';
+            elseif ($_GET['h'] === 'detail_aset_dipinjam') $page = 'halaman/kelola_peminjaman_aset/aset_dipinjam/detail.php';
+            elseif ($_GET['h'] === 'aset_dipinjam_per_jenis_aset') $page = 'halaman/kelola_peminjaman_aset/aset_dipinjam/index_per_jenis_aset.php';
+
+            if (in_array($_GET['h'], ['pengajuan_peminjaman_aset', 'pengajuan_peminjaman_aset_per_jenis_aset', 'detail_pengajuan_peminjaman_aset'])) $active = 'pengajuan_peminjaman_aset';
+            if ($_GET['h'] === 'pengajuan_peminjaman_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_peminjaman_aset/index.php';
+            elseif ($_GET['h'] === 'detail_pengajuan_peminjaman_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_peminjaman_aset/detail.php';
+            elseif ($_GET['h'] === 'pengajuan_peminjaman_aset_per_jenis_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_peminjaman_aset/index_per_jenis_aset.php';
+
+            if (in_array($_GET['h'], ['pengajuan_pengembalian_aset', 'pengajuan_pengembalian_aset_per_jenis_aset', 'detail_pengajuan_pengembalian_aset'])) $active = 'pengajuan_pengembalian_aset';
+            if ($_GET['h'] === 'pengajuan_pengembalian_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/index.php';
+            elseif ($_GET['h'] === 'detail_pengajuan_pengembalian_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/detail.php';
+            elseif ($_GET['h'] === 'pengajuan_pengembalian_aset_per_jenis_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/index_per_jenis_aset.php';
         } else {
             $active = 'dashboard';
             $page = 'halaman/dashboard/index.php';
@@ -181,6 +202,10 @@ if (!isset($_SESSION['user'])) {
         if (isset($_GET['h'])) {
             if ($_GET['h'] === 'pengajuan_peminjaman')
                 $page = "halaman/peminjaman_aset/tambah.php";
+            elseif ($_GET['h'] === 'riwayat_peminjaman_aset')
+                $page = "halaman/riwayat_peminjaman_aset/index.php";
+            elseif ($_GET['h'] === 'detail_riwayat_peminjaman_aset')
+                $page = "halaman/riwayat_peminjaman_aset/index.php";
             else
                 $page = 'halaman/peminjaman_aset/index.php';
         } else
