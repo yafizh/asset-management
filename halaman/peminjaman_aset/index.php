@@ -1,4 +1,11 @@
 <div class="container-fluid py-4">
+    <div class="row pe-4 w-100 position-fixed bottom-0" style="z-index: 999;">
+        <div class="col-12">
+            <div class="row">
+                <a href="?h=pengajuan_peminjaman" class="btn btn-lg btn-success">SCAN QR CODE ASET</a>
+            </div>
+        </div>
+    </div>
     <?php
     $q = "SELECT * FROM jenis_aset";
     $result_jenis_aset = $mysqli->query($q);
@@ -29,12 +36,14 @@
                     (SELECT plhra.id FROM pemeliharaan_aset AS plhra WHERE plhra.id_aset=a.id AND plhra.tanggal_selesai IS NULL),
                     FALSE 
                 ) AS sedang_pemeliharaan,
-                IFNULL(
-                    (SELECT pa.id FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) AND pa.status = 1), 
+                IF(
+                    (SELECT pa.status FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) ORDER BY pa.id DESC LIMIT 1) = 1, 
+                    TRUE,
                     FALSE
                 ) AS sedang_dipesan,
-                IFNULL(
-                    (SELECT pa.id FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) AND pa.status BETWEEN 2 AND 5), 
+                IF(
+                    (SELECT pa.status FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) ORDER BY pa.id DESC LIMIT 1) NOT IN (2,6),
+                    TRUE, 
                     FALSE 
                 ) AS sedang_dipinjam 
             FROM 
@@ -52,28 +61,28 @@
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                 <?php if ($aset['rusak']) : ?>
                                     <div class="bg-gradient-danger shadow-danger border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white text-capitalize m-0">Rusak</h6>
-                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal">Lihat</button>
+                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Rusak</h6>
+                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
                                 <?php elseif ($aset['hilang']) : ?>
                                     <div class="bg-gradient-danger shadow-danger border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white text-capitalize m-0">Hilang</h6>
-                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal">Lihat</button>
+                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Hilang</h6>
+                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
                                 <?php elseif ($aset['sedang_pemeliharaan']) : ?>
                                     <div class="bg-gradient-warning shadow-warning border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white text-capitalize m-0">Sedang Pemeliharan</h6>
-                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal">Lihat</button>
+                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Sedang Pemeliharan</h6>
+                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
                                 <?php elseif ($aset['sedang_dipesan']) : ?>
-                                    <div class="bg-gradient-success shadow-warning border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white text-capitalize m-0">Sedang Diajukan Pegawai Lain</h6>
-                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal">Lihat</button>
+                                    <div class="bg-gradient-warning shadow-warning border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Sedang Diajukan Pegawai Lain</h6>
+                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
                                 <?php elseif ($aset['sedang_dipinjam']) : ?>
                                     <div class="bg-gradient-info shadow-info border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white text-capitalize m-0">Sedang Dipinjam</h6>
-                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal">Lihat</button>
+                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Sedang Dipinjam</h6>
+                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
                                 <?php else : ?>
                                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">

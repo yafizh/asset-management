@@ -83,3 +83,66 @@ CREATE TABLE peminjaman_aset(
     keterangan_pengembalian TEXT,
     status TINYINT UNSIGNED NULL DEFAULT NULL COMMENT '1 = MENGAJUKAN PEMINJAMAN, 2 = PENGAJUAN DITOLAK, 3 = PENGAJUAN DITERIMA, 4 = MENGAJUKAN PENGEMBALIAN, 5 = PENGEMBALIAN DITOLAK, 6 = PENGAMBALIAN DITERIMA'
 );
+
+CREATE VIEW view_jumlah_aset_tersedia AS SELECT 
+    ja.id, 
+    ja.nama, 
+    (SELECT 
+        COUNT(a.id) 
+    FROM 
+        aset AS a 
+    WHERE 
+        a.id_jenis_aset=ja.id 
+        AND 
+        IF(
+            (
+                (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) = 2
+                OR 
+                (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) = 6
+                OR 
+                (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) IS NULL
+            ),
+            TRUE, 
+            FALSE
+        ) 
+        AND 
+        a.id NOT IN (
+            SELECT 
+                id_aset 
+            FROM 
+                aset_rusak 
+            UNION ALL 
+            SELECT 
+                id_aset 
+            FROM 
+                aset_hilang 
+            UNION ALL 
+            SELECT 
+                id_aset 
+            FROM 
+                pemeliharaan_aset 
+            WHERE 
+                tanggal_selesai IS NULL
+            )
+    ) AS tersedia 
+FROM 
+    jenis_aset AS ja
+
+CREATE VIEW view_jumlah_aset_dipinjam AS SELECT 
+    ja.id, 
+    ja.nama, 
+    (SELECT 
+        COUNT(a.id) 
+    FROM 
+        aset AS a 
+    WHERE 
+        a.id_jenis_aset=ja.id 
+        AND 
+        IF(
+            (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) IN (3,4,5),
+            TRUE, 
+            FALSE
+        ) 
+    ) AS dipinjam 
+FROM 
+    jenis_aset AS ja

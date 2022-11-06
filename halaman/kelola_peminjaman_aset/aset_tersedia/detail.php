@@ -7,7 +7,7 @@ $q = "
         (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset WHERE a.id=" . $_GET['id'] . ") AS rusak, 
         (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset WHERE a.id=" . $_GET['id'] . ") AS hilang, 
         (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL AND a.id=" . $_GET['id'] . ") AS sedang_pemeliharaan, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 2 AND 5 AND a.id=" . $_GET['id'] . ") AS sedang_dipinjam, 
+        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 3 AND 5 AND a.id=" . $_GET['id'] . ") AS sedang_dipinjam, 
         (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1 AND a.id=" . $_GET['id'] . ") AS sedang_dipesan  
     FROM 
         aset AS a 

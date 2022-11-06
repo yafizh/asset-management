@@ -43,12 +43,14 @@
                                         (SELECT plhra.id FROM pemeliharaan_aset AS plhra WHERE plhra.id_aset=a.id AND plhra.tanggal_selesai IS NULL),
                                         FALSE 
                                     ) AS sedang_pemeliharaan,
-                                    IFNULL(
-                                        (SELECT pa.id FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) AND pa.status = 1), 
+                                    IF(
+                                        (SELECT pa.status FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) ORDER BY pa.id DESC LIMIT 1) = 1, 
+                                        TRUE,
                                         FALSE
                                     ) AS sedang_dipesan,
-                                    IFNULL(
-                                        (SELECT pa.id FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) AND pa.status BETWEEN 3 AND 5), 
+                                    IF(
+                                        (SELECT pa.status FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) ORDER BY pa.id DESC LIMIT 1) NOT IN (2,6),
+                                        TRUE, 
                                         FALSE 
                                     ) AS sedang_dipinjam 
                                 FROM 

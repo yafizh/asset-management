@@ -24,7 +24,7 @@
         box-shadow: inset 0 1px #58B05C;
     }
 </style>
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl bg-light" id="navbarBlur" data-scroll="true">
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl bg-light mt-4" id="navbarBlur" data-scroll="true">
     <div class="container-fluid py-1 px-3">
         <div class="collapse navbar-collapse mt-sm-0 me-md-0 me-sm-4" id="navbar">
             <div class="w-100 pe-md-5 d-flex align-items-center">
@@ -35,12 +35,17 @@
             </div>
             <ul class="ms-3 navbar-nav justify-content-end" style="flex: 1;">
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-success p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-user"></i>
+                    <a href="javascript:;" class="nav-link text-success p-0 text-center" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user"></i> Menu
                     </a>
                     <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                         <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="javascript:;">
+                            <a class="dropdown-item border-radius-md" href="?">
+                                <i class="fa fa-user me-1"></i> Beranda
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a class="dropdown-item border-radius-md" href="?h=riwayat_peminjaman_aset">
                                 <i class="fa fa-user me-1"></i> Riwayat Peminjaman
                             </a>
                         </li>

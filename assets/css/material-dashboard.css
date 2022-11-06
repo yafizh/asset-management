@@ -21455,7 +21455,7 @@ fieldset:disabled .btn {
 
 .dark-version .dropdown .dropdown-menu .dropdown-item:hover,
 .dark-version .dropdown .dropdown-menu .dropdown-item:focus {
-  background-color: #1a2035 !important;
+  background-color: red !important;
 }
 
 .dark-version .dropdown .dropdown-menu .dropdown-item i,

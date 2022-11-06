@@ -86,6 +86,11 @@ if (!isset($_SESSION['user'])) {
         .modal table tr:last-child td:last-child {
             border-bottom-right-radius: 0.5rem !important;
         }
+
+        .dropdown-item:focus {
+            color: white !important;
+            background-color: #58B05C !important;
+        }
     </style>
 </head>
 
@@ -202,10 +207,12 @@ if (!isset($_SESSION['user'])) {
         if (isset($_GET['h'])) {
             if ($_GET['h'] === 'pengajuan_peminjaman')
                 $page = "halaman/peminjaman_aset/tambah.php";
+            else if ($_GET['h'] === 'pengajuan_pengembalian')
+                $page = "halaman/peminjaman_aset/pengajuan_pengembalian.php";
             elseif ($_GET['h'] === 'riwayat_peminjaman_aset')
                 $page = "halaman/riwayat_peminjaman_aset/index.php";
             elseif ($_GET['h'] === 'detail_riwayat_peminjaman_aset')
-                $page = "halaman/riwayat_peminjaman_aset/index.php";
+                $page = "halaman/riwayat_peminjaman_aset/detail.php";
             else
                 $page = 'halaman/peminjaman_aset/index.php';
         } else
