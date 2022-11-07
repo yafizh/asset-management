@@ -91,11 +91,6 @@ if (!isset($_SESSION['user'])) {
             display: none;
         }
 
-        .dropdown-item:focus {
-            color: white !important;
-            background-color: #58B05C !important;
-        }
-
         .btn-secondary,
         .btn-secondary:hover,
         .btn-secondary:focus {
