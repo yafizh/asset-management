@@ -63,7 +63,7 @@
                             </a>
                         </li>
                         <li class="mb-2">
-                            <a class="dropdown-item border-radius-md focus-color" href="javascript:;">
+                            <a class="dropdown-item border-radius-md focus-color" href="?h=ganti_password">
                                 <i class="fas fa-lock me-1"></i> Ganti Password
                             </a>
                         </li>

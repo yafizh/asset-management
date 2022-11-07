@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 
     if ($upload_foto && $upload_sk_tmt && $upload_ijazah) {
         $q = "
-        INSERT INTO pengguna (
+        UPDATE INTO pengguna (
             username, 
             password, 
             status  

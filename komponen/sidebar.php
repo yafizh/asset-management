@@ -128,7 +128,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Pengaturan</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="#">
+                <a class="nav-link <?= $active === 'ganti_password' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=ganti_password">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">lock</i>
                     </div>

@@ -104,6 +104,12 @@ if (!isset($_SESSION['user'])) {
     // Route for Admin and Petugas
     if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') {
         if (isset($_GET['h'])) {
+            // Ganti Password
+            if ($_GET['h'] === 'ganti_password') {
+                $active = 'ganti_password';
+                $page = 'halaman/ganti_password/index.php';
+            }
+
             // Dashboard
             if ($_GET['h'] === 'dashboard') {
                 $active = 'dashboard';
@@ -210,7 +216,10 @@ if (!isset($_SESSION['user'])) {
     // Route for Pegawai
     if ($_SESSION['user']['status'] === 'pegawai') {
         if (isset($_GET['h'])) {
-            if ($_GET['h'] === 'pengajuan_peminjaman') {
+            if ($_GET['h'] === 'ganti_password') {
+                $active = 'Ganti Password';
+                $page = 'halaman/ganti_password/index.php';
+            }else if ($_GET['h'] === 'pengajuan_peminjaman') {
                 $active = "Form Pengajuan Peminjaman Aset";
                 $page = "halaman/peminjaman_aset/tambah.php";
             } else if ($_GET['h'] === 'pengajuan_pengembalian') {
