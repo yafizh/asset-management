@@ -28,10 +28,14 @@
     <div class="container-fluid py-1 px-3">
         <div class="collapse navbar-collapse mt-sm-0 me-md-0 me-sm-4" id="navbar">
             <div class="w-100 pe-md-5 d-flex align-items-center">
-                <div class="input-group input-group-outline">
-                    <label class="form-label text-success">Pencarian...</label>
-                    <input type="text" class="form-control">
-                </div>
+                <?php if (is_null($active)) : ?>
+                    <div class="input-group input-group-outline">
+                        <label class="form-label text-success">Pencarian...</label>
+                        <input type="text" class="form-control">
+                    </div>
+                <?php else : ?>
+                    <h5 class="m-0"><?= $active; ?></h5>
+                <?php endif; ?>
             </div>
             <ul class="ms-3 navbar-nav justify-content-end" style="flex: 1;">
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
