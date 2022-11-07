@@ -1,11 +1,4 @@
 <div class="container-fluid py-4">
-    <!-- <div class="row pe-4 w-100 position-fixed bottom-0" style="z-index: 999;">
-        <div class="col-12">
-            <div class="row">
-                <a href="?h=pengajuan_peminjaman" class="btn btn-lg btn-success">SCAN QR CODE ASET</a>
-            </div>
-        </div>
-    </div> -->
     <div class="row mb-3">
         <div class="col-12 text-center">
             <h2>Scan QR CODE Untuk Menemukan Aset</h2>

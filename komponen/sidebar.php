@@ -24,7 +24,7 @@
                 <li class="nav-item">
                     <a class="nav-link <?= $active === 'jenis_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=jenis_aset">
                         <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">person</i>
+                            <i class="material-icons opacity-10">lan</i>
                         </div>
                         <span class="nav-link-text ms-1">Jenis Aset</span>
                     </a>
@@ -32,7 +32,7 @@
                 <li class="nav-item">
                     <a class="nav-link <?= $active === 'sifat_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=sifat_aset">
                         <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">login</i>
+                            <i class="material-icons opacity-10">real_estate_agent</i>
                         </div>
                         <span class="nav-link-text ms-1">Sifat Aset</span>
                     </a>
@@ -40,7 +40,7 @@
                 <li class="nav-item">
                     <a class="nav-link <?= $active === 'pegawai' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pegawai">
                         <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">person</i>
+                            <i class="material-icons opacity-10">group</i>
                         </div>
                         <span class="nav-link-text ms-1">Pegawai</span>
                     </a>
@@ -48,7 +48,7 @@
                 <li class="nav-item">
                     <a class="nav-link <?= $active === 'pengguna' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengguna">
                         <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">login</i>
+                            <i class="material-icons opacity-10">person</i>
                         </div>
                         <span class="nav-link-text ms-1">Pengguna</span>
                     </a>
@@ -60,7 +60,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">table_view</i>
+                        <i class="material-icons opacity-10">select_all</i>
                     </div>
                     <span class="nav-link-text ms-1">Aset</span>
                 </a>
@@ -68,7 +68,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'aset_rusak' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_rusak">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">receipt_long</i>
+                        <i class="material-icons opacity-10">dangerous</i>
                     </div>
                     <span class="nav-link-text ms-1">Aset Rusak</span>
                 </a>
@@ -84,7 +84,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'pemeliharaan_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pemeliharaan_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+                        <i class="material-icons opacity-10">date_range</i>
                     </div>
                     <span class="nav-link-text ms-1">Pemeliharaan Aset</span>
                 </a>
@@ -95,7 +95,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'aset_tersedia' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_tersedia">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
+                        <i class="material-icons opacity-10">event_available</i>
                     </div>
                     <span class="nav-link-text ms-1">Tersedia</span>
                 </a>
@@ -103,7 +103,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'aset_dipinjam' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_dipinjam">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
+                        <i class="material-icons opacity-10">event</i>
                     </div>
                     <span class="nav-link-text ms-1">Dipinjam</span>
                 </a>
@@ -111,7 +111,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'pengajuan_peminjaman_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengajuan_peminjaman_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
+                        <i class="material-icons opacity-10">today</i>
                     </div>
                     <span class="nav-link-text ms-1">Pengajuan Peminjaman</span>
                 </a>
@@ -119,7 +119,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'pengajuan_pengembalian_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengajuan_pengembalian_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
+                        <i class="material-icons opacity-10">today</i>
                     </div>
                     <span class="nav-link-text ms-1">Pengajuan Pengembalian</span>
                 </a>
@@ -130,12 +130,12 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" href="#">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">login</i>
+                        <i class="material-icons opacity-10">lock</i>
                     </div>
                     <span class="nav-link-text ms-1">Ganti Password</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mb-5">
                 <a class="nav-link text-dark" href="halaman/logout/index.php">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">login</i>

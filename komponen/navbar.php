@@ -40,27 +40,27 @@
             <ul class="ms-3 navbar-nav justify-content-end" style="flex: 1;">
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-success p-0 text-center" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-user"></i> Menu
+                        <i class="fas fa-bars"></i> Menu
                     </a>
                     <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
                         <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="?">
-                                <i class="fa fa-user me-1"></i> Beranda
+                                <i class="fas fa-home me-1"></i> Beranda
                             </a>
                         </li>
                         <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="?h=riwayat_peminjaman_aset">
-                                <i class="fa fa-user me-1"></i> Riwayat Peminjaman
+                                <i class="fas fa-history me-1"></i> Riwayat Peminjaman
                             </a>
                         </li>
                         <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="javascript:;">
-                                <i class="fa fa-user me-1"></i> Ganti Password
+                                <i class="fas fa-lock me-1"></i> Ganti Password
                             </a>
                         </li>
                         <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="halaman/logout/index.php">
-                                <i class="fa fa-user me-1"></i> Keluar
+                                <i class="fas fa-sign-out-alt me-1"></i> Keluar
                             </a>
                         </li>
                     </ul>
