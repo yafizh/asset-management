@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
             if (!move_uploaded_file($foto["tmp_name"], $foto_upload))
                 echo "<script>alert('Gagal meng-upload gambar!')</script>";
         }
-    } else $foto = $data['foto'];
+    } else $foto_upload = $data['foto'];
 
     $upload_sk_tmt = true;
     if ($sk_tmt['error'] != 4) {
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
             if (!move_uploaded_file($sk_tmt["tmp_name"], $sk_tmt_upload))
                 echo "<script>alert('Gagal meng-upload SK TMT!')</script>";
         }
-    } else $sk_tmt = $data['sk_tmt'];
+    } else $sk_tmt_upload = $data['sk_tmt'];
 
     $upload_ijazah = true;
     if ($ijazah_pendidikan_terakhir['error'] != 4) {
@@ -78,58 +78,39 @@ if (isset($_POST['submit'])) {
             if (!move_uploaded_file($ijazah_pendidikan_terakhir["tmp_name"], $ijazah_pendidikan_terakhir_upload))
                 echo "<script>alert('Gagal meng-upload ijazah!')</script>";
         }
-    } else $ijazah_pendidikan_terakhir = $data['ijazah_pendidikan_terakhir'];
+    } else $ijazah_pendidikan_terakhir_upload = $data['ijazah_pendidikan_terakhir'];
 
-    if ($upload_foto && $upload_sk_tmt && $upload_ijazah) {
+    $q = "
+        UPDATE pengguna SET 
+            username='$nip' 
+        WHERE 
+            id=" . $data['id_pengguna'];
+
+    if ($mysqli->query($q)) {
         $q = "
-        UPDATE INTO pengguna (
-            username, 
-            password, 
-            status  
-        ) VALUES (
-            '$nip',
-            '$nip',
-            'pegawai' 
-        )";
+            UPDATE pegawai SET 
+                nip='$nip', 
+                nama='$nama', 
+                tanggal_lahir='$tanggal_lahir', 
+                tempat_lahir='$tempat_lahir', 
+                jabatan='$jabatan', 
+                tmt='$tmt', 
+                sk_tmt='$sk_tmt_upload', 
+                pendidikan_terakhir='$pendidikan_terakhir', 
+                foto='$foto_upload', 
+                ijazah_pendidikan_terakhir='$ijazah_pendidikan_terakhir_upload' 
+            WHERE 
+                id=" . $_GET['id'];
 
         if ($mysqli->query($q)) {
-            $q = "
-            INSERT INTO pegawai (
-                id_pengguna, 
-                nip, 
-                nama, 
-                tanggal_lahir, 
-                tempat_lahir, 
-                jabatan, 
-                tmt, 
-                sk_tmt, 
-                pendidikan_terakhir, 
-                foto, 
-                ijazah_pendidikan_terakhir 
-            ) VALUES (
-                '$mysqli->insert_id', 
-                '$nip', 
-                '$nama', 
-                '$tanggal_lahir', 
-                '$tempat_lahir', 
-                '$jabatan',
-                '$tmt',
-                '$sk_tmt_upload',
-                '$pendidikan_terakhir',
-                '$foto_upload',
-                '$ijazah_pendidikan_terakhir_upload'
-            )";
-
-            if ($mysqli->query($q)) {
-                echo "<script>alert('Tambah Data Berhasil!')</script>";
-                echo "<script>location.href = '?h=pegawai';</script>";
-                exit;
-            }
+            echo "<script>alert('Edit Data Berhasil!')</script>";
+            echo "<script>location.href = '?h=detail_pegawai&id=" . $_GET['id'] . "';</script>";
+            exit;
         }
-
-        echo "<script>alert('Tambah Data Gagal!')</script>";
-        die($mysqli->error);
     }
+
+    echo "<script>alert('Edit Data Gagal!')</script>";
+    die($mysqli->error);
 }
 
 
@@ -140,7 +121,7 @@ if (isset($_POST['submit'])) {
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Tambah Pegawai</h6>
+                        <h6 class="text-white text-capitalize m-0">Edit Pegawai</h6>
                     </div>
                 </div>
                 <div class="card-body">
@@ -193,15 +174,15 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto</label>
-                            <input class="form-control" type="file" name="foto" id="foto" required>
+                            <input class="form-control" type="file" name="foto" id="foto">
                         </div>
                         <div class="mb-3">
                             <label for="ijazah_pendidikan_terakhir" class="form-label">Ijazah Terakhir</label>
-                            <input class="form-control" type="file" name="ijazah_pendidikan_terakhir" id="ijazah_pendidikan_terakhir" required>
+                            <input class="form-control" type="file" name="ijazah_pendidikan_terakhir" id="ijazah_pendidikan_terakhir">
                         </div>
                         <div class="mb-3">
                             <label for="sk_tmt" class="form-label">SK TMT</label>
-                            <input class="form-control" type="file" name="sk_tmt" id="sk_tmt" required>
+                            <input class="form-control" type="file" name="sk_tmt" id="sk_tmt">
                         </div>
                         <div class="d-flex justify-content-between">
                             <a href="?h=pegawai" class="btn btn-secondary">Kembali</a>

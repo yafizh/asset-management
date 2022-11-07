@@ -32,3 +32,11 @@ function tanggalIndonesiaString($date)
     $tahun = explode('-', $date)[0];
     return HARI_DALAM_INDONESIA[Date("w", strtotime($date))] . ', ' . $tanggal . ' ' . BULAN_DALAM_INDONESIA[$bulan - 1] . ' ' . $tahun;
 }
+
+function tanggalIndonesia($date)
+{
+    $tanggal = explode('-', $date)[2];
+    $bulan = explode('-', $date)[1];
+    $tahun = explode('-', $date)[0];
+    return $tanggal . ' ' . BULAN_DALAM_INDONESIA[$bulan - 1] . ' ' . $tahun;
+}

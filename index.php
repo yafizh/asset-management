@@ -125,12 +125,13 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'hapus_pengguna') $page = 'halaman/pengguna/hapus.php';
 
             // Pegawai
-            if (in_array($_GET['h'], ['pegawai', 'tambah_pegawai', 'edit_pegawai', 'hapus_pegawai'])) $active = 'pegawai';
+            if (in_array($_GET['h'], ['pegawai', 'tambah_pegawai', 'edit_pegawai', 'hapus_pegawai', 'detail_pegawai'])) $active = 'pegawai';
 
             if ($_GET['h'] === 'pegawai') $page = 'halaman/pegawai/index.php';
             elseif ($_GET['h'] === 'tambah_pegawai') $page = 'halaman/pegawai/tambah.php';
             elseif ($_GET['h'] === 'edit_pegawai') $page = 'halaman/pegawai/edit.php';
             elseif ($_GET['h'] === 'hapus_pegawai') $page = 'halaman/pegawai/hapus.php';
+            elseif ($_GET['h'] === 'detail_pegawai') $page = 'halaman/pegawai/detail.php';
 
             // Jenis Aset
             if (in_array($_GET['h'], ['jenis_aset', 'tambah_jenis_aset', 'edit_jenis_aset', 'hapus_jenis_aset'])) $active = 'jenis_aset';
