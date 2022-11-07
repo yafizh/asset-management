@@ -18,7 +18,6 @@
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Rusak</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Hilang</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sedang Pemeliharaan</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Dipesan</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sedang Dipinjam</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tersedia</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Total</th>
@@ -33,7 +32,6 @@
                                     (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id AND a.id IN (SELECT id_aset FROM aset_hilang)) AS hilang, 
                                     (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id AND a.id IN (SELECT id_aset FROM pemeliharaan_aset AS plhra WHERE plhra.tanggal_selesai IS NULL)) AS sedang_pemeliharaan, 
                                     (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id_jenis_aset=ja.id AND pa.status BETWEEN 3 AND 5 AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS sedang_dipinjam, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id_jenis_aset=ja.id AND pa.status = 1 AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS dipesan,
                                     (SELECT COUNT(a.id) FROM aset AS a LEFT JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id_jenis_aset=ja.id AND ((SELECT (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) IN (2,6)) OR pa.status IS NULL) AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS tersedia,
                                     (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id) AS total 
                                 FROM 
@@ -52,7 +50,7 @@
                                             <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="?h=aset_rusak" class="btn btn-sm m-0 btn-danger text-white">
+                                            <a href="?h=aset_rusak_per_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
                                                     <?= $row['rusak']; ?>
                                                 </span>
@@ -60,7 +58,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="?h=aset_hilang" class="btn btn-sm m-0 btn-danger text-white">
+                                            <a href="?h=aset_hilang_per_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
                                                     <?= $row['hilang']; ?>
                                                 </span>
@@ -68,7 +66,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="?h=pemeliharaan_aset" class="btn btn-sm m-0 btn-warning text-white">
+                                            <a href="?h=aset_sedang_pemeliharaan&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-warning text-white">
                                                 <span class="badge badge-sm bg-gradient-warning p-2">
                                                     <?= $row['sedang_pemeliharaan']; ?>
                                                 </span>
@@ -76,15 +74,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-warning text-white">
-                                                <span class="badge badge-sm bg-gradient-warning p-2">
-                                                    <?= $row['dipesan']; ?>
-                                                </span>
-                                                Lihat
-                                            </a>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-info text-white">
+                                            <a href="?h=aset_dipinjam_per_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-info text-white">
                                                 <span class="badge badge-sm bg-gradient-info p-2">
                                                     <?= $row['sedang_dipinjam']; ?>
                                                 </span>
@@ -92,7 +82,7 @@
                                             </a>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="?h=aset_per_jenis_aset&id=<?= $row['id'] ?>" class="btn btn-sm m-0 btn-success text-white">
+                                            <a href="?h=aset_tersedia_per_jenis_aset&id=<?= $row['id'] ?>" class="btn btn-sm m-0 btn-success text-white">
                                                 <span class="badge badge-sm bg-gradient-success p-2">
                                                     <?= $row['tersedia']; ?>
                                                 </span>
