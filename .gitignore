@@ -1,6 +1,10 @@
 material-dashboard-master
 material-dashboard-master.zip
 
+uploads/gambar_pegawai/*
+uploads/ijazah_pegawai/*
+uploads/sk_tmt_pegawai/*
+
 uploads/gambar_aset/*
 !uploads/gambar_aset/kamera*
 !uploads/gambar_aset/mobil*
