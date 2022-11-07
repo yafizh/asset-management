@@ -87,9 +87,19 @@ if (!isset($_SESSION['user'])) {
             border-bottom-right-radius: 0.5rem !important;
         }
 
+        .modal::-webkit-scrollbar {
+            display: none;
+        }
+
         .dropdown-item:focus {
             color: white !important;
             background-color: #58B05C !important;
+        }
+
+        .btn-secondary,
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            box-shadow: none;
         }
     </style>
 </head>
@@ -205,18 +215,26 @@ if (!isset($_SESSION['user'])) {
     // Route for Pegawai
     if ($_SESSION['user']['status'] === 'pegawai') {
         if (isset($_GET['h'])) {
-            if ($_GET['h'] === 'pengajuan_peminjaman')
+            if ($_GET['h'] === 'pengajuan_peminjaman') {
+                $active = "Form Pengajuan Peminjaman Aset";
                 $page = "halaman/peminjaman_aset/tambah.php";
-            else if ($_GET['h'] === 'pengajuan_pengembalian')
+            } else if ($_GET['h'] === 'pengajuan_pengembalian') {
+                $active = "Form Pengajuan Pengembalian Aset";
                 $page = "halaman/peminjaman_aset/pengajuan_pengembalian.php";
-            elseif ($_GET['h'] === 'riwayat_peminjaman_aset')
+            } elseif ($_GET['h'] === 'riwayat_peminjaman_aset') {
+                $active = "Data Peminjaman Aset";
                 $page = "halaman/riwayat_peminjaman_aset/index.php";
-            elseif ($_GET['h'] === 'detail_riwayat_peminjaman_aset')
+            } elseif ($_GET['h'] === 'detail_riwayat_peminjaman_aset') {
+                $active = "Detail Peminjaman Aset";
                 $page = "halaman/riwayat_peminjaman_aset/detail.php";
-            else
+            } else {
+                $active = null;
                 $page = 'halaman/peminjaman_aset/index.php';
-        } else
+            }
+        } else {
+            $active = null;
             $page = 'halaman/peminjaman_aset/index.php';
+        }
     }
     ?>
     <?php

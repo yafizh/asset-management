@@ -126,7 +126,7 @@ CREATE VIEW view_jumlah_aset_tersedia AS SELECT
             )
     ) AS tersedia 
 FROM 
-    jenis_aset AS ja
+    jenis_aset AS ja;
 
 CREATE VIEW view_jumlah_aset_dipinjam AS SELECT 
     ja.id, 
@@ -145,4 +145,4 @@ CREATE VIEW view_jumlah_aset_dipinjam AS SELECT
         ) 
     ) AS dipinjam 
 FROM 
-    jenis_aset AS ja
+    jenis_aset AS ja;

@@ -56,6 +56,12 @@ if (isset($_POST['submit'])) {
 ?>
 <div class="container-fluid">
     <div id="scanner" style="width: 100%; height: 100%;" class="<?= isset($_GET['id']) ? 'd-none' : ''; ?>">
+        <div class="div mb-3">
+            <label for="">Kamera</label>
+            <select id="camera" class="form-control">
+                <option value="" disabled selected>Pilih Kamera Lainnya</option>
+            </select>
+        </div>
         <video style="width: 100%; height: 100%;"></video>
     </div>
     <div id="form-peminjaman" class="row justify-content-center <?= $_GET['id'] ?? 'd-none' ?>">
@@ -209,11 +215,21 @@ if (isset($_POST['submit'])) {
 
 
     const scanner = new QrScanner(document.querySelector('video'), result => setResult(result), {
-        onDecodeError: error => {
-            console.log(error)
-        },
         highlightScanRegion: true,
         highlightCodeOutline: true,
     });
     scanner.start();
+    const z = async () => {
+        const selectCamera = document.getElementById('camera');
+        for (const camera of await QrScanner.listCameras(true)) {
+            const option = document.createElement('option');
+            option.value = camera.id;
+            option.innerText = camera.label;
+            selectCamera.append(option);
+        }
+        selectCamera.addEventListener('change', function() {
+            scanner.setCamera(this.value);
+        });
+    }
+    z();
 </script>
