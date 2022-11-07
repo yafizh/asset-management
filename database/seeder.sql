@@ -33,15 +33,15 @@ INSERT INTO aset(
     foto,
     keterangan 
 ) VALUES 
-(1, 2, 'Kamera 1', CURRENT_DATE(), '{"Merk": "Sony", "Warna": "Hitam", "Lensa": "Canon 50mm"}', 'uploads/gambar_aset/kamera1.jpg', ''),
-(1, 2, 'Kamera 2', CURRENT_DATE(), '{"Merk": "Fujifilm", "Warna": "Hitam Silver", "Lensa": "Fujinon 35mm"}', 'uploads/gambar_aset/kamera2.jpg', ''),
-(1, 2, 'Kamera 3', CURRENT_DATE(), '{"Warna": "Hitam Silver", "Lensa": "Fujinon 23mm"}', 'uploads/gambar_aset/kamera3.jpg', ''),
-(4, 2, 'Motor 1', CURRENT_DATE(), '{"Merk": "BMW", "Warna": "Putih Cokelat", "Plat": "CR 7", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor1.jpg', ''),
-(4, 2, 'Motor 2', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Hitam", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor2.jpg', ''),
-(4, 2, 'Motor 3', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Merah", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor3.jpg', ''),
-(5, 2, 'Mobil 1', CURRENT_DATE(), '{"Warna": "Kuning", "Roda": "4 Roda", "Kondisi": "Lama"}', 'uploads/gambar_aset/mobil1.jpg', ''),
-(5, 2, 'Mobil 2', CURRENT_DATE(), '{"Warna": "Biru", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil2.jpg', ''),
-(5, 2, 'Mobil 3', CURRENT_DATE(), '{"Merk": "Ford", "Warna": "Putih", "Plat": "8CPP419", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil3.jpg', '');
+(1, 2, 'Kamera 1', CURRENT_DATE(), '{"Merk": "Sony", "Warna": "Hitam", "Lensa": "Canon 50mm"}', 'uploads/gambar_aset/kamera1.webp', ''),
+(1, 2, 'Kamera 2', CURRENT_DATE(), '{"Merk": "Fujifilm", "Warna": "Hitam Silver", "Lensa": "Fujinon 35mm"}', 'uploads/gambar_aset/kamera2.webp', ''),
+(1, 2, 'Kamera 3', CURRENT_DATE(), '{"Warna": "Hitam Silver", "Lensa": "Fujinon 23mm"}', 'uploads/gambar_aset/kamera3.webp', ''),
+(4, 2, 'Motor 1', CURRENT_DATE(), '{"Merk": "BMW", "Warna": "Putih Cokelat", "Plat": "CR 7", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor1.webp', ''),
+(4, 2, 'Motor 2', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Hitam", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor2.webp', ''),
+(4, 2, 'Motor 3', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Merah", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor3.webp', ''),
+(5, 2, 'Mobil 1', CURRENT_DATE(), '{"Warna": "Kuning", "Roda": "4 Roda", "Kondisi": "Lama"}', 'uploads/gambar_aset/mobil1.webp', ''),
+(5, 2, 'Mobil 2', CURRENT_DATE(), '{"Warna": "Biru", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil2.webp', ''),
+(5, 2, 'Mobil 3', CURRENT_DATE(), '{"Merk": "Ford", "Warna": "Putih", "Plat": "8CPP419", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil3.webp', '');
 
 INSERT INTO pegawai(
     id_pengguna,

@@ -7,10 +7,19 @@
         </div>
     </div>
     <?php
-    $q = "SELECT * FROM jenis_aset";
+    $q = "
+        SELECT 
+            jenis_aset.id,
+            jenis_aset.nama, 
+            (SELECT COUNT(id) FROM aset WHERE aset.id_jenis_aset=jenis_aset.id AND nama LIKE '%" . ($_POST['keyword'] ?? '') . "%') AS count
+        FROM 
+            jenis_aset";
     $result_jenis_aset = $mysqli->query($q);
     ?>
     <?php while ($jenis_aset = $result_jenis_aset->fetch_assoc()) : ?>
+        <?php if (!$jenis_aset['count']) : ?>
+            <?php continue; ?>
+        <?php endif; ?>
         <div class="row mb-3">
             <div class="col-12">
                 <h2><?= $jenis_aset['nama']; ?></h3>
@@ -51,6 +60,9 @@
             WHERE 
                 id_jenis_aset=" . $jenis_aset['id'] . "
         ";
+        if (isset($_POST['keyword']))
+            $q .= " AND a.nama LIKE '%" . $_POST['keyword'] . "%'";
+
         $result_aset = $mysqli->query($q);
         ?>
         <div class="row mb-5">
