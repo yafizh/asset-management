@@ -184,10 +184,7 @@ if (isset($_POST['submit'])) {
 
 
 
-    function setResult(result) {
-        var audio = new Audio('assets/audio/beep.wav');
-        audio.play();
-
+    const setResult = (result) => {
         const data = JSON.parse(result.data);
         const detail_data = JSON.parse(data.detail);
         id_aset.value = data.id;
@@ -219,7 +216,7 @@ if (isset($_POST['submit'])) {
         highlightCodeOutline: true,
     });
     scanner.start();
-    const z = async () => {
+    (async () => {
         const selectCamera = document.getElementById('camera');
         for (const camera of await QrScanner.listCameras(true)) {
             const option = document.createElement('option');
@@ -230,6 +227,5 @@ if (isset($_POST['submit'])) {
         selectCamera.addEventListener('change', function() {
             scanner.setCamera(this.value);
         });
-    }
-    z();
+    })();
 </script>
