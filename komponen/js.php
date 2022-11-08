@@ -25,6 +25,9 @@
 <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+<!-- Chart JS -->
+<script src="./assets/js/plugins/chartjs.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#datatable').DataTable({

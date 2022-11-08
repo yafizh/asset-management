@@ -104,6 +104,33 @@ if (!isset($_SESSION['user'])) {
     // Route for Admin and Petugas
     if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') {
         if (isset($_GET['h'])) {
+            // Laporan
+            if ($_GET['h'] === 'laporan_pegawai') {
+                $page = 'halaman/laporan/tampil/pegawai.php';
+                $active = "laporan_pegawai";
+            } elseif ($_GET['h'] === 'laporan_aset_rusak') {
+                $page = 'halaman/laporan/tampil/aset_rusak.php';
+                $active = "laporan_aset_rusak";
+            } elseif ($_GET['h'] === 'laporan_aset_hilang') {
+                $page = 'halaman/laporan/tampil/aset_hilang.php';
+                $active = "laporan_aset_hilang";
+            } elseif ($_GET['h'] === 'laporan_pemeliharaan_aset') {
+                $page = 'halaman/laporan/tampil/pemeliharaan_aset.php';
+                $active = "laporan_pemeliharaan_aset";
+            } elseif ($_GET['h'] === 'laporan_peminjaman_aset') {
+                $page = 'halaman/laporan/tampil/peminjaman_aset.php';
+                $active = "laporan_peminjaman_aset";
+            } elseif ($_GET['h'] === 'laporan_grafik_peminjaman_aset') {
+                $page = 'halaman/laporan/tampil/grafik_peminjaman_aset.php';
+                $active = "laporan_grafik_peminjaman_aset";
+            } elseif ($_GET['h'] === 'laporan_jumlah_aset') {
+                $page = 'halaman/laporan/tampil/jumlah_aset.php';
+                $active = "laporan_jumlah_aset";
+            } elseif ($_GET['h'] === 'laporan_aset') {
+                $page = 'halaman/laporan/tampil/aset.php';
+                $active = "laporan_aset";
+            }
+
             // Ganti Password
             if ($_GET['h'] === 'ganti_password') {
                 $active = 'ganti_password';
@@ -220,7 +247,7 @@ if (!isset($_SESSION['user'])) {
             if ($_GET['h'] === 'ganti_password') {
                 $active = 'Ganti Password';
                 $page = 'halaman/ganti_password/index.php';
-            }else if ($_GET['h'] === 'pengajuan_peminjaman') {
+            } else if ($_GET['h'] === 'pengajuan_peminjaman') {
                 $active = "Form Pengajuan Peminjaman Aset";
                 $page = "halaman/peminjaman_aset/tambah.php";
             } else if ($_GET['h'] === 'pengajuan_pengembalian') {
