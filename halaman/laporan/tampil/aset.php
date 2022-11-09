@@ -27,7 +27,11 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
                         <h6 class="text-white text-capitalize m-0">Laporan Aset</h6>
-                        <a target="_blank" href="?halaman/cetak/aset.php?dari_tanggal=<?= $_POST['dari_tanggal'] ?? ''; ?>&sampai_tanggal=<?= $_POST['sampai_tanggal'] ?? ''; ?>" class="btn btn-dark m-0">Cetak</a>
+                        <form action="halaman/laporan/cetak/index.php?h=aset" method="POST" target="_blank">
+                            <input type="text" hidden name="dari_tanggal" value="<?= $_POST['dari_tanggal'] ?? ''; ?>">
+                            <input type="text" hidden name="sampai_tanggal" value="<?= $_POST['sampai_tanggal'] ?? ''; ?>">
+                            <button type="submit" class="btn btn-dark m-0">Cetak</button>
+                        </form>
                     </div>
                 </div>
                 <div class="card-body pb-3">
