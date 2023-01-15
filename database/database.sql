@@ -33,7 +33,8 @@ CREATE TABLE pegawai(
     sk_tmt VARCHAR(255),
     pendidikan_terakhir VARCHAR(20),
     ijazah_pendidikan_terakhir VARCHAR(255),
-    foto VARCHAR(255)
+    foto VARCHAR(255),
+    FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE 
 );
 
 CREATE TABLE aset(
@@ -44,21 +45,25 @@ CREATE TABLE aset(
     tanggal_masuk DATE,
     detail JSON,
     foto VARCHAR(255),
-    keterangan TEXT
+    keterangan TEXT,
+    FOREIGN KEY (id_jenis_aset) REFERENCES jenis_aset (id) ON DELETE CASCADE, 
+    FOREIGN KEY (id_sifat_aset) REFERENCES sifat_aset (id) ON DELETE CASCADE 
 );
 
 CREATE TABLE aset_rusak(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     id_aset BIGINT UNSIGNED REFERENCES aset(id),
     tanggal DATE,
-    keterangan TEXT
+    keterangan TEXT,
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
 CREATE TABLE aset_hilang(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     id_aset BIGINT UNSIGNED REFERENCES aset(id),
     tanggal DATE,
-    keterangan TEXT
+    keterangan TEXT,
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
 CREATE TABLE pemeliharaan_aset(
@@ -66,7 +71,8 @@ CREATE TABLE pemeliharaan_aset(
     id_aset BIGINT UNSIGNED REFERENCES aset(id),
     tanggal_mulai DATE,
     tanggal_selesai DATE,
-    keterangan TEXT
+    keterangan TEXT,
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
 CREATE TABLE peminjaman_aset(
@@ -81,7 +87,9 @@ CREATE TABLE peminjaman_aset(
     timestamp_pengembalian TIMESTAMP NULL DEFAULT NULL,
     timestamp_pengembalian_ditentukan TIMESTAMP NULL DEFAULT NULL,
     keterangan_pengembalian TEXT,
-    status TINYINT UNSIGNED NULL DEFAULT NULL COMMENT '1 = MENGAJUKAN PEMINJAMAN, 2 = PENGAJUAN DITOLAK, 3 = PENGAJUAN DITERIMA, 4 = MENGAJUKAN PENGEMBALIAN, 5 = PENGEMBALIAN DITOLAK, 6 = PENGAMBALIAN DITERIMA'
+    status TINYINT UNSIGNED NULL DEFAULT NULL COMMENT '1 = MENGAJUKAN PEMINJAMAN, 2 = PENGAJUAN DITOLAK, 3 = PENGAJUAN DITERIMA, 4 = MENGAJUKAN PENGEMBALIAN, 5 = PENGEMBALIAN DITOLAK, 6 = PENGAMBALIAN DITERIMA',
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
 CREATE VIEW view_jumlah_aset_tersedia AS SELECT 
