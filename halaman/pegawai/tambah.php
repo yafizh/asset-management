@@ -189,15 +189,15 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto</label>
-                            <input class="form-control" type="file" name="foto" id="foto" required>
+                            <input class="form-control" type="file" name="foto" id="foto" required accept="image/*">
                         </div>
                         <div class="mb-3">
                             <label for="ijazah_pendidikan_terakhir" class="form-label">Ijazah Terakhir</label>
-                            <input class="form-control" type="file" name="ijazah_pendidikan_terakhir" id="ijazah_pendidikan_terakhir" required>
+                            <input class="form-control" type="file" name="ijazah_pendidikan_terakhir" accept=".pdf" id="ijazah_pendidikan_terakhir" required>
                         </div>
                         <div class="mb-3">
                             <label for="sk_tmt" class="form-label">SK TMT</label>
-                            <input class="form-control" type="file" name="sk_tmt" id="sk_tmt" required>
+                            <input class="form-control" type="file" name="sk_tmt" id="sk_tmt" required accept=".pdf">
                         </div>
                         <div class="d-flex justify-content-between">
                             <a href="?h=pegawai" class="btn btn-secondary">Kembali</a>

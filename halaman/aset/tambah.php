@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto</label>
-                            <input class="form-control" type="file" name="foto" id="foto" required>
+                            <input class="form-control" type="file" name="foto" id="foto" required accept="image/*">
                         </div>
                         <div class="mb-3">
                             <label for="keterangan" class="form-label">Keterangan</label>
