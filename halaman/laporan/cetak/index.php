@@ -31,11 +31,14 @@
     include_once('../../../database/koneksi.php');
     include_once('../../../helper/date.php');
 
-    if ($_GET['h'] === 'aset') {
+    if ($_GET['h'] === 'aset')
         include_once('halaman/aset.php');
-    } elseif ($_GET['h'] === 'aset_rusak') {
+    elseif ($_GET['h'] === 'aset_rusak')
         include_once('halaman/aset_rusak.php');
-    }
+    elseif ($_GET['h'] === 'aset_hilang')
+        include_once('halaman/aset_hilang.php');
+    elseif ($_GET['h'] === 'pemeliharaan_aset')
+        include_once('halaman/pemeliharaan_aset.php');
     ?>
     <footer class="d-flex justify-content-end px-5">
         <div class="text-center">

@@ -1,9 +1,9 @@
-<h4 class="text-center my-3">Laporan Aset Rusak</h4>
+<h4 class="text-center my-3">Laporan Aset Hilang</h4>
 <?php if (!empty($_POST['dari_tanggal'] ?? '') && !empty($_POST['sampai_tanggal'] ?? '')) : ?>
     <section class="mb-3 px-3">
         <strong>
             <span style="width: 150px; display: inline-block;">Filter Tanggal</span>
-            <span>: Tanggal Rusak</span>
+            <span>: Tanggal Hilang</span>
         </strong>
         <br>
         <span style="width: 150px; display: inline-block;">Dari Tanggal</span>
@@ -20,7 +20,7 @@
                 <th class="text-center small-td">No</th>
                 <th class="text-center">Jenis Aset</th>
                 <th class="text-center">Nama Aset</th>
-                <th class="text-center">Tanggal Rusak</th>
+                <th class="text-center">Tanggal Hilang</th>
             </tr>
         </thead>
         <?php
@@ -28,13 +28,13 @@
             SELECT
                 ja.nama AS jenis_aset, 
                 a.nama, 
-                ar.tanggal  
+                ah.tanggal  
             FROM 
-                aset_rusak AS ar  
+                aset_hilang AS ah  
             INNER JOIN 
                 aset AS a
             ON 
-                a.id=ar.id_aset 
+                a.id=ah.id_aset 
             INNER JOIN 
                 jenis_aset AS ja  
             ON 
@@ -42,9 +42,9 @@
             ";
 
         if (!empty($_POST['dari_tanggal'] ?? '') && !empty($_POST['sampai_tanggal'] ?? ''))
-            $q .= " WHERE ar.tanggal >= '" . $_POST['dari_tanggal'] . "' AND ar.tanggal <= '" . $_POST['sampai_tanggal'] . "'";
+            $q .= " WHERE ah.tanggal >= '" . $_POST['dari_tanggal'] . "' AND ah.tanggal <= '" . $_POST['sampai_tanggal'] . "'";
 
-        $q .= " ORDER BY ar.id DESC";
+        $q .= " ORDER BY ah.id DESC";
         $result = $mysqli->query($q);
         $no = 1;
         ?>

@@ -1,6 +1,5 @@
 <?php session_start(); ?>
 <?php
-
 if (!isset($_SESSION['user'])) {
     echo "<script>location.href = 'halaman/login';</script>";
     exit;
