@@ -36,7 +36,7 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
                         <h6 class="text-white text-capitalize m-0">Laporan Pemeliharaan Aset</h6>
-                        <a target="_blank" href="?halaman/cetak/aset_rusak.php?dari_tanggal_mulai=<?= $_POST['dari_tanggal_mulai'] ?? ''; ?>&sampai_tanggal_mulai=<?= $_POST['sampai_tanggal_mulai'] ?? ''; ?>&dari_tanggal_selesai=<?= $_POST['dari_tanggal_selesai'] ?? ''; ?>&sampai_tanggal_selesai=<?= $_POST['sampai_tanggal_selesai'] ?? ''; ?>" class="btn btn-dark m-0">
+                        <a target="_blank" href="halaman/cetak/aset_rusak.php?dari_tanggal_mulai=<?= $_POST['dari_tanggal_mulai'] ?? ''; ?>&sampai_tanggal_mulai=<?= $_POST['sampai_tanggal_mulai'] ?? ''; ?>&dari_tanggal_selesai=<?= $_POST['dari_tanggal_selesai'] ?? ''; ?>&sampai_tanggal_selesai=<?= $_POST['sampai_tanggal_selesai'] ?? ''; ?>" class="btn btn-dark m-0">
                             Cetak
                         </a>
                     </div>
@@ -119,7 +119,10 @@
                                                 <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                             </td>
                                             <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= $row['tanggal']; ?></p>
+                                                <p class="text-secondary mb-0"><?= $row['tanggal_mulai']; ?></p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="text-secondary mb-0"><?= $row['tanggal_selesai']; ?></p>
                                             </td>
                                         </tr>
                                     <?php endwhile; ?>
