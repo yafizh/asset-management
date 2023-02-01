@@ -89,7 +89,7 @@
                     <span class="nav-link-text ms-1">Pemeliharaan Aset</span>
                 </a>
             </li>
-            <!-- <li class="nav-item mt-3">
+            <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Peminjaman Aset</h6>
             </li>
             <li class="nav-item">
@@ -123,7 +123,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Pengajuan Pengembalian</span>
                 </a>
-            </li> -->
+            </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Laporan</h6>
             </li>

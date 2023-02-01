@@ -1,28 +1,25 @@
 <?php
 $q = "
     SELECT 
-        ja.nama AS jenis_aset,
-        sa.nama AS sifat_aset,
+        ja.nama jenis_aset,
+        ka.nama kategori_aset,
         a.*,
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset WHERE a.id=" . $_GET['id'] . ") AS rusak, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset WHERE a.id=" . $_GET['id'] . ") AS hilang, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL AND a.id=" . $_GET['id'] . ") AS sedang_pemeliharaan, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 3 AND 5 AND a.id=" . $_GET['id'] . ") AS sedang_dipinjam, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1 AND a.id=" . $_GET['id'] . ") AS sedang_dipesan  
+        a.status 
     FROM 
-        aset AS a 
+        aset a 
     INNER JOIN 
-        jenis_aset AS ja 
+        jenis_aset ja 
     ON 
         ja.id=a.id_jenis_aset 
     INNER JOIN 
-        sifat_aset AS sa 
+        kategori_aset ka 
     ON 
-        sa.id=a.id_sifat_aset 
+        ka.id=a.id_kategori_aset 
     WHERE 
         a.id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
+$data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_GET['id'])->fetch_all(MYSQLI_ASSOC);
 ?>
 <div class="container-fluid py-4">
     <div class="row">
@@ -85,12 +82,8 @@ $data = $result->fetch_assoc();
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-3">
-                                <label class="form-label">Jenis Aset</label>
-                                <input type="text" class="form-control p-2" disabled value="<?= $data['jenis_aset'] ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Sifat Aset</label>
-                                <input type="text" class="form-control p-2" disabled value="<?= $data['sifat_aset'] ?>">
+                                <label class="form-label">Kategori Aset</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset'] ?>">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Nama</label>
@@ -101,52 +94,17 @@ $data = $result->fetch_assoc();
                                 <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesiaString($data['tanggal_masuk']); ?>">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Keterangan</label>
-                                <textarea class="form-control p-2" rows="5" disabled><?= $data['keterangan'] ?></textarea>
-                            </div>
-                            <div class="mb-3">
                                 <label class="form-label">Detail</label>
-                                <div class="row" id="detail">
-                                    <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
-                                        <div class="col-6 mb-3">
-                                            <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+                                <?php foreach ($data['detail'] as $key => $value) : ?>
+                                    <div class="row ps-1 mb-2">
+                                        <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
+                                        <div class="col-8">: <?= $value['nilai']; ?></div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                             <div class="d-flex justify-content-between flex-wrap">
                                 <div class="d-flex align-items-center flex-grow-1">
-                                    <a href="?h=aset_tersedia_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
-                                </div>
-                                <div class="d-flex justify-content-end align-items-center flex-wrap gap-1 flex-grow-1">
-                                    <?php if ($data['rusak']) : ?>
-                                        <div class="alert alert-danger text-white" role="alert">
-                                            Aset Sedang Dalam Keadaan <strong>Rusak</strong>
-                                        </div>
-                                    <?php elseif ($data['hilang']) : ?>
-                                        <div class="alert alert-danger text-white" role="alert">
-                                            Aset Sedang Dalam Keadaan <strong>Hilang</strong>
-                                        </div>
-                                    <?php elseif ($data['sedang_pemeliharaan']) : ?>
-                                        <div class="alert alert-warning text-white" role="alert">
-                                            Aset Sedang Dalam Keadaan <strong>Masa Pemeliharaan</strong>
-                                        </div>
-                                    <?php elseif ($data['sedang_dipesan']) : ?>
-                                        <div class="alert alert-info text-white" role="alert">
-                                            Aset Sedang Dalam Keadaan <strong>Dipesan</strong>. Tolak terlebih dahulu pemesanan untuk melakukan aksi lainnya.
-                                        </div>
-                                    <?php elseif ($data['sedang_dipinjam']) : ?>
-                                        <div class="alert alert-info text-white" role="alert">
-                                            Aset Sedang Dalam Keadaan <strong>Dipinjam</strong>. Tunggu pengembalian terlebih dahulu untuk melakukan aksi lainnya.
-                                        </div>
-                                    <?php else : ?>
-                                        <a href="?h=tambah_aset_rusak&id=<?= $data['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Laporkan Rusak</a>
-                                        <a href="?h=tambah_aset_hilang&id=<?= $data['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Laporkan Hilang</a>
-                                        <a href="?h=tambah_pemeliharaan_aset&id=<?= $data['id']; ?>" class="btn btn-warning text-white">Lakukan Pemeliharaan</a>
-                                    <?php endif; ?>
+                                    <a href="?h=aset_tersedia_per_kategori_aset&id=<?= $data['id_kategori_aset']; ?>" class="btn btn-secondary">Kembali</a>
                                 </div>
                             </div>
                         </div>

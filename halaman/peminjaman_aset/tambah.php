@@ -2,28 +2,24 @@
 if (isset($_GET['id'])) {
     $q = "
     SELECT 
-        ja.nama AS jenis_aset,
-        sa.nama AS sifat_aset,
-        a.*,
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_rusak AS ar ON a.id=ar.id_aset) AS rusak, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ah ON a.id=ah.id_aset) AS hilang, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN pemeliharaan_aset AS plhra ON a.id=plhra.id_aset WHERE plhra.tanggal_selesai IS NULL) AS sedang_pemeliharaan, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status BETWEEN 3 AND 5) AS sedang_dipinjam, 
-        (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE pa.status = 1) AS sedang_dipesan  
+        ja.nama jenis_aset,
+        ka.nama kategori_aset,
+        a.* 
     FROM 
-        aset AS a 
+        aset a 
     INNER JOIN 
-        jenis_aset AS ja 
+        jenis_aset ja 
     ON 
         ja.id=a.id_jenis_aset 
     INNER JOIN 
-        sifat_aset AS sa 
+        kategori_aset ka
     ON 
-        sa.id=a.id_sifat_aset 
+        ka.id=a.id_kategori_aset 
     WHERE 
         a.id=" . $_GET['id'];
     $result = $mysqli->query($q);
     $data = $result->fetch_assoc();
+    $data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_GET['id'])->fetch_all(MYSQLI_ASSOC);
 }
 
 if (isset($_POST['submit'])) {
@@ -92,8 +88,8 @@ if (isset($_POST['submit'])) {
                         <div class="col-12">
                             <form action="" method="POST">
                                 <div class="mb-3">
-                                    <label class="form-label">Jenis Aset</label>
-                                    <input type="text" class="form-control p-2" disabled id="jenis_aset" value="<?= $data['jenis_aset'] ?? ''; ?>">
+                                    <label class="form-label">Kategori Aset</label>
+                                    <input type="text" class="form-control p-2" disabled id="jenis_aset" value="<?= $data['kategori_aset'] ?? ''; ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nama</label>
@@ -101,18 +97,12 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Detail</label>
-                                    <div class="row" id="detail">
-                                        <?php if ($data['detail'] ?? false) : ?>
-                                            <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
-                                                <div class="col-6 mb-3">
-                                                    <input type="text" class="form-control p-2 detail" value="<?= $key; ?>" disabled>
-                                                </div>
-                                                <div class="col-6 mb-3">
-                                                    <input type="text" class="form-control p-2 detail" value="<?= $value; ?>" disabled>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </div>
+                                    <?php foreach ($data['detail'] as $key => $value) : ?>
+                                        <div class="row ps-1 mb-2">
+                                            <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
+                                            <div class="col-8">: <?= $value['nilai']; ?></div>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
                                 <hr>
                                 <div class="mb-3">
@@ -128,28 +118,25 @@ if (isset($_POST['submit'])) {
                                         <a href="?h=aset_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
                                     </div>
                                     <div class="d-flex justify-content-end align-items-center flex-wrap gap-1 flex-grow-1">
-                                        <?php if ($data['rusak'] ?? false) : ?>
+                                        <?php if ($data['status'] == 1) : ?>
+                                            <input id="id_aset" type="text" name="id" value="<?= $data['id'] ?? ''; ?>" hidden>
+                                            <button type="submit" name="submit" class="btn btn-success" onclick="return confirm('Yakin?')">Ajukan Peminjaman</button>
+                                        <?php elseif ($data['status'] == 2) : ?>
                                             <div class="alert alert-danger text-white" role="alert">
                                                 Aset Sedang Dalam Keadaan <strong>Rusak</strong>
                                             </div>
-                                        <?php elseif ($data['hilang'] ?? false) : ?>
+                                        <?php elseif ($data['status'] == 3) : ?>
                                             <div class="alert alert-danger text-white" role="alert">
                                                 Aset Sedang Dalam Keadaan <strong>Hilang</strong>
                                             </div>
-                                        <?php elseif ($data['sedang_pemeliharaan'] ?? false) : ?>
+                                        <?php elseif ($data['status'] == 4) : ?>
                                             <div class="alert alert-warning text-white" role="alert">
                                                 Aset Sedang Dalam Keadaan <strong>Masa Pemeliharaan</strong>
                                             </div>
-                                        <?php elseif ($data['sedang_dipesan'] ?? false) : ?>
-                                            <div class="alert alert-info text-white" role="alert">
-                                                Aset Sedang Dalam Keadaan <strong>Pengajuan Peminjaman Oleh Pegawai Lain</strong></div>
-                                        <?php elseif ($data['sedang_dipinjam'] ?? false) : ?>
+                                        <?php elseif ($data['status'] == 5) : ?>
                                             <div class="alert alert-info text-white" role="alert">
                                                 Aset Sedang Dalam Keadaan <strong>Dipinjam</strong> oleh pegawai lain. Tunggu pengembalian terlebih dahulu untuk dapat meminjam aset ini.
                                             </div>
-                                        <?php else : ?>
-                                            <input id="id_aset" type="text" name="id" value="<?= $data['id'] ?? ''; ?>" hidden>
-                                            <button type="submit" name="submit" class="btn btn-success" onclick="return confirm('Yakin?')">Ajukan Peminjaman</button>
                                         <?php endif; ?>
                                     </div>
                                 </div>

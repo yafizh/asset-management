@@ -14,12 +14,18 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Kategori Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jumlah Tersedia</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7"></th>
                                 </tr>
                             </thead>
                             <?php
-                            $q = "SELECT * FROM view_jumlah_aset_tersedia";
+                            $q = "
+                                SELECT 
+                                    *,
+                                    (SELECT COUNT(*) FROM aset WHERE aset.id_kategori_aset=ka.id AND aset.status=1) tersedia
+                                FROM 
+                                    kategori_aset ka";
                             $result = $mysqli->query($q);
                             $no = 1;
                             ?>
@@ -36,7 +42,7 @@
                                             <p class="text-secondary mb-0"><?= $row['tersedia']; ?></p>
                                         </td>
                                         <td class="small-td">
-                                            <a href="?h=aset_tersedia_per_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
+                                            <a href="?h=aset_tersedia_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

@@ -13,49 +13,18 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">kategori Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jumlah Pengajuan</th>
                                 </tr>
                             </thead>
                             <?php
                             $q = "
                                 SELECT 
-                                    ja.id, 
-                                    ja.nama, 
-                                    (
-                                        SELECT 
-                                            COUNT(a.id) 
-                                        FROM 
-                                            aset AS a 
-                                        INNER JOIN 
-                                            peminjaman_aset AS pa 
-                                        ON 
-                                            a.id=pa.id_aset 
-                                        WHERE 
-                                            a.id_jenis_aset=ja.id 
-                                            AND 
-                                            pa.status = 1 
-                                            AND a.id NOT IN (
-                                                SELECT 
-                                                    id_aset 
-                                                FROM 
-                                                    aset_rusak 
-                                                UNION ALL 
-                                                SELECT 
-                                                    id_aset 
-                                                FROM 
-                                                    aset_hilang 
-                                                UNION ALL 
-                                                SELECT 
-                                                    id_aset 
-                                                FROM 
-                                                    pemeliharaan_aset 
-                                                WHERE 
-                                                    tanggal_selesai IS NULL
-                                            )
-                                    ) AS dipesan
+                                    ka.id, 
+                                    ka.nama, 
+                                    (SELECT COUNT(*) FROM aset a INNER JOIN peminjaman_aset pm ON a.id=pm.id_aset WHERE a.id_kategori_aset=ka.id AND pm.status=1) dipesan
                                 FROM 
-                                    jenis_aset AS ja
+                                    kategori_aset ka
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;
@@ -73,7 +42,7 @@
                                             <p class="text-secondary mb-0"><?= $row['dipesan']; ?></p>
                                         </td>
                                         <td class="small-td">
-                                            <a href="?h=pengajuan_peminjaman_aset_per_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
+                                            <a href="?h=pengajuan_peminjaman_aset_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

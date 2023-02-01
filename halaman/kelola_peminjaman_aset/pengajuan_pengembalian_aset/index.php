@@ -13,15 +13,15 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Kategori Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jumlah Pengajuan Pengembalian</th>
                                 </tr>
                             </thead>
                             <?php
                             $q = "
                                 SELECT 
-                                    ja.id, 
-                                    ja.nama, 
+                                    ka.id, 
+                                    ka.nama, 
                                     (
                                         SELECT 
                                             COUNT(a.id) 
@@ -32,30 +32,12 @@
                                         ON 
                                             a.id=pa.id_aset 
                                         WHERE 
-                                            a.id_jenis_aset=ja.id 
+                                            a.id_kategori_aset=ka.id 
                                             AND 
                                             pa.status = 4 
-                                            AND a.id NOT IN (
-                                                SELECT 
-                                                    id_aset 
-                                                FROM 
-                                                    aset_rusak 
-                                                UNION ALL 
-                                                SELECT 
-                                                    id_aset 
-                                                FROM 
-                                                    aset_hilang 
-                                                UNION ALL 
-                                                SELECT 
-                                                    id_aset 
-                                                FROM 
-                                                    pemeliharaan_aset 
-                                                WHERE 
-                                                    tanggal_selesai IS NULL
-                                            )
                                     ) AS pengajuan_pengembalian
                                 FROM 
-                                    jenis_aset AS ja
+                                    kategori_aset ka
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;
@@ -73,7 +55,7 @@
                                             <p class="text-secondary mb-0"><?= $row['pengajuan_pengembalian']; ?></p>
                                         </td>
                                         <td class="small-td">
-                                            <a href="?h=pengajuan_pengembalian_aset_per_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
+                                            <a href="?h=pengajuan_pengembalian_aset_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

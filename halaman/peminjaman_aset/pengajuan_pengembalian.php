@@ -1,10 +1,10 @@
 <?php
 $q = "
     SELECT 
-        sa.nama AS sifat_aset,
+        ka.nama kategori_aset,
         pa.id,
+        a.id id_aset,
         a.nama,
-        a.detail,
         a.foto,
         DATE(pa.timestamp_pengajuan) AS tanggal_pengajuan,
         DATE(pa.timestamp_pengajuan_ditentukan) AS tanggal_pengajuan_ditentukan,
@@ -12,20 +12,20 @@ $q = "
         pa.alasan_peminjaman,
         pa.status
     FROM 
-        peminjaman_aset AS pa  
+        peminjaman_aset pa  
     INNER JOIN 
-        aset AS a 
+        aset a 
     ON 
         a.id=pa.id_aset
     INNER JOIN 
-        sifat_aset AS sa 
+        kategori_aset ka 
     ON 
-        sa.id=a.id_sifat_aset  
+        ka.id=a.id_kategori_aset  
     WHERE 
         pa.id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
-
+$data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $data['id_aset'])->fetch_all(MYSQLI_ASSOC);
 if (isset($_POST['submit'])) {
     $alasan_pengembalian = $mysqli->real_escape_string($_POST['alasan_pengembalian']);
 
@@ -75,8 +75,8 @@ if (isset($_POST['submit'])) {
                         <div class="col-12">
                             <form action="" method="POST">
                                 <div class="mb-3">
-                                    <label class="form-label">Sifat Aset</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['sifat_aset'] ?>">
+                                    <label class="form-label">kategori Aset</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset'] ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nama</label>
@@ -84,16 +84,12 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Detail</label>
-                                    <div class="row" id="detail">
-                                        <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
-                                            <div class="col-6 mb-3">
-                                                <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
-                                            </div>
-                                            <div class="col-6 mb-3">
-                                                <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
+                                    <?php foreach ($data['detail'] as $key => $value) : ?>
+                                        <div class="row ps-1 mb-2">
+                                            <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
+                                            <div class="col-8">: <?= $value['nilai']; ?></div>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
                                 <hr>
                                 <div class="mb-3">

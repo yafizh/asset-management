@@ -1,34 +1,35 @@
 <?php
 $q = "
     SELECT 
-        sa.nama AS sifat_aset,
+        ka.nama kategori_aset,
         pa.id,
         a.nama,
-        a.detail,
+        a.id id_aset,
         a.foto,
-        DATE(pa.timestamp_pengajuan) AS tanggal_pengajuan,
-        DATE(pa.timestamp_pengembalian) AS tanggal_pengembalian,
-        DATE(pa.timestamp_pengajuan_ditentukan) AS tanggal_pengajuan_ditentukan,
-        DATE(pa.timestamp_pengembalian_ditentukan) AS tanggal_pengembalian_ditentukan,
+        DATE(pa.timestamp_pengajuan) tanggal_pengajuan,
+        DATE(pa.timestamp_pengembalian) tanggal_pengembalian,
+        DATE(pa.timestamp_pengajuan_ditentukan) tanggal_pengajuan_ditentukan,
+        DATE(pa.timestamp_pengembalian_ditentukan) tanggal_pengembalian_ditentukan,
         pa.keterangan_pengajuan,
         pa.keterangan_pengembalian,
         pa.alasan_peminjaman,
         pa.alasan_pengembalian,
         pa.status
     FROM 
-        peminjaman_aset AS pa  
+        peminjaman_aset pa  
     INNER JOIN 
-        aset AS a 
+        aset a 
     ON 
         a.id=pa.id_aset
     INNER JOIN 
-        sifat_aset AS sa 
+        kategori_aset ka 
     ON 
-        sa.id=a.id_sifat_aset  
+        ka.id=a.id_kategori_aset  
     WHERE 
         pa.id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
+$data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_GET['id'])->fetch_all(MYSQLI_ASSOC);
 ?>
 <div class="container-fluid py-4">
     <div class="row">
@@ -59,7 +60,7 @@ $data = $result->fetch_assoc();
                         <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label">Sifat Aset</label>
-                                <input type="text" class="form-control p-2" disabled value="<?= $data['sifat_aset'] ?>">
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset'] ?>">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Nama</label>
@@ -67,16 +68,12 @@ $data = $result->fetch_assoc();
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Detail</label>
-                                <div class="row" id="detail">
-                                    <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
-                                        <div class="col-6 mb-3">
-                                            <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+                                <?php foreach ($data['detail'] as $key => $value) : ?>
+                                    <div class="row ps-1 mb-2">
+                                        <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
+                                        <div class="col-8">: <?= $value['nilai']; ?></div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                             <hr>
                             <div class="mb-3">
@@ -137,7 +134,7 @@ $data = $result->fetch_assoc();
                             <div class="d-flex justify-content-between">
                                 <a href="?h=riwayat_peminjaman_aset" class="btn btn-secondary">Kembali</a>
                                 <?php if ($data['status'] == 2) : ?>
-                                    <a href="?h=pengajuan_peminjaman&id=<?= $data['id']; ?>" class="btn btn-warning text-white">Ajukan Kembali</a>
+                                    <a href="?h=pengajuan_peminjaman&id=<?= $data['id_aset']; ?>" class="btn btn-warning text-white">Ajukan Kembali</a>
                                 <?php elseif ($data['status'] == 3 || $data['status'] == 5) : ?>
                                     <a href="?h=pengajuan_pengembalian&id=<?= $data['id']; ?>" class="btn btn-info text-white">Ajukan Pengembalian</a>
                                 <?php endif; ?>

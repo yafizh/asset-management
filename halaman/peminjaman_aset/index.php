@@ -9,20 +9,20 @@
     <?php
     $q = "
         SELECT 
-            jenis_aset.id,
-            jenis_aset.nama, 
-            (SELECT COUNT(id) FROM aset WHERE aset.id_jenis_aset=jenis_aset.id AND nama LIKE '%" . ($_POST['keyword'] ?? '') . "%') AS count
+            kategori_aset.id,
+            kategori_aset.nama, 
+            (SELECT COUNT(id) FROM aset WHERE aset.id_kategori_aset=kategori_aset.id AND nama LIKE '%" . ($_POST['keyword'] ?? '') . "%') AS count
         FROM 
-            jenis_aset";
-    $result_jenis_aset = $mysqli->query($q);
+            kategori_aset";
+    $result_kategori_aset = $mysqli->query($q);
     ?>
-    <?php while ($jenis_aset = $result_jenis_aset->fetch_assoc()) : ?>
-        <?php if (!$jenis_aset['count']) : ?>
+    <?php while ($kategori_aset = $result_kategori_aset->fetch_assoc()) : ?>
+        <?php if (!$kategori_aset['count']) : ?>
             <?php continue; ?>
         <?php endif; ?>
         <div class="row mb-3">
             <div class="col-12">
-                <h2><?= $jenis_aset['nama']; ?></h3>
+                <h2><?= $kategori_aset['nama']; ?></h3>
             </div>
         </div>
         <?php
@@ -30,75 +30,49 @@
             SELECT 
                 a.id,
                 a.nama,  
-                a.keterangan, 
-                a.detail, 
                 a.foto, 
-                IFNULL(
-                    (SELECT ar.id FROM aset_rusak AS ar WHERE (ar.id_aset=a.id)), 
-                    FALSE 
-                ) AS rusak,
-                IFNULL(
-                    (SELECT ah.id FROM aset_hilang AS ah WHERE (ah.id_aset=a.id)), 
-                    FALSE 
-                ) AS hilang, 
-                IFNULL(
-                    (SELECT plhra.id FROM pemeliharaan_aset AS plhra WHERE plhra.id_aset=a.id AND plhra.tanggal_selesai IS NULL),
-                    FALSE 
-                ) AS sedang_pemeliharaan,
-                IF(
-                    (SELECT pa.status FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) ORDER BY pa.id DESC LIMIT 1) = 1, 
-                    TRUE,
-                    FALSE
-                ) AS sedang_dipesan,
-                IF(
-                    (SELECT pa.status FROM peminjaman_aset AS pa WHERE (pa.id_aset=a.id) ORDER BY pa.id DESC LIMIT 1) NOT IN (2,6),
-                    TRUE, 
-                    FALSE 
-                ) AS sedang_dipinjam 
+                a.status 
             FROM 
                 aset AS a 
             WHERE 
-                id_jenis_aset=" . $jenis_aset['id'] . "
+                id_kategori_aset=" . $kategori_aset['id'] . "
         ";
         if (isset($_POST['keyword']))
             $q .= " AND a.nama LIKE '%" . $_POST['keyword'] . "%'";
 
+        $q .= " ORDER BY status";
         $result_aset = $mysqli->query($q);
         ?>
         <div class="row mb-5">
             <?php if ($result_aset->num_rows) : ?>
                 <?php while ($aset = $result_aset->fetch_assoc()) : ?>
+                    <?php $aset['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $aset['id'])->fetch_all(MYSQLI_ASSOC); ?>
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
                         <div class="card my-4">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <?php if ($aset['rusak']) : ?>
+                                <?php if ($aset['status'] == 1) : ?>
+                                    <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Tersedia</h6>
+                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
+                                    </div>
+                                <?php elseif ($aset['status'] == 2) : ?>
                                     <div class="bg-gradient-danger shadow-danger border-radius-lg p-3 d-flex justify-content-between align-items-center">
                                         <h6 class="text-white text-capitalize m-0" style="flex: 1;">Rusak</h6>
                                         <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
-                                <?php elseif ($aset['hilang']) : ?>
+                                <?php elseif ($aset['status'] == 3) : ?>
                                     <div class="bg-gradient-danger shadow-danger border-radius-lg p-3 d-flex justify-content-between align-items-center">
                                         <h6 class="text-white text-capitalize m-0" style="flex: 1;">Hilang</h6>
                                         <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
-                                <?php elseif ($aset['sedang_pemeliharaan']) : ?>
+                                <?php elseif ($aset['status'] == 4) : ?>
                                     <div class="bg-gradient-warning shadow-warning border-radius-lg p-3 d-flex justify-content-between align-items-center">
                                         <h6 class="text-white text-capitalize m-0" style="flex: 1;">Sedang Pemeliharan</h6>
                                         <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
-                                <?php elseif ($aset['sedang_dipesan']) : ?>
-                                    <div class="bg-gradient-warning shadow-warning border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Sedang Diajukan Pegawai Lain</h6>
-                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
-                                    </div>
-                                <?php elseif ($aset['sedang_dipinjam']) : ?>
+                                <?php elseif ($aset['status'] == 5) : ?>
                                     <div class="bg-gradient-info shadow-info border-radius-lg p-3 d-flex justify-content-between align-items-center">
                                         <h6 class="text-white text-capitalize m-0" style="flex: 1;">Sedang Dipinjam</h6>
-                                        <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
-                                    </div>
-                                <?php else : ?>
-                                    <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                                        <h6 class="text-white text-capitalize m-0" style="flex: 1;">Tersedia</h6>
                                         <button type="button" class="btn btn-dark m-0" data-bs-toggle="modal" data-bs-target="#detailModal<?= $aset['id']; ?>">Lihat</button>
                                     </div>
                                 <?php endif; ?>
@@ -124,41 +98,37 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach (json_decode($aset['detail']) as $key => $value) : ?>
+                                                <?php foreach ($aset['detail'] as $key => $value) : ?>
                                                     <tr>
-                                                        <td><?= $key; ?></td>
-                                                        <td><?= $value; ?></td>
+                                                        <td><?= $value['kolom']; ?></td>
+                                                        <td><?= $value['nilai']; ?></td>
                                                     </tr>
                                                 <?php endforeach; ?>
-                                                <?php if ($aset['rusak']) : ?>
+                                                <?php if ($aset['status'] == 1) : ?>
+                                                    <tr class="text-white text-center" style="overflow: hidden;">
+                                                        <td class="bg-gradient-success" colspan="2">Tersedia</td>
+                                                    </tr>
+                                                <?php elseif ($aset['status'] == 2) : ?>
                                                     <tr class="text-white text-center" style="overflow: hidden;">
                                                         <td class="bg-gradient-danger" colspan="2">Rusak</td>
                                                     </tr>
-                                                <?php elseif ($aset['hilang']) : ?>
+                                                <?php elseif ($aset['status'] == 3) : ?>
                                                     <tr class="text-white text-center" style="overflow: hidden;">
                                                         <td class="bg-gradient-danger" colspan="2">Hilang</td>
                                                     </tr>
-                                                <?php elseif ($aset['sedang_pemeliharaan']) : ?>
+                                                <?php elseif ($aset['status'] == 4) : ?>
                                                     <tr class="text-white text-center" style="overflow: hidden;">
                                                         <td class="bg-gradient-warning" colspan="2">Sedang Pemeliharaan</td>
                                                     </tr>
-                                                <?php elseif ($aset['sedang_dipesan']) : ?>
-                                                    <tr class="text-white text-center" style="overflow: hidden;">
-                                                        <td class="bg-gradient-warning" colspan="2">Sedang Diajukan Pegawai Lain</td>
-                                                    </tr>
-                                                <?php elseif ($aset['sedang_dipinjam']) : ?>
+                                                <?php elseif ($aset['status'] == 5) : ?>
                                                     <tr class="bg-gradient-info text-white text-center" style="overflow: hidden;">
                                                         <td class="bg-gradient-info" colspan="2">Sedang Dipinjam</td>
-                                                    </tr>
-                                                <?php else : ?>
-                                                    <tr class="text-white text-center" style="overflow: hidden;">
-                                                        <td class="bg-gradient-success" colspan="2">Tersedia</td>
                                                     </tr>
                                                 <?php endif; ?>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <?php if (!$aset['rusak'] && !$aset['hilang'] && !$aset['sedang_pemeliharaan'] && !$aset['sedang_dipesan'] && !$aset['sedang_dipinjam']) : ?>
+                                    <?php if ($aset['status'] == 1) : ?>
                                         <div class="modal-footer justify-content-center">
                                             <a href="?h=pengajuan_peminjaman&id=<?= $aset['id']; ?>" class="btn bg-gradient-success">Ajukan Peminjaman</a>
                                         </div>
@@ -170,7 +140,7 @@
                     </div>
                 <?php endwhile; ?>
             <?php else : ?>
-                <h5 class="text-muted text-center">Aset <?= $jenis_aset['nama']; ?> Tidak Tersedia</h5>
+                <h5 class="text-muted text-center">Aset <?= $kategori_aset['nama']; ?> Tidak Tersedia</h5>
             <?php endif; ?>
         </div>
     <?php endwhile; ?>

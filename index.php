@@ -271,7 +271,7 @@ if (!isset($_SESSION['user'])) {
     <?php
     if ($_SESSION['user']['status'] === 'ADMIN' || $_SESSION['user']['status'] === 'PETUGAS') include_once('komponen/sidebar.php'); ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <?php if ($_SESSION['user']['status'] === 'pegawai') include_once('komponen/navbar.php'); ?>
+        <?php if ($_SESSION['user']['status'] === 'PEGAWAI') include_once('komponen/navbar.php'); ?>
         <div class="container-fluid py-4">
             <?php
             include_once('database/koneksi.php');

@@ -14,7 +14,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Kategori Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Status</th>
                                     <th class="text-secondary opacity-7"></th>
@@ -24,19 +24,19 @@
                             $q = "
                                 SELECT 
                                     pa.id, 
-                                    ja.nama AS jenis_aset,
+                                    ka.nama kategori_aset,
                                     a.nama,
                                     pa.status  
                                 FROM 
-                                    peminjaman_aset AS pa 
+                                    peminjaman_aset pa 
                                 INNER JOIN 
-                                    aset AS a 
+                                    aset a 
                                 ON 
                                     a.id=pa.id_aset 
                                 INNER JOIN 
-                                    jenis_aset AS ja 
+                                    kategori_aset ka 
                                 ON 
-                                    a.id_jenis_aset=ja.id  
+                                    a.id_kategori_aset=ka.id  
                                 WHERE 
                                     id_pegawai=" . $_SESSION['user']['id'] . " ORDER BY pa.id DESC";
                             $result = $mysqli->query($q);
@@ -49,7 +49,7 @@
                                             <p class="text-secondary mb-0"><?= $no++; ?></p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-secondary mb-0"><?= $row['jenis_aset']; ?></p>
+                                            <p class="text-secondary mb-0"><?= $row['kategori_aset']; ?></p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
