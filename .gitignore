@@ -2,6 +2,8 @@ material-dashboard-master
 material-dashboard-master.zip
 
 uploads/gambar_pegawai/*
+!uploads/gambar_pegawai/pegawai*
+
 uploads/ijazah_pegawai/*
 uploads/sk_tmt_pegawai/*
 

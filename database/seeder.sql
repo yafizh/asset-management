@@ -5,7 +5,13 @@ INSERT INTO `manajemen_aset`.`pengguna` (
 ) VALUES 
 ('admin', 'admin', 'ADMIN'),
 ('petugas', 'petugas', 'PETUGAS'),
-('18630320', '18630320', 'PEGAWAI');
+('198609262015051007', '198609262015051007', 'PEGAWAI'),
+('198609262115051340', '198609262115051340', 'PEGAWAI'),
+('198609262115051331', '198609262115051331', 'PEGAWAI'),
+('198609262115051342', '198609262115051342', 'PEGAWAI'),
+('198609262115051337', '198609262115051337', 'PEGAWAI'),
+('198609262115051338', '198609262115051338', 'PEGAWAI'),
+('198609262015051003', '198609262015051003', 'PEGAWAI');
 
 INSERT INTO `manajemen_aset`.`jenis_aset` (
     nama
@@ -86,4 +92,10 @@ INSERT INTO `manajemen_aset`.`pegawai` (
     ijazah_pendidikan_terakhir,
     foto
 ) VALUES 
-(3, '18630220', 'Diki Suti Prasetya', '1998-05-18', 'Banjarbaru', 'Mahasiswa', '2018-01-01', '', 'SMA/SMK', '', '');
+(3, '198609262015051007', 'Muhammad Ali', '1998-05-18', 'Banjarbaru', 'Penyuluh Pertanian Pertama', '2018-01-01', '', 'SMA/SMK', '', 'uploads/gambar_pegawai/pegawai1.jpg'),
+(4, '198609262115051340', 'Agus Setiati', '1998-05-18', 'Banjarbaru', 'Penata Muda', '2018-01-01', '', 'S1', '', 'uploads/gambar_pegawai/pegawai3.jpg'),
+(5, '198609262115051331', 'Ahmad Isa Anshari, SE', '1998-05-18', 'Banjarbaru', 'Penata Muda', '2018-01-01', '', 'S1', '', 'uploads/gambar_pegawai/pegawai4.jpg'),
+(6, '198609262115051342', 'Juhdy', '1998-05-18', 'Banjarbaru', 'Penata Muda', '2018-01-01', '', 'S1', '', 'uploads/gambar_pegawai/pegawai2.jpg'),
+(7, '198609262115051337', 'Jumarni', '1998-05-18', 'Banjarbaru', 'Teknisi', '2018-01-01', '', 'S1', '', 'uploads/gambar_pegawai/pegawai5.jpg'),
+(8, '198609262115051338', 'Kusyanti', '1998-05-18', 'Banjarbaru', 'Teknisi', '2018-01-01', '', 'S1', '', 'uploads/gambar_pegawai/pegawai6.jpg'),
+(9, '198609262015051003', 'Muhammad Syarif, S.ST', '1998-05-18', 'Banjarbaru', 'Teknisi', '2018-01-01', '', 'S1', '', 'uploads/gambar_pegawai/pegawai7.jpg');
