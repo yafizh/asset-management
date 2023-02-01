@@ -1,29 +1,27 @@
-DROP DATABASE IF EXISTS manajemen_aset;
-CREATE DATABASE manajemen_aset;
-USE manajemen_aset;
+DROP DATABASE IF EXISTS `manajemen_aset`;
+CREATE DATABASE `manajemen_aset`;
+USE `manajemen_aset`;
 
-CREATE TABLE jenis_aset(
+CREATE TABLE `manajemen_aset`.`jenis_aset`(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    nama VARCHAR(255),
-    keterangan TEXT
+    nama VARCHAR(255)
 );
 
-CREATE TABLE sifat_aset(
+CREATE TABLE `manajemen_aset`.`kategori_aset`(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    nama VARCHAR(255),
-    keterangan TEXT
+    nama VARCHAR(255)
 );
 
-CREATE TABLE pengguna(
+CREATE TABLE `manajemen_aset`.`pengguna`(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) UNIQUE,
     password VARCHAR(255),
-    status VARCHAR(255)
+    status ENUM('ADMIN', 'PETUGAS', 'PEGAWAI', 'PIMPINAN')
 );
 
-CREATE TABLE pegawai(
+CREATE TABLE `manajemen_aset`.`pegawai`(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    id_pengguna BIGINT UNSIGNED REFERENCES pengguna(id),
+    id_pengguna BIGINT UNSIGNED,
     nip VARCHAR(255) UNIQUE,
     nama VARCHAR(255),
     tanggal_lahir DATE,
@@ -37,48 +35,55 @@ CREATE TABLE pegawai(
     FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE 
 );
 
-CREATE TABLE aset(
+CREATE TABLE `manajemen_aset`.`aset`(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    id_jenis_aset BIGINT UNSIGNED REFERENCES jenis_aset(id),
-    id_sifat_aset BIGINT UNSIGNED REFERENCES sifat_aset(id),
+    id_jenis_aset BIGINT UNSIGNED,
+    id_kategori BIGINT UNSIGNED,
     nama VARCHAR(255),
     tanggal_masuk DATE,
-    detail JSON,
     foto VARCHAR(255),
-    keterangan TEXT,
+    status TINYINT UNSIGNED NULL DEFAULT NULL COMMENT '1 = TERSEDIA, 2 = RUSAK, 3 = HILANG, 4 = DALAM MASA PEMELIHARAAN, 5 = SEDANG PENGAJUAN PEMINJAMAN, 6 = SEDANG DIPINJAM',
     FOREIGN KEY (id_jenis_aset) REFERENCES jenis_aset (id) ON DELETE CASCADE, 
-    FOREIGN KEY (id_sifat_aset) REFERENCES sifat_aset (id) ON DELETE CASCADE 
+    FOREIGN KEY (id_kategori) REFERENCES kategori (id) ON DELETE CASCADE 
 );
 
-CREATE TABLE aset_rusak(
+CREATE TABLE `manajemen_aset`.`detail_aset` (
+    id BIGINT UNSIGNED PRIMARY AUTO_INCREMENT,
+    id_aset BIGINT UNSIGNED,
+    kolom VARCHAR(255),
+    nilai VARCHAR(255),
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE 
+)
+
+CREATE TABLE `manajemen_aset`.`aset_rusak` (
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    id_aset BIGINT UNSIGNED REFERENCES aset(id),
+    id_aset BIGINT UNSIGNED,
     tanggal DATE,
     keterangan TEXT,
     FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
-CREATE TABLE aset_hilang(
+CREATE TABLE `manajemen_aset`.`aset_hilang` (
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    id_aset BIGINT UNSIGNED REFERENCES aset(id),
+    id_aset BIGINT UNSIGNED,
     tanggal DATE,
     keterangan TEXT,
     FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
-CREATE TABLE pemeliharaan_aset(
+CREATE TABLE `manajemen_aset`.`pemeliharaan_aset` (
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    id_aset BIGINT UNSIGNED REFERENCES aset(id),
+    id_aset BIGINT UNSIGNED,
     tanggal_mulai DATE,
     tanggal_selesai DATE,
     keterangan TEXT,
     FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
-CREATE TABLE peminjaman_aset(
+CREATE TABLE `manajemen_aset`.`peminjaman_aset`(
     id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    id_pegawai BIGINT UNSIGNED REFERENCES pegawai(id),
-    id_aset BIGINT UNSIGNED REFERENCES aset(id),
+    id_pegawai BIGINT UNSIGNED,
+    id_aset BIGINT UNSIGNED,
     alasan_peminjaman VARCHAR(255),
     timestamp_pengajuan TIMESTAMP NULL DEFAULT NULL,
     timestamp_pengajuan_ditentukan TIMESTAMP NULL DEFAULT NULL,
@@ -91,66 +96,3 @@ CREATE TABLE peminjaman_aset(
     FOREIGN KEY (id_pegawai) REFERENCES pegawai (id) ON DELETE CASCADE,
     FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
-
-CREATE VIEW view_jumlah_aset_tersedia AS SELECT 
-    ja.id, 
-    ja.nama, 
-    (SELECT 
-        COUNT(a.id) 
-    FROM 
-        aset AS a 
-    WHERE 
-        a.id_jenis_aset=ja.id 
-        AND 
-        IF(
-            (
-                (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) = 2
-                OR 
-                (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) = 6
-                OR 
-                (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) IS NULL
-            ),
-            TRUE, 
-            FALSE
-        ) 
-        AND 
-        a.id NOT IN (
-            SELECT 
-                id_aset 
-            FROM 
-                aset_rusak 
-            UNION ALL 
-            SELECT 
-                id_aset 
-            FROM 
-                aset_hilang 
-            UNION ALL 
-            SELECT 
-                id_aset 
-            FROM 
-                pemeliharaan_aset 
-            WHERE 
-                tanggal_selesai IS NULL
-            )
-    ) AS tersedia 
-FROM 
-    jenis_aset AS ja;
-
-CREATE VIEW view_jumlah_aset_dipinjam AS SELECT 
-    ja.id, 
-    ja.nama, 
-    (SELECT 
-        COUNT(a.id) 
-    FROM 
-        aset AS a 
-    WHERE 
-        a.id_jenis_aset=ja.id 
-        AND 
-        IF(
-            (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) IN (3,4,5),
-            TRUE, 
-            FALSE
-        ) 
-    ) AS dipinjam 
-FROM 
-    jenis_aset AS ja;

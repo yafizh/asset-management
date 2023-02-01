@@ -1,49 +1,79 @@
-INSERT INTO pengguna (
+INSERT INTO `manajemen_aset`.`pengguna` (
     username,
     password,
     status
 ) VALUES 
-('admin', 'admin', 'admin'),
-('petugas', 'petugas', 'petugas'),
-('18630320', '18630320', 'pegawai');
+('admin', 'admin', 'ADMIN'),
+('petugas', 'petugas', 'PETUGAS'),
+('18630320', '18630320', 'PEGAWAI');
 
-INSERT INTO jenis_aset(
-    nama, 
-    keterangan
+INSERT INTO `manajemen_aset`.`jenis_aset` (
+    nama
 ) VALUES 
-('Kamera', 'Kamera jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
-('Kursi', 'Kursi jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
-('Meja', 'Meja jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
-('Motor', 'Motor jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.'),
-('Mobil', 'Mobil jenis apapun yang ada di Balai Pengkajian Teknologi Pertanian Kalimantan Selatan.');
+('Aset Tetap'),
+('Aset Bergerak');
 
-INSERT INTO sifat_aset(
-    nama, 
-    keterangan
+INSERT INTO `manajemen_aset`.`kategori_aset` (
+    nama
 ) VALUES 
-('Pemberian', 'Barang pemberian dari pihak manapun.'),
-('Milik Kantor', 'Barang hasil beli dengan uang kas kantor');
+('Kamera'),
+('Kursi'),
+('Meja'),
+('Motor'),
+('Mobil');
 
-INSERT INTO aset(
+INSERT INTO `manajemen_aset`.`aset`(
+    id,
     id_jenis_aset,
-    id_sifat_aset,
+    id_kategori_aset,
     nama,
     tanggal_masuk,
-    detail,
     foto,
-    keterangan 
+    status
 ) VALUES 
-(1, 2, 'Kamera 1', CURRENT_DATE(), '{"Merk": "Sony", "Warna": "Hitam", "Lensa": "Canon 50mm"}', 'uploads/gambar_aset/kamera1.webp', ''),
-(1, 2, 'Kamera 2', CURRENT_DATE(), '{"Merk": "Fujifilm", "Warna": "Hitam Silver", "Lensa": "Fujinon 35mm"}', 'uploads/gambar_aset/kamera2.webp', ''),
-(1, 2, 'Kamera 3', CURRENT_DATE(), '{"Warna": "Hitam Silver", "Lensa": "Fujinon 23mm"}', 'uploads/gambar_aset/kamera3.webp', ''),
-(4, 2, 'Motor 1', CURRENT_DATE(), '{"Merk": "BMW", "Warna": "Putih Cokelat", "Plat": "CR 7", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor1.webp', ''),
-(4, 2, 'Motor 2', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Hitam", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor2.webp', ''),
-(4, 2, 'Motor 3', CURRENT_DATE(), '{"Merk": "Honda", "Warna": "Merah", "Roda": "2 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/motor3.webp', ''),
-(5, 2, 'Mobil 1', CURRENT_DATE(), '{"Warna": "Kuning", "Roda": "4 Roda", "Kondisi": "Lama"}', 'uploads/gambar_aset/mobil1.webp', ''),
-(5, 2, 'Mobil 2', CURRENT_DATE(), '{"Warna": "Biru", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil2.webp', ''),
-(5, 2, 'Mobil 3', CURRENT_DATE(), '{"Merk": "Ford", "Warna": "Putih", "Plat": "8CPP419", "Roda": "4 Roda", "Kondisi": "Baru"}', 'uploads/gambar_aset/mobil3.webp', '');
+(1, 1, 2, 'Kamera 1', CURRENT_DATE(), 'uploads/gambar_aset/kamera1.webp'),
+(2, 1, 2, 'Kamera 2', CURRENT_DATE(), 'uploads/gambar_aset/kamera2.webp'),
+(3, 1, 2, 'Kamera 3', CURRENT_DATE(), 'uploads/gambar_aset/kamera3.webp'),
+(4, 4, 2, 'Motor 1', CURRENT_DATE(), 'uploads/gambar_aset/motor1.webp'),
+(5, 4, 2, 'Motor 2', CURRENT_DATE(), 'uploads/gambar_aset/motor2.webp'),
+(6, 4, 2, 'Motor 3', CURRENT_DATE(), 'uploads/gambar_aset/motor3.webp'),
+(7, 5, 2, 'Mobil 1', CURRENT_DATE(), 'uploads/gambar_aset/mobil1.webp'),
+(8, 5, 2, 'Mobil 2', CURRENT_DATE(), 'uploads/gambar_aset/mobil2.webp'),
+(9, 5, 2, 'Mobil 3', CURRENT_DATE(), 'uploads/gambar_aset/mobil3.webp');
 
-INSERT INTO pegawai(
+INSERT INTO `manajemen_aset`.`detail_aset` (
+    id_aset,
+    kolom,
+    nilai 
+) VALUES 
+(1, "Merk", "Sony"),
+(1, "Warna", "Hitam"),
+(1, "Lensa", "Canon 50mm"),
+(2, "Merk", "Fujifilm"),
+(2, "Warna", "Silver"),
+(3, "Lensa", "Fujinon 35mm"),
+(3, "Merk", "Fujifilm"),
+(3, "Lensa", "Fujinon 23mm"),
+(4, "Merk", "Suzuki"),
+(4, "Warna", "Putih Cokelat"),
+(4, "Plat", "DA 12345 DA"),
+(4, "Roda", "Roda 2"),
+(5, "Merk", "Honda"),
+(5, "Warna", "Hitam"),
+(5, "Roda", "Roda 2"),
+(6, "Merk", "Honda"),
+(6, "Warna", "Merah"),
+(6, "Roda", "Roda 2"),
+(7, "Warna", "Kuning"),
+(7, "Roda", "Roda 4"),
+(8, "Warna", "Biru"),
+(8, "Roda", "Roda 4"),
+(9, "Warna", "Putih"),
+(9, "Merk", "Ford"),
+(9, "Plat", "8CPP419"),
+(9, "Roda", "Roda 4");
+
+INSERT INTO `manajemen_aset`.`pegawai` (
     id_pengguna,
     nip,
     nama,
