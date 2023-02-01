@@ -101,7 +101,7 @@ if (!isset($_SESSION['user'])) {
 <body class="g-sidenav-show bg-gray-200">
     <?php
     // Route for Admin and Petugas
-    if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') {
+    if ($_SESSION['user']['status'] === 'ADMIN' || $_SESSION['user']['status'] === 'PETUGAS') {
         if (isset($_GET['h'])) {
             // Laporan
             if ($_GET['h'] === 'laporan_pegawai') {
@@ -167,13 +167,13 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'edit_jenis_aset') $page = 'halaman/jenis_aset/edit.php';
             elseif ($_GET['h'] === 'hapus_jenis_aset') $page = 'halaman/jenis_aset/hapus.php';
 
-            // Sifat Aset
-            if (in_array($_GET['h'], ['sifat_aset', 'tambah_sifat_aset', 'edit_sifat_aset', 'hapus_sifat_aset'])) $active = 'sifat_aset';
+            // Kategori Aset
+            if (in_array($_GET['h'], ['kategori_aset', 'tambah_kategori_aset', 'edit_kategori_aset', 'hapus_kategori_aset'])) $active = 'kategori_aset';
 
-            if ($_GET['h'] === 'sifat_aset') $page = 'halaman/sifat_aset/index.php';
-            elseif ($_GET['h'] === 'tambah_sifat_aset') $page = 'halaman/sifat_aset/tambah.php';
-            elseif ($_GET['h'] === 'edit_sifat_aset') $page = 'halaman/sifat_aset/edit.php';
-            elseif ($_GET['h'] === 'hapus_sifat_aset') $page = 'halaman/sifat_aset/hapus.php';
+            if ($_GET['h'] === 'kategori_aset') $page = 'halaman/kategori_aset/index.php';
+            elseif ($_GET['h'] === 'tambah_kategori_aset') $page = 'halaman/kategori_aset/tambah.php';
+            elseif ($_GET['h'] === 'edit_kategori_aset') $page = 'halaman/kategori_aset/edit.php';
+            elseif ($_GET['h'] === 'hapus_kategori_aset') $page = 'halaman/kategori_aset/hapus.php';
 
             // Aset
             if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'hapus_aset', 'detail_aset', 'aset_per_jenis_aset'])) $active = 'aset';
@@ -241,7 +241,7 @@ if (!isset($_SESSION['user'])) {
     }
 
     // Route for Pegawai
-    if ($_SESSION['user']['status'] === 'pegawai') {
+    if ($_SESSION['user']['status'] === 'PEGAWAI') {
         if (isset($_GET['h'])) {
             if ($_GET['h'] === 'ganti_password') {
                 $active = 'Ganti Password';
@@ -269,7 +269,7 @@ if (!isset($_SESSION['user'])) {
     }
     ?>
     <?php
-    if ($_SESSION['user']['status'] === 'admin' || $_SESSION['user']['status'] === 'petugas') include_once('komponen/sidebar.php'); ?>
+    if ($_SESSION['user']['status'] === 'ADMIN' || $_SESSION['user']['status'] === 'PETUGAS') include_once('komponen/sidebar.php'); ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <?php if ($_SESSION['user']['status'] === 'pegawai') include_once('komponen/navbar.php'); ?>
         <div class="container-fluid py-4">

@@ -10,12 +10,11 @@
                 </div>
                 <div class="card-body pb-3">
                     <div class="table-responsive p-0">
-                        <table id="datatable" class="table align-items-center mb-0">
+                        <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
@@ -32,9 +31,6 @@
                                         </td>
                                         <td class="text-center">
                                             <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
-                                        </td>
-                                        <td class="text-center">
-                                            <p class="text-secondary mb-0"><?= $row['keterangan']; ?></p>
                                         </td>
                                         <td class="small-td">
                                             <a href="?h=edit_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-warning text-white">Edit</a>

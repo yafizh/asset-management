@@ -17,7 +17,7 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <?php if ($_SESSION['user']['status'] === 'admin') : ?>
+            <?php if ($_SESSION['user']['status'] === 'ADMIN') : ?>
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Master</h6>
                 </li>
@@ -30,11 +30,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= $active === 'sifat_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=sifat_aset">
+                    <a class="nav-link <?= $active === 'kategori_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=kategori_aset">
                         <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">real_estate_agent</i>
                         </div>
-                        <span class="nav-link-text ms-1">Sifat Aset</span>
+                        <span class="nav-link-text ms-1">Kategori Aset</span>
                     </a>
                 </li>
                 <li class="nav-item">

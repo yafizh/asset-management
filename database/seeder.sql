@@ -37,15 +37,15 @@ INSERT INTO `manajemen_aset`.`aset`(
     foto,
     status
 ) VALUES 
-(1, 1, 2, 'Kamera 1', CURRENT_DATE(), 'uploads/gambar_aset/kamera1.webp'),
-(2, 1, 2, 'Kamera 2', CURRENT_DATE(), 'uploads/gambar_aset/kamera2.webp'),
-(3, 1, 2, 'Kamera 3', CURRENT_DATE(), 'uploads/gambar_aset/kamera3.webp'),
-(4, 4, 2, 'Motor 1', CURRENT_DATE(), 'uploads/gambar_aset/motor1.webp'),
-(5, 4, 2, 'Motor 2', CURRENT_DATE(), 'uploads/gambar_aset/motor2.webp'),
-(6, 4, 2, 'Motor 3', CURRENT_DATE(), 'uploads/gambar_aset/motor3.webp'),
-(7, 5, 2, 'Mobil 1', CURRENT_DATE(), 'uploads/gambar_aset/mobil1.webp'),
-(8, 5, 2, 'Mobil 2', CURRENT_DATE(), 'uploads/gambar_aset/mobil2.webp'),
-(9, 5, 2, 'Mobil 3', CURRENT_DATE(), 'uploads/gambar_aset/mobil3.webp');
+(1, 2, 1, 'Kamera 1', CURRENT_DATE(), 'uploads/gambar_aset/kamera1.webp', 1),
+(2, 2, 1, 'Kamera 2', CURRENT_DATE(), 'uploads/gambar_aset/kamera2.webp', 1),
+(3, 2, 1, 'Kamera 3', CURRENT_DATE(), 'uploads/gambar_aset/kamera3.webp', 1),
+(4, 2, 4, 'Motor 1', CURRENT_DATE(), 'uploads/gambar_aset/motor1.webp', 1),
+(5, 2, 4, 'Motor 2', CURRENT_DATE(), 'uploads/gambar_aset/motor2.webp', 1),
+(6, 2, 4, 'Motor 3', CURRENT_DATE(), 'uploads/gambar_aset/motor3.webp', 1),
+(7, 2, 5, 'Mobil 1', CURRENT_DATE(), 'uploads/gambar_aset/mobil1.webp', 1),
+(8, 2, 5, 'Mobil 2', CURRENT_DATE(), 'uploads/gambar_aset/mobil2.webp', 1),
+(9, 2, 5, 'Mobil 3', CURRENT_DATE(), 'uploads/gambar_aset/mobil3.webp', 1);
 
 INSERT INTO `manajemen_aset`.`detail_aset` (
     id_aset,
