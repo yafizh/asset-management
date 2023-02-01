@@ -48,19 +48,19 @@
                             <?php
                             $q = "
                                 SELECT
-                                    ja.nama AS jenis_aset, 
+                                    ka.nama kategori_aset, 
                                     a.nama, 
                                     ar.tanggal  
                                 FROM 
-                                    aset_rusak AS ar  
+                                    aset_rusak ar  
                                 INNER JOIN 
-                                    aset AS a
+                                    aset a
                                 ON 
                                     a.id=ar.id_aset 
                                 INNER JOIN 
-                                    jenis_aset AS ja  
+                                    kategori_aset ka  
                                 ON 
-                                    ja.id=a.id_jenis_aset 
+                                    ka.id=a.id_kategori_aset 
                                 ";
 
                             if (!empty($_POST['dari_tanggal'] ?? '') && !empty($_POST['sampai_tanggal'] ?? ''))
@@ -78,13 +78,13 @@
                                                 <p class="text-secondary mb-0"><?= $no++; ?></p>
                                             </td>
                                             <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= $row['jenis_aset']; ?></p>
+                                                <p class="text-secondary mb-0"><?= $row['kategori_aset']; ?></p>
                                             </td>
                                             <td class="text-center">
                                                 <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                             </td>
                                             <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= $row['tanggal']; ?></p>
+                                                <p class="text-secondary mb-0"><?= tanggalIndonesia($row['tanggal']); ?></p>
                                             </td>
                                         </tr>
                                     <?php endwhile; ?>

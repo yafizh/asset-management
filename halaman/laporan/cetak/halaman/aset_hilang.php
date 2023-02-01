@@ -18,7 +18,7 @@
         <thead class="text-center">
             <tr>
                 <th class="text-center small-td">No</th>
-                <th class="text-center">Jenis Aset</th>
+                <th class="text-center">Kategori Aset</th>
                 <th class="text-center">Nama Aset</th>
                 <th class="text-center">Tanggal Hilang</th>
             </tr>
@@ -26,19 +26,19 @@
         <?php
         $q = "
             SELECT
-                ja.nama AS jenis_aset, 
+                ka.nama kategori_aset, 
                 a.nama, 
                 ah.tanggal  
             FROM 
-                aset_hilang AS ah  
+                aset_hilang ah  
             INNER JOIN 
-                aset AS a
+                aset a
             ON 
                 a.id=ah.id_aset 
             INNER JOIN 
-                jenis_aset AS ja  
+                kategori_aset ka  
             ON 
-                ja.id=a.id_jenis_aset 
+                ka.id=a.id_kategori_aset 
             ";
 
         if (!empty($_POST['dari_tanggal'] ?? '') && !empty($_POST['sampai_tanggal'] ?? ''))
@@ -53,7 +53,7 @@
                 <?php while ($row = $result->fetch_assoc()) : ?>
                     <tr>
                         <td style="vertical-align: middle;" class="text-center small-td"><?= $no++; ?></td>
-                        <td style="vertical-align: middle;" class="text-center"><?= $row['jenis_aset']; ?></td>
+                        <td style="vertical-align: middle;" class="text-center"><?= $row['kategori_aset']; ?></td>
                         <td style="vertical-align: middle;" class="text-center"><?= $row['nama']; ?></td>
                         <td style="vertical-align: middle;" class="text-center"><?= tanggalIndonesia($row['tanggal']); ?></td>
                     </tr>

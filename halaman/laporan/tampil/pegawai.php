@@ -62,7 +62,7 @@
                                             <td class="text-center">
                                                 <p class="text-secondary mb-0"><?= $row['nip']; ?></p>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="">
                                                 <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                             </td>
                                             <td class="text-center">

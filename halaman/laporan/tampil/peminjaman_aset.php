@@ -38,7 +38,6 @@
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">NIP</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tanggal Peminjaman</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tanggal Selesai</th>
@@ -47,29 +46,19 @@
                             <?php
                             $q = "
                                 SELECT
-                                    DATE(pa.timestamp_pengajuan_ditentukan) AS tanggal_peminjaman,  
-                                    DATE(pa.timestamp_pengajuan_ditentukan) AS tanggal_selesai,
+                                    DATE(pa.timestamp_pengajuan_ditentukan) tanggal_peminjaman,  
+                                    DATE(pa.timestamp_pengajuan_ditentukan) tanggal_selesai,
                                     p.nip,
                                     p.nama,
-                                    ja.nama AS jenis_aset,
-                                    sa.nama AS sifat_aset,
                                     a.nama   
                                 FROM 
-                                    peminjaman_aset AS pa  
+                                    peminjaman_aset pa  
                                 INNER JOIN 
-                                    aset AS a
+                                    aset a
                                 ON 
                                     a.id=pa.id_aset 
                                 INNER JOIN 
-                                    jenis_aset AS ja  
-                                ON 
-                                    ja.id=a.id_jenis_aset 
-                                INNER JOIN 
-                                    sifat_aset AS sa  
-                                ON 
-                                    sa.id=a.id_sifat_aset 
-                                INNER JOIN 
-                                    pegawai AS p  
+                                    pegawai p  
                                 ON 
                                     p.id=pa.id_pegawai 
                                 WHERE 
@@ -97,22 +86,19 @@
                                                 <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                             </td>
                                             <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= $row['jenis_aset']; ?></p>
-                                            </td>
-                                            <td class="text-center">
                                                 <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                             </td>
                                             <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= $row['tanggal_peminjaman']; ?></p>
+                                                <p class="text-secondary mb-0"><?= tanggalIndonesia($row['tanggal_peminjaman']); ?></p>
                                             </td>
                                             <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= is_null($row['tanggal_selesai']) ? "Belum Dikembalikan" : $row['tanggal_selesai']; ?></p>
+                                                <p class="text-secondary mb-0"><?= is_null($row['tanggal_selesai']) ? "Belum Dikembalikan" : tanggalIndonesia($row['tanggal_selesai']); ?></p>
                                             </td>
                                         </tr>
                                     <?php endwhile; ?>
                                 <?php else : ?>
                                     <tr>
-                                        <td colspan="7" class="text-center">Data Kosong</td>
+                                        <td colspan="6" class="text-center">Data Kosong</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>

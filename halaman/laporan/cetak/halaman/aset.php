@@ -19,28 +19,26 @@
             <tr>
                 <th class="text-center small-td">No</th>
                 <th class="text-center">Jenis Aset</th>
-                <th class="text-center">Sifat Aset</th>
+                <th class="text-center">Kategori Aset</th>
                 <th class="text-center">Nama Aset</th>
                 <th class="text-center">Tanggal Masuk</th>
-                <th class="text-center">Keterangan</th>
             </tr>
         </thead>
         <?php
         $q = "
             SELECT
-                ja.nama AS jenis_aset, 
-                sa.nama AS sifat_aset, 
+                ja.nama jenis_aset, 
+                sa.nama kategori_aset, 
                 a.nama, 
-                a.tanggal_masuk,
-                a.keterangan   
+                a.tanggal_masuk
             FROM 
-                aset AS a  
+                aset a  
             INNER JOIN 
-                sifat_aset AS sa
+                kategori_aset sa
             ON 
-                a.id_sifat_aset=sa.id 
+                a.id_kategori_aset=sa.id 
             INNER JOIN 
-                jenis_aset AS ja  
+                jenis_aset ja  
             ON 
                 ja.id=a.id_jenis_aset 
             ";
@@ -58,15 +56,14 @@
                     <tr>
                         <td style="vertical-align: middle;" class="text-center small-td"><?= $no++; ?></td>
                         <td style="vertical-align: middle;" class="text-center"><?= $row['jenis_aset']; ?></td>
-                        <td style="vertical-align: middle;" class="text-center"><?= $row['sifat_aset']; ?></td>
+                        <td style="vertical-align: middle;" class="text-center"><?= $row['kategori_aset']; ?></td>
                         <td style="vertical-align: middle;" class="text-center"><?= $row['nama']; ?></td>
                         <td style="vertical-align: middle;" class="text-center"><?= tanggalIndonesia($row['tanggal_masuk']); ?></td>
-                        <td style="vertical-align: middle;"><?= $row['keterangan']; ?></td>
                     </tr>
                 <?php endwhile; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="6" class="text-center">Data Kosong</td>
+                    <td colspan="5" class="text-center">Data Kosong</td>
                 </tr>
             <?php endif; ?>
         </tbody>

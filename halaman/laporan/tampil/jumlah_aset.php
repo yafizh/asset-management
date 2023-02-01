@@ -14,7 +14,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Kategori Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Rusak</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Hilang</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tersedia</th>
@@ -24,16 +24,16 @@
                             <?php
                             $q = "
                                 SELECT 
-                                    ja.id, 
-                                    ja.nama, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id AND a.id IN (SELECT id_aset FROM aset_rusak)) AS rusak, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id AND a.id IN (SELECT id_aset FROM aset_hilang)) AS hilang, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id AND a.id IN (SELECT id_aset FROM pemeliharaan_aset AS plhra WHERE plhra.tanggal_selesai IS NULL)) AS sedang_pemeliharaan, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id_jenis_aset=ja.id AND pa.status BETWEEN 3 AND 5 AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS sedang_dipinjam, 
-                                    (SELECT COUNT(a.id) FROM aset AS a LEFT JOIN peminjaman_aset AS pa ON a.id=pa.id_aset WHERE a.id_jenis_aset=ja.id AND ((SELECT (SELECT pa.status FROM peminjaman_aset AS pa WHERE pa.id_aset=a.id ORDER BY pa.id DESC LIMIT 1) IN (2,6)) OR pa.status IS NULL) AND a.id NOT IN (SELECT id_aset FROM aset_rusak UNION ALL SELECT id_aset FROM aset_hilang UNION ALL SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS tersedia,
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE a.id_jenis_aset=ja.id) AS total 
+                                    ka.id, 
+                                    ka.nama, 
+                                    (SELECT COUNT(*) FROM aset a WHERE a.id_kategori_aset=ka.id AND a.status='2') rusak, 
+                                    (SELECT COUNT(*) FROM aset a WHERE a.id_kategori_aset=ka.id AND a.status='3') hilang, 
+                                    (SELECT COUNT(*) FROM aset a WHERE a.id_kategori_aset=ka.id AND a.status='4') sedang_pemeliharaan, 
+                                    (SELECT COUNT(a.id) FROM aset a WHERE a.id_kategori_aset=ka.id AND a.status='5') sedang_dipinjam, 
+                                    (SELECT COUNT(a.id) FROM aset a WHERE a.id_kategori_aset=ka.id AND a.status='1') tersedia,
+                                    (SELECT COUNT(a.id) FROM aset a WHERE a.id_kategori_aset=ka.id) total 
                                 FROM 
-                                    jenis_aset AS ja
+                                    kategori_aset ka
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;

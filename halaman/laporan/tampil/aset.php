@@ -41,26 +41,24 @@
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sifat Aset</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Kategori Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tanggal Masuk</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Keterangan</th>
                                 </tr>
                             </thead>
                             <?php
                             $q = "
                                 SELECT
                                     ja.nama AS jenis_aset, 
-                                    sa.nama AS sifat_aset, 
+                                    ka.nama AS kategori_aset, 
                                     a.nama, 
-                                    a.tanggal_masuk,
-                                    a.keterangan   
+                                    a.tanggal_masuk
                                 FROM 
                                     aset AS a  
                                 INNER JOIN 
-                                    sifat_aset AS sa
+                                    kategori_aset AS ka
                                 ON 
-                                    a.id_sifat_aset=sa.id 
+                                    a.id_kategori_aset=ka.id 
                                 INNER JOIN 
                                     jenis_aset AS ja  
                                 ON 
@@ -85,7 +83,7 @@
                                                 <p class="text-secondary mb-0"><?= $row['jenis_aset']; ?></p>
                                             </td>
                                             <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= $row['sifat_aset']; ?></p>
+                                                <p class="text-secondary mb-0"><?= $row['kategori_aset']; ?></p>
                                             </td>
                                             <td class="text-center">
                                                 <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
@@ -93,14 +91,11 @@
                                             <td class="text-center">
                                                 <p class="text-secondary mb-0"><?= tanggalIndonesia($row['tanggal_masuk']); ?></p>
                                             </td>
-                                            <td class="text-center">
-                                                <p class="text-secondary mb-0"><?= $row['keterangan']; ?></p>
-                                            </td>
                                         </tr>
                                     <?php endwhile; ?>
                                 <?php else : ?>
                                     <tr>
-                                        <td colspan="6" class="text-center">Data Kosong</td>
+                                        <td colspan="5" class="text-center">Data Kosong</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
