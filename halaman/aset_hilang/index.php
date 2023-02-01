@@ -21,11 +21,11 @@
                             <?php
                             $q = "
                                 SELECT 
-                                    ja.id, 
-                                    ja.nama, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ar ON a.id=ar.id_aset WHERE ja.id=a.id_jenis_aset) AS hilang 
+                                    ka.id, 
+                                    ka.nama, 
+                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ar ON a.id=ar.id_aset WHERE ka.id=a.id_kategori_aset) AS hilang 
                                 FROM 
-                                    jenis_aset AS ja
+                                    kategori_aset ka
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;
@@ -43,7 +43,7 @@
                                             <p class="text-secondary mb-0"><?= $row['hilang']; ?></p>
                                         </td>
                                         <td class="small-td">
-                                            <a href="?h=aset_hilang_per_jenis_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
+                                            <a href="?h=aset_hilang_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

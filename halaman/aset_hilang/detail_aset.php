@@ -1,33 +1,33 @@
 <?php
 $q = "
     SELECT 
-        ja.nama AS jenis_aset,
-        sa.nama AS sifat_aset,
-        a.id_jenis_aset,
+        ja.nama jenis_aset,
+        ka.nama kategori_aset,
+        a.id_kategori_aset,
         a.nama,
-        a.detail,
         a.foto,
         ah.id,  
         ah.tanggal,  
         ah.keterangan 
     FROM 
-        aset_hilang AS ah 
+        aset_hilang ah 
     INNER JOIN 
-        aset AS a 
+        aset a 
     ON 
         ah.id_aset=a.id 
     INNER JOIN 
-        jenis_aset AS ja 
+        jenis_aset ja 
     ON 
         ja.id=a.id_jenis_aset 
     INNER JOIN 
-        sifat_aset AS sa 
+        kategori_aset ka 
     ON 
-        sa.id=a.id_sifat_aset   
+        ka.id=a.id_kategori_aset   
     WHERE 
         ah.id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
+$data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_GET['id'])->fetch_all(MYSQLI_ASSOC);
 ?>
 <div class="container-fluid py-4">
     <div class="row">
@@ -57,12 +57,8 @@ $data = $result->fetch_assoc();
                     <div class="row">
                         <div class="col-12">
                             <div class="mb-3">
-                                <label class="form-label">Jenis Aset</label>
-                                <input type="text" class="form-control p-2" disabled value="<?= $data['jenis_aset'] ?>">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Sifat Aset</label>
-                                <input type="text" class="form-control p-2" disabled value="<?= $data['sifat_aset'] ?>">
+                                <label class="form-label">Kategori Aset</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset'] ?>">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Nama</label>
@@ -70,16 +66,12 @@ $data = $result->fetch_assoc();
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Detail</label>
-                                <div class="row" id="detail">
-                                    <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
-                                        <div class="col-6 mb-3">
-                                            <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+                                <?php foreach ($data['detail'] as $key => $value) : ?>
+                                    <div class="row ps-1 mb-2">
+                                        <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
+                                        <div class="col-8">: <?= $value['nilai']; ?></div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                             <hr>
                             <div class="mb-3">
@@ -91,8 +83,8 @@ $data = $result->fetch_assoc();
                                 <textarea class="form-control p-2" rows="5" disabled><?= $data['keterangan'] ?></textarea>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <a href="?h=aset_hilang_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
-                                <a href="?h=hapus_aset_hilang&id=<?= $data['id']; ?>&id_jenis_aset=<?= $data['id_jenis_aset']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Hapus</a>
+                                <a href="?h=aset_hilang_per_kategori_aset&id=<?= $data['id_kategori_aset']; ?>" class="btn btn-secondary">Kembali</a>
+                                <a href="?h=hapus_aset_hilang&id=<?= $data['id']; ?>&id_kategori_aset=<?= $data['id_kategori_aset']; ?>" class="btn btn-danger" onclick="return confirm('Yakin?')">Hapus</a>
                             </div>
                         </div>
                     </div>

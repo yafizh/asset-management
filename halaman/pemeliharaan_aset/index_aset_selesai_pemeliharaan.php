@@ -3,12 +3,12 @@
         <div class="col-12">
             <div class="card my-4">
                 <?php
-                $q = "SELECT nama FROM jenis_aset WHERE id=" . $_GET['id'];
+                $q = "SELECT nama FROM kategori_aset WHERE id=" . $_GET['id'];
                 $result = $mysqli->query($q);
                 ?>
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Data Aset <strong><?= $result->fetch_assoc()['nama']; ?></strong> yang Sedang Dalam Pemeliharaan</h6>
+                        <h6 class="text-white text-capitalize m-0">Data Aset <strong><?= $result->fetch_assoc()['nama']; ?></strong> yang Telah Selesai Pemeliharaan</h6>
                     </div>
                 </div>
 
@@ -40,7 +40,7 @@
                                 ON 
                                     pa.id_aset=a.id 
                                 WHERE 
-                                    pa.tanggal_selesai IS NOT NULL AND a.id_jenis_aset=" . $_GET['id'] . "
+                                    pa.tanggal_selesai IS NOT NULL AND a.id_kategori_aset=" . $_GET['id'] . "
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;

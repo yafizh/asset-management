@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card my-4">
                 <?php
-                $q = "SELECT nama FROM jenis_aset WHERE id=" . $_GET['id'];
+                $q = "SELECT nama FROM kategori_aset WHERE id=" . $_GET['id'];
                 $result = $mysqli->query($q);
                 ?>
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -38,7 +38,7 @@
                                 ON 
                                     pa.id_aset=a.id 
                                 WHERE 
-                                    pa.tanggal_selesai IS NULL AND a.id_jenis_aset=" . $_GET['id'] . "
+                                    pa.tanggal_selesai IS NULL AND a.id_kategori_aset=" . $_GET['id'] . "
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;

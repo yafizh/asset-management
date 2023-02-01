@@ -21,12 +21,12 @@
                             <?php
                             $q = "
                                 SELECT 
-                                    ja.id, 
-                                    ja.nama, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE ja.id=a.id_jenis_aset AND a.id IN (SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS sedang_dalam_pemeliharaan, 
-                                    (SELECT COUNT(a.id) FROM aset AS a WHERE ja.id=a.id_jenis_aset AND a.id IN (SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NOT NULL)) AS telah_menjalani_pemeliharaan   
+                                    ka.id, 
+                                    ka.nama, 
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE ka.id=a.id_kategori_aset AND a.id IN (SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NULL)) AS sedang_dalam_pemeliharaan, 
+                                    (SELECT COUNT(a.id) FROM aset AS a WHERE ka.id=a.id_kategori_aset AND a.id IN (SELECT id_aset FROM pemeliharaan_aset WHERE tanggal_selesai IS NOT NULL)) AS telah_menjalani_pemeliharaan   
                                 FROM 
-                                    jenis_aset AS ja
+                                    kategori_aset ka
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;

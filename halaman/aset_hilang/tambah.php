@@ -1,46 +1,53 @@
 <?php
 $q = "
 SELECT 
-    ja.nama AS jenis_aset,
-    sa.nama AS sifat_aset,
+    ja.nama jenis_aset,
+    ka.nama kategori_aset,
     a.* 
 FROM 
-    aset AS a 
+    aset a 
 INNER JOIN 
-    jenis_aset AS ja 
+    jenis_aset ja 
 ON 
     ja.id=a.id_jenis_aset 
 INNER JOIN 
-    sifat_aset AS sa 
+    kategori_aset ka 
 ON 
-    sa.id=a.id_sifat_aset 
+    ka.id=a.id_kategori_aset 
 WHERE 
     a.id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
-
+$data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_GET['id'])->fetch_all(MYSQLI_ASSOC);
 if (isset($_POST['submit'])) {
     $id = $mysqli->real_escape_string($_GET['id']);
     $tanggal = $mysqli->real_escape_string($_POST['tanggal']);
     $keterangan = $mysqli->real_escape_string($_POST['keterangan']);
 
-    $q = "
-    INSERT INTO aset_hilang (
-        id_aset, 
-        tanggal, 
-        keterangan 
-    ) VALUES (
-        '$id',
-        '$tanggal',
-        '$keterangan'
-    )";
+    try {
+        $mysqli->begin_transaction();
 
-    if ($mysqli->query($q)) {
+        $q = "
+        INSERT INTO aset_hilang (
+            id_aset, 
+            tanggal, 
+            keterangan 
+        ) VALUES (
+            '$id',
+            '$tanggal',
+            '$keterangan'
+        )";
+        $mysqli->query($q);
+        $mysqli->query("UPDATE aset SET status=3 WHERE id=$id");
+
+        $mysqli->commit();
         echo "<script>alert('Pelaporan Aset Hilang Berhasil!')</script>";
         echo "<script>location.href = '?h=detail_aset&id=$id';</script>";
-    } else {
+    } catch (\Throwable $e) {
         echo "<script>alert('Pelaporan Aset Hilang Gagal!')</script>";
         die($mysqli->error);
+        $mysqli->rollback();
+        throw $e;
     }
 }
 ?>
@@ -56,21 +63,21 @@ if (isset($_POST['submit'])) {
                 <div class="card-body">
                     <form action="" method="POST">
                         <div class="mb-3">
+                            <label class="form-label">Kategori Aset</label>
+                            <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset'] ?>">
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Nama</label>
                             <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Detail</label>
-                            <div class="row" id="detail">
-                                <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
-                                    <div class="col-6 mb-3">
-                                        <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
+                            <?php foreach ($data['detail'] as $key => $value) : ?>
+                                <div class="row ps-1 mb-2">
+                                    <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
+                                    <div class="col-8">: <?= $value['nilai']; ?></div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                         <hr>
                         <div class="mb-3">
