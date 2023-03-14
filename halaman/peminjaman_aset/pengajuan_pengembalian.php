@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
                                     <?php foreach ($data['detail'] as $key => $value) : ?>
                                         <div class="row ps-1 mb-2">
                                             <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
-                                            <div class="col-8">: <?= $value['nilai']; ?></div>
+                                            <div class="col-auto">: <?= $value['nilai']; ?></div>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
