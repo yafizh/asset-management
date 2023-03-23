@@ -1,10 +1,9 @@
 <?php
 if (isset($_POST['submit'])) {
     $id_jenis_aset = $mysqli->real_escape_string($_POST['id_jenis_aset']);
-    $id_sifat_aset = $mysqli->real_escape_string($_POST['id_sifat_aset']);
+    $id_kategori_aset = $mysqli->real_escape_string($_POST['id_kategori_aset']);
     $nama = $mysqli->real_escape_string($_POST['nama']);
     $tanggal_masuk = $mysqli->real_escape_string($_POST['tanggal_masuk']);
-    $keterangan = $mysqli->real_escape_string($_POST['keterangan']);
 
     $detail = [];
     for ($i = 0; $i < count($_POST['detail']); $i += 2) {
@@ -42,26 +41,46 @@ if (isset($_POST['submit'])) {
     }
 
     if ($uploadOk) {
-        $q = "
+        try {
+            $mysqli->begin_transaction();
+
+            $q = "
             INSERT INTO aset (
                 id_jenis_aset, 
-                id_sifat_aset, 
+                id_kategori_aset, 
                 nama, 
                 tanggal_masuk, 
-                detail, 
-                foto, 
-                keterangan
+                foto,
+                status
             ) VALUES (
                 '$id_jenis_aset', 
-                '$id_sifat_aset', 
+                '$id_kategori_aset', 
                 '$nama', 
                 '$tanggal_masuk', 
-                '" . json_encode($detail) . "', 
                 '$target_file',
-                '$keterangan'
+                '1'
             )";
+            $mysqli->query($q);
 
-        if ($mysqli->query($q)) {
+            $id_aset = $mysqli->insert_id;
+
+            foreach ($detail as $kolom => $nilai) {
+                $q = "
+                    INSERT INTO detail_aset (
+                        id_aset, 
+                        kolom, 
+                        nilai
+                    ) VALUES (
+                        '$id_aset', 
+                        '$kolom', 
+                        '$nilai' 
+                    )";
+                $mysqli->query($q);
+            }
+
+
+            $mysqli->commit();
+
             echo "<script>alert('Tambah Data Berhasil!')</script>";
             echo
             isset($_GET['id_jenis_aset'])
@@ -69,9 +88,10 @@ if (isset($_POST['submit'])) {
                 "<script>location.href = '?h=aset_per_jenis_aset&id=" . $_GET['id_jenis_aset'] . "';</script>"
                 :
                 "<script>location.href = '?h=aset';</script>";
-        } else {
+        } catch (\Throwable $e) {
             echo "<script>alert('Tambah Data Gagal!')</script>";
-            die($mysqli->error);
+            $mysqli->rollback();
+            throw $e;
         }
     }
 }
@@ -111,11 +131,11 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="mb-3">
                             <?php
-                            $q = "SELECT * FROM sifat_aset";
+                            $q = "SELECT * FROM kategori_aset";
                             $result = $mysqli->query($q);
                             ?>
-                            <label for="id_sifat_aset" class="form-label">Sifat Aset</label>
-                            <select class="form-control p-2" id="id_sifat_aset" name="id_sifat_aset" required>
+                            <label for="id_kategori_aset" class="form-label">Kategori Aset</label>
+                            <select class="form-control p-2" id="id_kategori_aset" name="id_kategori_aset" required>
                                 <option selected value="" disabled>Pilih</option>
                                 <?php while ($row = $result->fetch_assoc()) : ?>
                                     <option value="<?= $row['id']; ?>"><?= $row['nama']; ?></option>
@@ -133,10 +153,6 @@ if (isset($_POST['submit'])) {
                         <div class="mb-3">
                             <label for="foto" class="form-label">Foto</label>
                             <input class="form-control" type="file" name="foto" id="foto" required accept="image/*">
-                        </div>
-                        <div class="mb-3">
-                            <label for="keterangan" class="form-label">Keterangan</label>
-                            <textarea class="form-control p-2" rows="5" id="keterangan" name="keterangan" required autocomplete="off"></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Detail</label>

@@ -3,13 +3,13 @@
 $q = "SELECT * FROM aset WHERE id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
+$data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $data['id'])->fetch_all(MYSQLI_ASSOC);
 
 if (isset($_POST['submit'])) {
     $id_jenis_aset = $mysqli->real_escape_string($_POST['id_jenis_aset']);
-    $id_sifat_aset = $mysqli->real_escape_string($_POST['id_sifat_aset']);
+    $id_kategori_aset = $mysqli->real_escape_string($_POST['id_kategori_aset']);
     $nama = $mysqli->real_escape_string($_POST['nama']);
     $tanggal_masuk = $mysqli->real_escape_string($_POST['tanggal_masuk']);
-    $keterangan = $mysqli->real_escape_string($_POST['keterangan']);
 
     $detail = [];
     for ($i = 0; $i < count($_POST['detail']); $i += 2) {
@@ -47,24 +47,44 @@ if (isset($_POST['submit'])) {
     } else $target_file = $data['foto'];
 
     if ($uploadOk) {
-        $q = "
+        try {
+            $mysqli->begin_transaction();
+
+            $q = "
             UPDATE aset SET 
                 id_jenis_aset='$id_jenis_aset', 
-                id_sifat_aset='$id_sifat_aset', 
+                id_kategori_aset='$id_kategori_aset', 
                 nama='$nama', 
                 tanggal_masuk='$tanggal_masuk', 
                 detail='" . json_encode($detail) . "', 
-                foto='$target_file', 
-                keterangan='$keterangan' 
+                foto='$target_file' 
             WHERE 
                 id=" . $data['id'];
 
-        if ($mysqli->query($q)) {
+            $mysqli->query("DELETE FROM detail_aset WHERE id_aset=" . $data['id']);
+            foreach ($detail as $kolom => $nilai) {
+                $q = "
+                    INSERT INTO detail_aset (
+                        id_aset, 
+                        kolom, 
+                        nilai
+                    ) VALUES (
+                        '" . $data['id'] . "', 
+                        '$kolom', 
+                        '$nilai' 
+                    )";
+                $mysqli->query($q);
+            }
+
+
+            $mysqli->commit();
+
             echo "<script>alert('Edit Data Berhasil!')</script>";
             echo "<script>location.href = '?h=detail_aset&id=" . $data['id'] . "';</script>";
-        } else {
+        } catch (\Throwable $e) {
             echo "<script>alert('Edit Data Gagal!')</script>";
-            die($mysqli->error);
+            $mysqli->rollback();
+            throw $e;
         }
     }
 }
@@ -98,14 +118,14 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="mb-3">
                             <?php
-                            $q = "SELECT * FROM sifat_aset";
+                            $q = "SELECT * FROM kategori_aset";
                             $result = $mysqli->query($q);
                             ?>
-                            <label for="id_sifat_aset" class="form-label">Sifat Aset</label>
-                            <select class="form-control p-2" id="id_sifat_aset" name="id_sifat_aset" required>
+                            <label for="id_kategori_aset" class="form-label">Kategori Aset</label>
+                            <select class="form-control p-2" id="id_kategori_aset" name="id_kategori_aset" required>
                                 <option selected value="" disabled>Pilih</option>
                                 <?php while ($row = $result->fetch_assoc()) : ?>
-                                    <?php if ($row['id'] === $data['id_sifat_aset']) : ?>
+                                    <?php if ($row['id'] === $data['id_kategori_aset']) : ?>
                                         <option value="<?= $row['id']; ?>" selected><?= $row['nama']; ?></option>
                                     <?php else : ?>
                                         <option value="<?= $row['id']; ?>"><?= $row['nama']; ?></option>
@@ -126,18 +146,14 @@ if (isset($_POST['submit'])) {
                             <input class="form-control" type="file" name="foto" id="foto">
                         </div>
                         <div class="mb-3">
-                            <label for="keterangan" class="form-label">Keterangan</label>
-                            <textarea class="form-control p-2" rows="5" id="keterangan" name="keterangan" required autocomplete="off"><?= $data['keterangan']; ?></textarea>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label">Detail</label>
                             <div class="row" id="detail">
-                                <?php foreach (json_decode($data['detail']) as $key => $value) : ?>
+                                <?php foreach ($data['detail'] as $value) : ?>
                                     <div class="col-6 mb-3">
-                                        <input type="text" class="form-control p-2" value="<?= $key; ?>" disabled>
+                                        <input type="text" class="form-control p-2" name="detail[]" autocomplete="off" value="<?= $value['kolom']; ?>">
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <input type="text" class="form-control p-2" value="<?= $value; ?>" disabled>
+                                        <input type="text" class="form-control p-2" name="detail[]" autocomplete="off" value="<?= $value['nilai']; ?>">
                                     </div>
                                 <?php endforeach; ?>
                                 <div class="col-6 mb-3">
