@@ -8,6 +8,8 @@ $q = "
         a.nama,
         a.tanggal_masuk,
         a.foto,
+        p.nip,
+        p.nama nama_pegawai,
         DATE(pa.timestamp_pengajuan) tanggal_pengajuan,
         DATE(pa.timestamp_pengajuan_ditentukan) tanggal_pengajuan_ditentukan,
         pa.keterangan_pengajuan,
@@ -27,6 +29,10 @@ $q = "
         jenis_aset ja 
     ON 
         ja.id=a.id_jenis_aset  
+    INNER JOIN 
+        pegawai p 
+    ON 
+        p.id=pa.id_pegawai  
     WHERE 
         a.id=" . $_GET['id'];
 $result = $mysqli->query($q);
@@ -82,6 +88,14 @@ $data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_
                                 <?php endforeach; ?>
                             </div>
                             <hr>
+                            <div class="mb-3">
+                                <label class="form-label">NIP Peminjam</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['nip']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama Peminjam</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['nama_pegawai']; ?>">
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label">Tanggal Pengajuan</label>
                                 <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesiaString($data['tanggal_pengajuan']); ?>">
