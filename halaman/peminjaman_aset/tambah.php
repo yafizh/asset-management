@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
         <video style="width: 100%; height: 100%;"></video>
     </div>
     <div id="form-peminjaman" class="row justify-content-center <?= $_GET['id'] ?? 'd-none' ?>">
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3" id="aset">
             <div class="col-12 mb-5">
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -89,13 +89,13 @@ if (isset($_POST['submit'])) {
                             <form action="" method="POST">
                                 <div class="mb-3">
                                     <label class="form-label">Kategori Aset</label>
-                                    <input type="text" class="form-control p-2" disabled id="jenis_aset" value="<?= $data['kategori_aset'] ?? ''; ?>">
+                                    <input type="text" class="form-control p-2" disabled id="kategori_aset" value="<?= $data['kategori_aset'] ?? ''; ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nama</label>
                                     <input type="text" class="form-control p-2" disabled id="nama" value="<?= $data['nama'] ?? ''; ?>">
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3" id="detail">
                                     <label class="form-label">Detail</label>
                                     <?php foreach ($data['detail'] as $key => $value) : ?>
                                         <div class="row ps-1 mb-2">
@@ -118,26 +118,8 @@ if (isset($_POST['submit'])) {
                                         <a href="?h=aset_per_jenis_aset&id=<?= $data['id_jenis_aset']; ?>" class="btn btn-secondary">Kembali</a>
                                     </div>
                                     <div class="d-flex justify-content-end align-items-center flex-wrap gap-1 flex-grow-1">
-                                        <?php if ($data['status'] == 1) : ?>
-                                            <input id="id_aset" type="text" name="id" value="<?= $data['id'] ?? ''; ?>" hidden>
-                                            <button type="submit" name="submit" class="btn btn-success" onclick="return confirm('Yakin?')">Ajukan Peminjaman</button>
-                                        <?php elseif ($data['status'] == 2) : ?>
-                                            <div class="alert alert-danger text-white" role="alert">
-                                                Aset Sedang Dalam Keadaan <strong>Rusak</strong>
-                                            </div>
-                                        <?php elseif ($data['status'] == 3) : ?>
-                                            <div class="alert alert-danger text-white" role="alert">
-                                                Aset Sedang Dalam Keadaan <strong>Hilang</strong>
-                                            </div>
-                                        <?php elseif ($data['status'] == 4) : ?>
-                                            <div class="alert alert-warning text-white" role="alert">
-                                                Aset Sedang Dalam Keadaan <strong>Masa Pemeliharaan</strong>
-                                            </div>
-                                        <?php elseif ($data['status'] == 5) : ?>
-                                            <div class="alert alert-info text-white" role="alert">
-                                                Aset Sedang Dalam Keadaan <strong>Dipinjam</strong> oleh pegawai lain. Tunggu pengembalian terlebih dahulu untuk dapat meminjam aset ini.
-                                            </div>
-                                        <?php endif; ?>
+                                        <input id="id_aset" type="text" name="id" value="<?= $data['id'] ?? ''; ?>" hidden>
+                                        <button type="submit" name="submit" class="btn btn-success" onclick="return confirm('Yakin?')">Ajukan Peminjaman</button>
                                     </div>
                                 </div>
                             </form>
@@ -164,31 +146,28 @@ if (isset($_POST['submit'])) {
 
     const id_aset = document.getElementById('id_aset');
     const nama = document.getElementById('nama');
-    const jenis_aset = document.getElementById('jenis_aset');
+    const kategori_aset = document.getElementById('kategori_aset');
     const detail = document.getElementById('detail');
     const foto = document.getElementById('foto');
     const modal_foto = document.getElementById('modal_foto');
 
 
-
     const setResult = (result) => {
         const data = JSON.parse(result.data);
-        const detail_data = JSON.parse(data.detail);
+        const detail_data = data.detail;
         id_aset.value = data.id;
         nama.value = data.nama;
-        jenis_aset.value = data.jenis_aset;
+        kategori_aset.value = data.kategori_aset;
         foto.setAttribute('src', data.foto);
         modal_foto.setAttribute('src', data.foto);
         detail.innerText = '';
-        for (let i = 0; i < Object.keys(detail_data).length; i++) {
+        for (let i = 0; i < Object.values(detail_data).length; i++) {
             detail.insertAdjacentHTML('beforeend',
                 `
-            <div class="col-6 mb-3">
-                <input type="text" class="form-control p-2 detail" value="${Object.keys(detail_data)[i]}" disabled>
-            </div>
-            <div class="col-6 mb-3">
-                <input type="text" class="form-control p-2 detail" value="${Object.values(detail_data)[i]}" disabled>
-            </div>
+                <div class="row ps-1 mb-2">
+                    <div class="col-auto" style="width: 120px;">${Object.values(detail_data)[i]["kolom"]}</div>
+                    <div class="col-auto">: ${Object.values(detail_data)[i]["nilai"]}</div>
+                </div>
             `
             );
         }
@@ -202,17 +181,19 @@ if (isset($_POST['submit'])) {
         highlightScanRegion: true,
         highlightCodeOutline: true,
     });
-    scanner.start();
-    (async () => {
-        const selectCamera = document.getElementById('camera');
-        for (const camera of await QrScanner.listCameras(true)) {
-            const option = document.createElement('option');
-            option.value = camera.id;
-            option.innerText = camera.label;
-            selectCamera.append(option);
-        }
-        selectCamera.addEventListener('change', function() {
-            scanner.setCamera(this.value);
-        });
-    })();
+    <?php if (!isset($_GET['id'])) : ?>
+        scanner.start();
+    <?php endif; ?>
+        (async () => {
+            const selectCamera = document.getElementById('camera');
+            for (const camera of await QrScanner.listCameras(true)) {
+                const option = document.createElement('option');
+                option.value = camera.id;
+                option.innerText = camera.label;
+                selectCamera.append(option);
+            }
+            selectCamera.addEventListener('change', function() {
+                scanner.setCamera(this.value);
+            });
+        })();
 </script>

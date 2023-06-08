@@ -14,10 +14,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Rusak</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Hilang</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sedang Pemeliharaan</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Kategori Aset</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Sedang Dipinjam</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tersedia</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Total</th>
@@ -48,30 +45,6 @@
                                         </td>
                                         <td class="text-center">
                                             <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <a href="?h=aset_rusak_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-danger text-white">
-                                                <span class="badge badge-sm bg-gradient-danger p-2">
-                                                    <?= $row['rusak']; ?>
-                                                </span>
-                                                Lihat
-                                            </a>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <a href="?h=aset_hilang_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-danger text-white">
-                                                <span class="badge badge-sm bg-gradient-danger p-2">
-                                                    <?= $row['hilang']; ?>
-                                                </span>
-                                                Lihat
-                                            </a>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <a href="?h=aset_sedang_pemeliharaan&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-warning text-white">
-                                                <span class="badge badge-sm bg-gradient-warning p-2">
-                                                    <?= $row['sedang_pemeliharaan']; ?>
-                                                </span>
-                                                Lihat
-                                            </a>
                                         </td>
                                         <td class="align-middle text-center">
                                             <a href="?h=aset_dipinjam_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm m-0 btn-info text-white">
