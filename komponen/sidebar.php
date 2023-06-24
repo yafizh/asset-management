@@ -55,6 +55,14 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link <?= $active === 'aset_masuk' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_masuk">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">dangerous</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Pemnambahan Aset</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link <?= $active === 'aset_rusak' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_rusak">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">dangerous</i>
@@ -70,14 +78,14 @@
                     <span class="nav-link-text ms-1">Aset Hilang</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link <?= $active === 'pemeliharaan_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pemeliharaan_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">date_range</i>
                     </div>
                     <span class="nav-link-text ms-1">Pemeliharaan Aset</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Peminjaman Aset</h6>
             </li>

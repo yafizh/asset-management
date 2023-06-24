@@ -18,7 +18,6 @@
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Rusak</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Hilang</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Dipinjam</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Total</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -29,8 +28,7 @@
                                     a.*,
                                     (SELECT COUNT(*) FROM aset_masuk ar WHERE ar.id_aset=a.id) masuk,
                                     (SELECT COUNT(*) FROM aset_rusak ar WHERE ar.id_aset=a.id) rusak,
-                                    (SELECT COUNT(*) FROM aset_hilang ah WHERE ah.id_aset=a.id) hilang,
-                                    (SELECT COUNT(*) FROM peminjaman_aset ad WHERE ad.id_aset=a.id AND ad.id NOT IN (SELECT id_peminjaman_aset FROM pengembalian_aset)) dipinjam
+                                    (SELECT COUNT(*) FROM aset_hilang ah WHERE ah.id_aset=a.id) hilang
                                 FROM 
                                     aset a
                                 WHERE 
@@ -65,12 +63,9 @@
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-secondary mb-0"><?= $row['dipinjam']; ?></p>
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-info text-white">
+                                        <a href="?h=tambah_aset_masuk&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-info text-white">
                                                 <span class="badge badge-sm bg-gradient-info p-2">
-                                                    <?= $row['jumlah'] + $row['masuk'] - $row['rusak'] - $row['hilang'] - $row['dipinjam']; ?>
+                                                    <?= $row['jumlah'] + $row['masuk'] - $row['rusak'] - $row['hilang'] ?>
                                                 </span>
                                                 Tambah
                                             </a>

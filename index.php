@@ -213,6 +213,16 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'tambah_aset_hilang') $page = 'halaman/aset_hilang/tambah.php';
             elseif ($_GET['h'] === 'hapus_aset_hilang') $page = 'halaman/aset_hilang/hapus.php';
 
+             // Aset Masuk
+             if (in_array($_GET['h'], ['aset_masuk', 'tambah_aset_masuk', 'hapus_aset_masuk'])) {
+                $navbar = "Penambahan Aset";
+                $active = 'aset_masuk';
+            }
+
+            if ($_GET['h'] === 'aset_masuk') $page = 'halaman/aset_masuk/index.php';
+            elseif ($_GET['h'] === 'tambah_aset_masuk') $page = 'halaman/aset_masuk/tambah.php';
+            elseif ($_GET['h'] === 'hapus_aset_masuk') $page = 'halaman/aset_masuk/hapus.php';
+
             // Pemeliharaan Aset
             if (in_array($_GET['h'], ['pemeliharaan_aset', 'tambah_pemeliharaan_aset', 'aset_sedang_pemeliharaan', 'aset_selesai_pemeliharaan', 'detail_pemeliharaan_aset', 'pemeliharaan_aset_selesai'])) $active = 'pemeliharaan_aset';
 
