@@ -17,11 +17,8 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <?php if ($_SESSION['user']['status'] === 'ADMIN') : ?>
-                <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Master</h6>
-                </li>
-                <li class="nav-item">
+            <?php if ($_SESSION['user']['status'] == 1) : ?>
+                <!-- <li class="nav-item">
                     <a class="nav-link <?= $active === 'jenis_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=jenis_aset">
                         <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">lan</i>
@@ -36,7 +33,7 @@
                         </div>
                         <span class="nav-link-text ms-1">Kategori Aset</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link <?= $active === 'pegawai' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pegawai">
                         <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
@@ -45,20 +42,12 @@
                         <span class="nav-link-text ms-1">Pegawai</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= $active === 'pengguna' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengguna">
-                        <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">person</i>
-                        </div>
-                        <span class="nav-link-text ms-1">Pengguna</span>
-                    </a>
-                </li>
             <?php endif; ?>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Data Aset</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === 'aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset">
+                <a class="nav-link <?= $active === 'aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=jenis_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">select_all</i>
                     </div>
@@ -124,7 +113,7 @@
                     <span class="nav-link-text ms-1">Pengajuan Pengembalian</span>
                 </a>
             </li>
-            <?php if ($_SESSION['user']['status'] === 'ADMIN') : ?>
+            <?php if ($_SESSION['user']['status'] == 1) : ?>
                 <li class="nav-item mt-3">
                     <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Laporan</h6>
                 </li>
@@ -193,25 +182,6 @@
                     </a>
                 </li>
             <?php endif; ?>
-            <li class="nav-item mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Pengaturan</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?= $active === 'ganti_password' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=ganti_password">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">lock</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Ganti Password</span>
-                </a>
-            </li>
-            <li class="nav-item mb-5">
-                <a class="nav-link text-dark" href="halaman/logout/index.php">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">login</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Keluar</span>
-                </a>
-            </li>
         </ul>
     </div>
 </aside>
