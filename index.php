@@ -194,13 +194,14 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'hapus_aset') $page = 'halaman/aset/hapus.php';
 
             // Aset Rusak
-            if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak', 'detail_aset_rusak', 'aset_rusak_per_kategori_aset'])) $active = 'aset_rusak';
+            if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak'])) {
+                $navbar = "Aset Rusak";
+                $active = 'aset_rusak';
+            } 
 
             if ($_GET['h'] === 'aset_rusak') $page = 'halaman/aset_rusak/index.php';
             elseif ($_GET['h'] === 'tambah_aset_rusak') $page = 'halaman/aset_rusak/tambah.php';
             elseif ($_GET['h'] === 'hapus_aset_rusak') $page = 'halaman/aset_rusak/hapus.php';
-            elseif ($_GET['h'] === 'detail_aset_rusak') $page = 'halaman/aset_rusak/detail_aset.php';
-            elseif ($_GET['h'] === 'aset_rusak_per_kategori_aset') $page = 'halaman/aset_rusak/index_per_kategori_aset.php';
 
             // Aset Hilang
             if (in_array($_GET['h'], ['aset_hilang', 'tambah_aset_hilang', 'hapus_aset_hilang', 'detail_aset_hilang', 'aset_hilang_per_kategori_aset'])) $active = 'aset_hilang';

@@ -49,7 +49,7 @@
                                             <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                         </td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-danger text-white">
+                                            <a href="?h=tambah_aset_rusak&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
                                                     <?= $row['rusak']; ?>
                                                 </span>
@@ -77,7 +77,7 @@
                                         </td>
                                         <td class="small-td">
                                             <a href="?h=edit_aset&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm btn-warning text-white m-0">Edit</a>
-                                            <a href="?h=hapus_aset&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm btn-danger text-white m-0">Hapus</a>
+                                            <a href="?h=hapus_aset&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm btn-danger text-white m-0" onclick="return confirm('Yakin?')">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
