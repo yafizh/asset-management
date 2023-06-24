@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php
+session_start();
+include_once('database/koneksi.php');
+?>
 <?php
 if (!isset($_SESSION['user'])) {
     echo "<script>location.href = 'halaman/login';</script>";
@@ -101,7 +104,7 @@ if (!isset($_SESSION['user'])) {
 <body class="g-sidenav-show bg-gray-200">
     <?php
     // Route for Admin and Petugas
-    if ($_SESSION['user']['status'] === 'ADMIN' || $_SESSION['user']['status'] === 'PETUGAS') {
+    if ($_SESSION['user']['status'] == 1 || $_SESSION['user']['status'] == 2) {
         if (isset($_GET['h'])) {
             // Laporan
             if ($_GET['h'] === 'laporan_pegawai') {
@@ -160,30 +163,35 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'detail_pegawai') $page = 'halaman/pegawai/detail.php';
 
             // Jenis Aset
-            if (in_array($_GET['h'], ['jenis_aset', 'tambah_jenis_aset', 'edit_jenis_aset', 'hapus_jenis_aset'])) $active = 'jenis_aset';
+            if (in_array($_GET['h'], ['jenis_aset'])) $active = 'aset';
 
-            if ($_GET['h'] === 'jenis_aset') $page = 'halaman/jenis_aset/index.php';
-            elseif ($_GET['h'] === 'tambah_jenis_aset') $page = 'halaman/jenis_aset/tambah.php';
-            elseif ($_GET['h'] === 'edit_jenis_aset') $page = 'halaman/jenis_aset/edit.php';
-            elseif ($_GET['h'] === 'hapus_jenis_aset') $page = 'halaman/jenis_aset/hapus.php';
+            if ($_GET['h'] === 'jenis_aset') {
+                $navbar = "Jenis Aset";
+                $page = 'halaman/jenis_aset/index.php';
+            };
 
             // Kategori Aset
-            if (in_array($_GET['h'], ['kategori_aset', 'tambah_kategori_aset', 'edit_kategori_aset', 'hapus_kategori_aset'])) $active = 'kategori_aset';
+            if (in_array($_GET['h'], ['kategori_aset'])) $active = 'aset';
 
-            if ($_GET['h'] === 'kategori_aset') $page = 'halaman/kategori_aset/index.php';
-            elseif ($_GET['h'] === 'tambah_kategori_aset') $page = 'halaman/kategori_aset/tambah.php';
-            elseif ($_GET['h'] === 'edit_kategori_aset') $page = 'halaman/kategori_aset/edit.php';
-            elseif ($_GET['h'] === 'hapus_kategori_aset') $page = 'halaman/kategori_aset/hapus.php';
+            if ($_GET['h'] === 'kategori_aset') {
+                $jenis_aset = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_GET['id_jenis_aset'])->fetch_assoc();
+                $navbar = "<a href='?h=jenis_aset'>Jenis Aset</a> \\ " . $jenis_aset['nama'] . "";
+                $page = 'halaman/kategori_aset/index.php';
+            }
 
             // Aset
             if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'hapus_aset', 'detail_aset', 'aset_per_kategori_aset'])) $active = 'aset';
+
+            if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset'])) {
+                $jenis_aset = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_GET['id_jenis_aset'])->fetch_assoc();
+                $kategori_aset = $mysqli->query("SELECT * FROM kategori_aset WHERE id=" . $_GET['id_kategori_aset'])->fetch_assoc();
+                $navbar = "<a href='?h=jenis_aset'>Jenis Aset</a> \\ <span class='text-muted'>" . $jenis_aset['nama'] . "</span> \\ <a href='?h=kategori_aset&id_jenis_aset=" . $jenis_aset['id'] . "'>Ketegori Aset</a> \\ <span class='text-muted'>" . $kategori_aset['nama'] . "</span>";
+            }
 
             if ($_GET['h'] === 'aset') $page = 'halaman/aset/index.php';
             elseif ($_GET['h'] === 'tambah_aset') $page = 'halaman/aset/tambah.php';
             elseif ($_GET['h'] === 'edit_aset') $page = 'halaman/aset/edit.php';
             elseif ($_GET['h'] === 'hapus_aset') $page = 'halaman/aset/hapus.php';
-            elseif ($_GET['h'] === 'detail_aset') $page = 'halaman/aset/detail_aset.php';
-            elseif ($_GET['h'] === 'aset_per_kategori_aset') $page = 'halaman/aset/index_per_kategori_aset.php';
 
             // Aset Rusak
             if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak', 'detail_aset_rusak', 'aset_rusak_per_kategori_aset'])) $active = 'aset_rusak';
@@ -241,7 +249,7 @@ if (!isset($_SESSION['user'])) {
     }
 
     // Route for Pegawai
-    if ($_SESSION['user']['status'] === 'PEGAWAI') {
+    if ($_SESSION['user']['status'] === 3) {
         if (isset($_GET['h'])) {
             if ($_GET['h'] === 'ganti_password') {
                 $active = 'Ganti Password';
@@ -269,12 +277,12 @@ if (!isset($_SESSION['user'])) {
     }
     ?>
     <?php
-    if ($_SESSION['user']['status'] === 'ADMIN' || $_SESSION['user']['status'] === 'PETUGAS') include_once('komponen/sidebar.php'); ?>
+    if ($_SESSION['user']['status'] == 1 || $_SESSION['user']['status'] == 2) include_once('komponen/sidebar.php'); ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <?php if ($_SESSION['user']['status'] === 'PEGAWAI') include_once('komponen/navbar.php'); ?>
+        <?php if ($_SESSION['user']['status'] == 1) include_once('komponen/navbar.php'); ?>
+        <?php if ($_SESSION['user']['status'] == 3) include_once('komponen/navbar.php'); ?>
         <div class="container-fluid py-4">
             <?php
-            include_once('database/koneksi.php');
             include_once('helper/date.php');
             include_once($page);
             ?>

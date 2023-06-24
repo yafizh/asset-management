@@ -5,7 +5,6 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
                         <h6 class="text-white text-capitalize m-0">Data Kategori Aset</h6>
-                        <a href="?h=tambah_kategori_aset" class="btn btn-dark m-0">Tambah</a>
                     </div>
                 </div>
                 <div class="card-body pb-3">
@@ -15,7 +14,6 @@
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
-                                    <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
                             <?php
@@ -29,11 +27,11 @@
                                             <p class="text-secondary mb-0"><?= $no++; ?></p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
-                                        </td>
-                                        <td class="small-td">
-                                            <a href="?h=edit_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-warning text-white">Edit</a>
-                                            <a href="?h=hapus_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin?')">Hapus</a>
+                                            <p class="text-secondary mb-0">
+                                                <a href="?h=aset&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $row['id']; ?>">
+                                                    <?= $row['nama']; ?>
+                                                </a>
+                                            </p>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
