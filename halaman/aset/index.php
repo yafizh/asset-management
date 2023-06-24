@@ -57,7 +57,7 @@
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-sm m-0 btn-danger text-white">
+                                        <a href="?h=tambah_aset_hilang&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
                                                     <?= $row['hilang']; ?>
                                                 </span>

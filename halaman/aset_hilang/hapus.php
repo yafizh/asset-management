@@ -1,9 +1,7 @@
 <?php
-
-$data = $mysqli->query("SELECT * FROM aset_hilang WHERE id=" . $_GET['id'])->fetch_assoc();
-if ($mysqli->query("DELETE FROM aset_hilang WHERE id=" . $_GET['id']) && $mysqli->query("UPDATE aset SET status=1 WHERE id=" . $data['id_aset'])) {
+if ($mysqli->query("DELETE FROM aset_hilang WHERE id=" . $_GET['id'])) {
     echo "<script>alert('Hapus Data Berhasil!')</script>";
-    echo "<script>location.href = '?h=aset_hilang_per_kategori_aset&id=" . $_GET['id_kategori_aset'] . "';</script>";
+    echo "<script>location.href = '?h=aset_hilang';</script>";
 } else {
     echo "<script>alert('Hapus Data Gagal!')</script>";
     die($mysqli->error);

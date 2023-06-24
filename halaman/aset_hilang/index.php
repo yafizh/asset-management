@@ -7,25 +7,34 @@
                         <h6 class="text-white text-capitalize m-0">Data Aset Hilang</h6>
                     </div>
                 </div>
+
                 <div class="card-body pb-3">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
+                        <table id="datatable" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jenis Aset</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jumlah Hilang</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Tanggal</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jumlah</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Keterangan</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
                             <?php
                             $q = "
                                 SELECT 
-                                    ka.id, 
-                                    ka.nama, 
-                                    (SELECT COUNT(a.id) FROM aset AS a INNER JOIN aset_hilang AS ar ON a.id=ar.id_aset WHERE ka.id=a.id_kategori_aset) AS hilang 
+                                    a.nama,
+                                    ah.id,
+                                    ah.tanggal,
+                                    ah.jumlah, 
+                                    ah.keterangan 
                                 FROM 
-                                    kategori_aset ka
+                                    aset_hilang AS ah  
+                                INNER JOIN 
+                                    aset AS a 
+                                ON 
+                                    ah.id_aset=a.id 
                             ";
                             $result = $mysqli->query($q);
                             $no = 1;
@@ -37,13 +46,19 @@
                                             <p class="text-secondary mb-0"><?= $no++; ?></p>
                                         </td>
                                         <td class="text-center">
+                                            <p class="text-secondary mb-0"><?= tanggalIndonesiaString($row['tanggal']); ?></p>
+                                        </td>
+                                        <td class="text-center">
                                             <p class="text-secondary mb-0"><?= $row['nama']; ?></p>
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-secondary mb-0"><?= $row['hilang']; ?></p>
+                                            <p class="text-secondary mb-0"><?= $row['jumlah']; ?></p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-secondary mb-0"><?= $row['keterangan']; ?></p>
                                         </td>
                                         <td class="small-td">
-                                            <a href="?h=aset_hilang_per_kategori_aset&id=<?= $row['id']; ?>" class="btn btn-sm btn-info text-white">Lihat</a>
+                                            <a href="?h=hapus_aset_hilang&id=<?= $row['id'] ?>" class="btn btn-sm btn-danger text-white m-0" onclick="return confirm('Yakin?')">Hapus</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

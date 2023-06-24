@@ -197,20 +197,21 @@ if (!isset($_SESSION['user'])) {
             if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak'])) {
                 $navbar = "Aset Rusak";
                 $active = 'aset_rusak';
-            } 
+            }
 
             if ($_GET['h'] === 'aset_rusak') $page = 'halaman/aset_rusak/index.php';
             elseif ($_GET['h'] === 'tambah_aset_rusak') $page = 'halaman/aset_rusak/tambah.php';
             elseif ($_GET['h'] === 'hapus_aset_rusak') $page = 'halaman/aset_rusak/hapus.php';
 
             // Aset Hilang
-            if (in_array($_GET['h'], ['aset_hilang', 'tambah_aset_hilang', 'hapus_aset_hilang', 'detail_aset_hilang', 'aset_hilang_per_kategori_aset'])) $active = 'aset_hilang';
+            if (in_array($_GET['h'], ['aset_hilang', 'tambah_aset_hilang', 'hapus_aset_hilang'])) {
+                $navbar = "Aset Hilang";
+                $active = 'aset_hilang';
+            }
 
             if ($_GET['h'] === 'aset_hilang') $page = 'halaman/aset_hilang/index.php';
             elseif ($_GET['h'] === 'tambah_aset_hilang') $page = 'halaman/aset_hilang/tambah.php';
             elseif ($_GET['h'] === 'hapus_aset_hilang') $page = 'halaman/aset_hilang/hapus.php';
-            elseif ($_GET['h'] === 'detail_aset_hilang') $page = 'halaman/aset_hilang/detail_aset.php';
-            elseif ($_GET['h'] === 'aset_hilang_per_kategori_aset') $page = 'halaman/aset_hilang/index_per_kategori_aset.php';
 
             // Pemeliharaan Aset
             if (in_array($_GET['h'], ['pemeliharaan_aset', 'tambah_pemeliharaan_aset', 'aset_sedang_pemeliharaan', 'aset_selesai_pemeliharaan', 'detail_pemeliharaan_aset', 'pemeliharaan_aset_selesai'])) $active = 'pemeliharaan_aset';
