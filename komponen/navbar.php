@@ -43,38 +43,66 @@
                         </div>
                     </form>
                 <?php else : ?>
-                    <h5 class="m-0"><?= $active; ?></h5>
+                    <h5 class="m-0"><?= $navbar ?? ''; ?></h5>
                 <?php endif; ?>
             </div>
-            <ul class="ms-3 navbar-nav justify-content-end" style="flex: 1;">
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-success p-0 text-center" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-bars"></i> Menu
-                    </a>
-                    <ul id="dropdown-menu-custome" class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md focus-color" href="?">
-                                <i class="fas fa-home me-1"></i> Beranda
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md focus-color" href="?h=riwayat_peminjaman_aset">
-                                <i class="fas fa-history me-1"></i> Riwayat Peminjaman
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md focus-color" href="?h=ganti_password">
-                                <i class="fas fa-lock me-1"></i> Ganti Password
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md focus-color" href="halaman/logout/index.php">
-                                <i class="fas fa-sign-out-alt me-1"></i> Keluar
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <?php if (is_null($active)) : ?>
+                <ul class="ms-3 navbar-nav justify-content-end" style="flex: 1;">
+                    <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-success p-0 text-center" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars"></i> Menu
+                        </a>
+                        <ul id="dropdown-menu-custome" class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md focus-color" href="?">
+                                    <i class="fas fa-home me-1"></i> Beranda
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md focus-color" href="?h=riwayat_peminjaman_aset">
+                                    <i class="fas fa-history me-1"></i> Riwayat Peminjaman
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md focus-color" href="?h=ganti_password">
+                                    <i class="fas fa-lock me-1"></i> Ganti Password
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md focus-color" href="halaman/logout/index.php">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Keluar
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            <?php else : ?>
+                <ul class="ms-3 navbar-nav justify-content-end" style="flex: 1;">
+                    <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                        <a href="javascript:;" class="nav-link text-success p-0 text-center" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars"></i> Menu
+                        </a>
+                        <ul id="dropdown-menu-custome" class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                            <li class="mb-2 text-center">
+                                <h6>12312321312</h6>
+                                <h6>Muhammad Arsyad</h6>
+                                <h6 class="text-muted">Admin</h6>
+                            </li>
+                            <hr>
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md focus-color" href="?h=ganti_password">
+                                    <i class="fas fa-lock me-1"></i> Ganti Password
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a class="dropdown-item border-radius-md focus-color" href="halaman/logout/index.php">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Keluar
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            <?php endif; ?>
         </div>
     </div>
 </nav>
