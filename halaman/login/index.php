@@ -6,7 +6,21 @@ if (isset($_POST['submit'])) {
   $nip = $mysqli->real_escape_string($_POST['nip']);
   $password = $mysqli->real_escape_string($_POST['password']);
 
-  $result = $mysqli->query("SELECT * FROM pengguna WHERE username='$nip' AND password='$password'");
+  $query = "
+    SELECT 
+      pengguna.*,
+      pegawai.nip,
+      pegawai.nama
+    FROM
+      pengguna  
+    LEFT JOIN   
+      pegawai 
+    ON 
+      pegawai.id_pengguna=pengguna.id 
+    WHERE 
+      username='$nip' AND password='$password'
+  ";
+  $result = $mysqli->query($query);
 
   if ($result->num_rows) {
     $_SESSION['user'] = $result->fetch_assoc();

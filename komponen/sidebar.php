@@ -90,27 +90,11 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Peminjaman Aset</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $active === 'aset_tersedia' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_tersedia">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">event_available</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Tersedia</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?= $active === 'aset_dipinjam' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=aset_dipinjam">
-                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">event</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Dipinjam</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link <?= $active === 'pengajuan_peminjaman_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengajuan_peminjaman_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">today</i>
                     </div>
-                    <span class="nav-link-text ms-1">Pengajuan Peminjaman</span>
+                    <span class="nav-link-text ms-1">Peminjaman Aset</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -118,7 +102,7 @@
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">today</i>
                     </div>
-                    <span class="nav-link-text ms-1">Pengajuan Pengembalian</span>
+                    <span class="nav-link-text ms-1">Pengembalian Aset</span>
                 </a>
             </li>
             <?php if ($_SESSION['user']['status'] == 1) : ?>

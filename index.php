@@ -213,8 +213,8 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'tambah_aset_hilang') $page = 'halaman/aset_hilang/tambah.php';
             elseif ($_GET['h'] === 'hapus_aset_hilang') $page = 'halaman/aset_hilang/hapus.php';
 
-             // Aset Masuk
-             if (in_array($_GET['h'], ['aset_masuk', 'tambah_aset_masuk', 'hapus_aset_masuk'])) {
+            // Aset Masuk
+            if (in_array($_GET['h'], ['aset_masuk', 'tambah_aset_masuk', 'hapus_aset_masuk'])) {
                 $navbar = "Penambahan Aset";
                 $active = 'aset_masuk';
             }
@@ -245,15 +245,19 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'detail_aset_dipinjam') $page = 'halaman/kelola_peminjaman_aset/aset_dipinjam/detail.php';
             elseif ($_GET['h'] === 'aset_dipinjam_per_kategori_aset') $page = 'halaman/kelola_peminjaman_aset/aset_dipinjam/index_per_kategori_aset.php';
 
-            if (in_array($_GET['h'], ['pengajuan_peminjaman_aset', 'pengajuan_peminjaman_aset_per_kategori_aset', 'detail_pengajuan_peminjaman_aset'])) $active = 'pengajuan_peminjaman_aset';
+            if (in_array($_GET['h'], ['pengajuan_peminjaman_aset', 'detail_pengajuan_peminjaman_aset'])) {
+                $navbar = "Pengajuan Peminjaman Aset";
+                $active = 'pengajuan_peminjaman_aset';
+            }
             if ($_GET['h'] === 'pengajuan_peminjaman_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_peminjaman_aset/index.php';
             elseif ($_GET['h'] === 'detail_pengajuan_peminjaman_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_peminjaman_aset/detail.php';
-            elseif ($_GET['h'] === 'pengajuan_peminjaman_aset_per_kategori_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_peminjaman_aset/index_per_kategori_aset.php';
 
-            if (in_array($_GET['h'], ['pengajuan_pengembalian_aset', 'pengajuan_pengembalian_aset_per_kategori_aset', 'detail_pengajuan_pengembalian_aset'])) $active = 'pengajuan_pengembalian_aset';
+            if (in_array($_GET['h'], ['pengajuan_pengembalian_aset', 'detail_pengajuan_pengembalian_aset'])) {
+                $navbar = "Pengajuan Peminjaman Aset";
+                $active = 'pengajuan_pengembalian_aset';
+            }
             if ($_GET['h'] === 'pengajuan_pengembalian_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/index.php';
             elseif ($_GET['h'] === 'detail_pengajuan_pengembalian_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/detail.php';
-            elseif ($_GET['h'] === 'pengajuan_pengembalian_aset_per_kategori_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/index_per_kategori_aset.php';
         } else {
             $active = 'dashboard';
             $page = 'halaman/dashboard/index.php';
@@ -261,30 +265,45 @@ if (!isset($_SESSION['user'])) {
     }
 
     // Route for Pegawai
-    if ($_SESSION['user']['status'] === 3) {
+    if ($_SESSION['user']['status'] == 3) {
         if (isset($_GET['h'])) {
             if ($_GET['h'] === 'ganti_password') {
                 $active = 'Ganti Password';
                 $page = 'halaman/ganti_password/index.php';
+            } else if ($_GET['h'] === 'kategori_aset') {
+                $jenis_aset = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_GET['id_jenis_aset'])->fetch_assoc();
+                $navbar = "<a href='?h=jenis_aset'>Jenis Aset</a> \\ <span class='text-muted'>" . $jenis_aset['nama'] . "</span>";
+                $page = "halaman/kategori_aset/index.php";
+            }else if ($_GET['h'] === 'aset') {
+                $jenis_aset = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_GET['id_jenis_aset'])->fetch_assoc();
+                $kategori_aset = $mysqli->query("SELECT * FROM kategori_aset WHERE id=" . $_GET['id_kategori_aset'])->fetch_assoc();
+                $navbar = "<a href='?h=jenis_aset'>Jenis Aset</a> \\ <span class='text-muted'>" . $jenis_aset['nama'] . "</span> \\ <a href='?h=kategori_aset&id_jenis_aset=" . $jenis_aset['id'] . "'>Ketegori Aset</a> \\ <span class='text-muted'>" . $kategori_aset['nama'] . "</span>";
+                $page = "halaman/peminjaman_aset/index.php";
             } else if ($_GET['h'] === 'pengajuan_peminjaman') {
-                $active = "Form Pengajuan Peminjaman Aset";
-                $page = "halaman/peminjaman_aset/tambah.php";
+                $navbar = "Pengajuan Peminjaman Aset";
+                $page = "halaman/peminjaman_aset/pengajuan_peminjaman.php";
             } else if ($_GET['h'] === 'pengajuan_pengembalian') {
-                $active = "Form Pengajuan Pengembalian Aset";
+                $navbar = "Pengajuan Pengembalian Aset";
                 $page = "halaman/peminjaman_aset/pengajuan_pengembalian.php";
             } elseif ($_GET['h'] === 'riwayat_peminjaman_aset') {
-                $active = "Data Peminjaman Aset";
+                $navbar = "Data Peminjaman Aset";
                 $page = "halaman/riwayat_peminjaman_aset/index.php";
             } elseif ($_GET['h'] === 'detail_riwayat_peminjaman_aset') {
-                $active = "Detail Peminjaman Aset";
+                $navbar = "Detail Peminjaman Aset";
                 $page = "halaman/riwayat_peminjaman_aset/detail.php";
-            } else {
-                $active = null;
-                $page = 'halaman/peminjaman_aset/index.php';
+            } elseif ($_GET['h'] === 'riwayat_pengembalian_aset') {
+                $navbar = "Data Pengembalian Aset";
+                $page = "halaman/riwayat_pengembalian_aset/index.php";
+            } elseif ($_GET['h'] === 'detail_riwayat_pengembalian_aset') {
+                $navbar = "Detail Peminjaman Aset";
+                $page = "halaman/riwayat_pengembalian_aset/detail.php";
+            }  else {
+                $navbar = "Jenis Aset";
+                $page = 'halaman/jenis_aset/index.php';
             }
         } else {
-            $active = null;
-            $page = 'halaman/peminjaman_aset/index.php';
+            $navbar = "Jenis Aset";
+            $page = 'halaman/jenis_aset/index.php';
         }
     }
     ?>

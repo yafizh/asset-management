@@ -7,13 +7,16 @@ $q = "
         DATE(pa.tanggal_waktu_pengajuan) tanggal_pengajuan,
         DATE(pa.tanggal_waktu_verifikasi) tanggal_pengajuan_ditentukan,
         pa.keterangan_verifikasi,
-        (SELECT id FROM pengembalian_aset WHERE id_peminjaman_aset=pa.id AND status=3) telah_dikembalikan,
-        pa.alasan,
+        pa1.alasan,
         pa.jumlah,
         pegawai.nama verifikator,
-        pa.status
+        pa1.status
     FROM 
+        pengembalian_aset pa1 
+    INNER JOIN 
         peminjaman_aset pa  
+    ON 
+        pa.id=pa1.id_peminjaman_aset 
     INNER JOIN 
         aset a 
     ON 
@@ -31,7 +34,7 @@ $q = "
     ON 
         pegawai.id_pengguna=pengguna.id 
     WHERE 
-        pa.id=" . $_GET['id'];
+        pa1.id=" . $_GET['id'];
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
 ?>
@@ -71,11 +74,11 @@ $data = $result->fetch_assoc();
                                 <?php endif; ?>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Alasan Peminjaman</label>
+                                <label class="form-label">Alasan Pengembalian</label>
                                 <textarea class="form-control p-2" rows="5" disabled><?= $data['alasan'] ?></textarea>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Jumlah Yang Dipinjam</label>
+                                <label class="form-label">Jumlah</label>
                                 <input type="text" class="form-control p-2" disabled value="<?= $data['jumlah'] ?>">
                             </div>
                             <?php if ($data['status'] != 1) : ?>
@@ -94,10 +97,7 @@ $data = $result->fetch_assoc();
                                 </div>
                             <?php endif; ?>
                             <div class="d-flex justify-content-between">
-                                <a href="?h=riwayat_peminjaman_aset" class="btn btn-secondary">Kembali</a>
-                                <?php if ($data['status'] == 3 && is_null($data['telah_dikembalikan'])) : ?>
-                                    <a href="?h=pengajuan_pengembalian&id=<?= $data['id']; ?>" class="btn btn-info text-white">Ajukan Pengembalian</a>
-                                <?php endif; ?>
+                                <a href="?h=riwayat_pengembalian_aset" class="btn btn-secondary">Kembali</a>
                             </div>
                         </div>
                     </div>

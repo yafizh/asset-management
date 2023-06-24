@@ -94,16 +94,17 @@ CREATE TABLE `manajemen_aset`.`pemeliharaan_aset` (
 CREATE TABLE `manajemen_aset`.`peminjaman_aset`(
     id BIGINT UNSIGNED AUTO_INCREMENT,
     id_user_peminjam BIGINT UNSIGNED,
-    id_user_verifikator BIGINT UNSIGNED,
+    id_user_verifikator BIGINT UNSIGNED NULL,
     id_aset BIGINT UNSIGNED,
     alasan TEXT,
     tanggal_waktu_pengajuan TIMESTAMP NULL DEFAULT NULL,
     tanggal_waktu_verifikasi TIMESTAMP NULL DEFAULT NULL,
-    keterangan_pengajuan TEXT,
+    keterangan_verifikasi TEXT,
+    jumlah INT UNSIGNED,
     status TINYINT UNSIGNED, 
     PRIMARY KEY(id),
-    FOREIGN KEY (id_user_peminjam) REFERENCES pegawai (id) ON DELETE CASCADE,
-    FOREIGN KEY (id_user_verifikator) REFERENCES pegawai (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_user_peminjam) REFERENCES pengguna (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_user_verifikator) REFERENCES pengguna (id) ON DELETE CASCADE,
     FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );
 
@@ -115,10 +116,10 @@ CREATE TABLE `manajemen_aset`.`pengembalian_aset`(
     alasan TEXT,
     tanggal_waktu_pengajuan TIMESTAMP NULL DEFAULT NULL,
     tanggal_waktu_verifikasi TIMESTAMP NULL DEFAULT NULL,
-    keterangan_pengajuan TEXT,
+    keterangan_verifikasi TEXT,
     status TINYINT UNSIGNED, 
     PRIMARY KEY(id),
     FOREIGN KEY (id_peminjaman_aset) REFERENCES peminjaman_aset (id) ON DELETE CASCADE,
-    FOREIGN KEY (id_user_verifikator) REFERENCES pegawai (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_user_verifikator) REFERENCES pengguna (id) ON DELETE CASCADE,
     FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
 );

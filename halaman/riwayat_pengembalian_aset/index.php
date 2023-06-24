@@ -4,7 +4,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Riwayat Peminjaman Aset</h6>
+                        <h6 class="text-white text-capitalize m-0">Riwayat Pengembalian Aset</h6>
                     </div>
                 </div>
 
@@ -24,13 +24,17 @@
                             <?php
                             $q = "
                                 SELECT 
-                                    pa.id, 
+                                    pa1.id, 
                                     ka.nama kategori_aset,
                                     a.nama,
                                     pa.jumlah,
-                                    pa.status
+                                    pa1.status
                                 FROM 
+                                    pengembalian_aset pa1 
+                                INNER JOIN 
                                     peminjaman_aset pa 
+                                ON 
+                                    pa1.id_peminjaman_aset=pa.id  
                                 INNER JOIN 
                                     aset a 
                                 ON 
@@ -42,7 +46,7 @@
                                 WHERE 
                                     pa.id_user_peminjam=" . $_SESSION['user']['id'] . " 
                                 ORDER BY 
-                                    pa.id DESC";
+                                    pa1.id DESC";
                             $result = $mysqli->query($q);
                             $no = 1;
                             ?>
