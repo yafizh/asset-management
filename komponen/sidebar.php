@@ -89,20 +89,36 @@
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Peminjaman Aset</h6>
             </li>
+            <?php
+            $result = $mysqli->query("SELECT COUNT(*) as jumlah FROM peminjaman_aset WHERE status=1");
+            $peminjaman_aset = $result->fetch_assoc();
+            ?>
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'pengajuan_peminjaman_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengajuan_peminjaman_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">today</i>
                     </div>
-                    <span class="nav-link-text ms-1">Peminjaman Aset</span>
+                    <span class="nav-link-text ms-1">Peminjaman Aset
+                        <?php if ($peminjaman_aset['jumlah']) : ?>
+                            <span class="badge text-bg-danger"><?= $peminjaman_aset['jumlah']; ?></span>
+                        <?php endif; ?>
+                    </span>
                 </a>
             </li>
+            <?php
+            $result = $mysqli->query("SELECT COUNT(*) as jumlah FROM pengembalian_aset WHERE status=1");
+            $pengembalian_aset = $result->fetch_assoc();
+            ?>
             <li class="nav-item">
                 <a class="nav-link <?= $active === 'pengajuan_pengembalian_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=pengajuan_pengembalian_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">today</i>
                     </div>
-                    <span class="nav-link-text ms-1">Pengembalian Aset</span>
+                    <span class="nav-link-text ms-1">Pengembalian Aset
+                        <?php if ($pengembalian_aset['jumlah']) : ?>
+                            <span class="badge text-bg-danger"><?= $pengembalian_aset['jumlah']; ?></span>
+                        <?php endif; ?>
+                    </span>
                 </a>
             </li>
             <?php if ($_SESSION['user']['status'] == 1) : ?>
