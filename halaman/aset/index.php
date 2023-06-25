@@ -26,9 +26,9 @@
                             $q = "
                                 SELECT 
                                     a.*,
-                                    (SELECT COUNT(*) FROM aset_masuk ar WHERE ar.id_aset=a.id) masuk,
-                                    (SELECT COUNT(*) FROM aset_rusak ar WHERE ar.id_aset=a.id) rusak,
-                                    (SELECT COUNT(*) FROM aset_hilang ah WHERE ah.id_aset=a.id) hilang
+                                    (SELECT SUM(jumlah) FROM aset_masuk ar WHERE ar.id_aset=a.id) masuk,
+                                    (SELECT SUM(jumlah) FROM aset_rusak ar WHERE ar.id_aset=a.id) rusak,
+                                    (SELECT SUM(jumlah) FROM aset_hilang ah WHERE ah.id_aset=a.id) hilang
                                 FROM 
                                     aset a
                                 WHERE 
@@ -49,7 +49,7 @@
                                         <td class="text-center">
                                             <a href="?h=tambah_aset_rusak&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
-                                                    <?= $row['rusak']; ?>
+                                                    <?= $row['rusak'] ?? 0; ?>
                                                 </span>
                                                 Tambah
                                             </a>
@@ -57,7 +57,7 @@
                                         <td class="text-center">
                                         <a href="?h=tambah_aset_hilang&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
-                                                    <?= $row['hilang']; ?>
+                                                    <?= $row['hilang'] ?? 0; ?>
                                                 </span>
                                                 Tambah
                                             </a>

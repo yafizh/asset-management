@@ -29,11 +29,13 @@ if (isset($_POST['submit'])) {
 
         $q = "
         INSERT INTO aset_hilang (
+            id_pengguna, 
             id_aset, 
             tanggal, 
             jumlah, 
             keterangan 
         ) VALUES (
+            ".$_SESSION['user']['id'].",
             '$id',
             '$tanggal',
             '$jumlah',
@@ -43,6 +45,7 @@ if (isset($_POST['submit'])) {
 
         $mysqli->commit();
         echo "<script>alert('Pelaporan Aset Hilang Berhasil!')</script>";
+        echo "<script>location.href = '?h=aset&id_jenis_aset=" . $_GET['id_jenis_aset'] . "&id_kategori_aset=" . $_GET['id_kategori_aset'] . "';</script>";
     } catch (\Throwable $e) {
         echo "<script>alert('Pelaporan Aset Hilang Gagal!')</script>";
         $mysqli->rollback();

@@ -53,31 +53,37 @@ CREATE TABLE `manajemen_aset`.`aset`(
 CREATE TABLE `manajemen_aset`.`aset_masuk` (
     id BIGINT UNSIGNED AUTO_INCREMENT,
     id_aset BIGINT UNSIGNED,
+    id_pengguna BIGINT UNSIGNED,
     tanggal DATE,
     jumlah INT UNSIGNED,
     keterangan TEXT,
     PRIMARY KEY(id),
-    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE
 );
 
 CREATE TABLE `manajemen_aset`.`aset_rusak` (
     id BIGINT UNSIGNED AUTO_INCREMENT,
     id_aset BIGINT UNSIGNED,
+    id_pengguna BIGINT UNSIGNED,
     tanggal DATE,
     jumlah INT UNSIGNED,
     keterangan TEXT,
     PRIMARY KEY(id),
-    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE
 );
 
 CREATE TABLE `manajemen_aset`.`aset_hilang` (
     id BIGINT UNSIGNED AUTO_INCREMENT,
     id_aset BIGINT UNSIGNED,
+    id_pengguna BIGINT UNSIGNED,
     tanggal DATE,
     jumlah INT UNSIGNED,
     keterangan TEXT,
     PRIMARY KEY(id),
-    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE,
+    FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE
 );
 
 CREATE TABLE `manajemen_aset`.`pemeliharaan_aset` (
