@@ -14,15 +14,24 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7 small-td">No</th>
-                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Foto</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">NIP</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Jabatan</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Status Pengguna</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
                             <?php
-                            $q = "SELECT * FROM pegawai";
+                            $q = "
+                                SELECT 
+                                    pegawai.*,
+                                    pengguna.status 
+                                FROM 
+                                    pegawai 
+                                INNER JOIN 
+                                    pengguna 
+                                ON 
+                                    pengguna.id=pegawai.id_pengguna";
                             $result = $mysqli->query($q);
                             $no = 1;
                             ?>
@@ -32,11 +41,6 @@
                                         <td class="text-center">
                                             <p class="text-secondary mb-0"><?= $no++; ?></p>
                                         </td>
-                                        <td class="text-center small-td">
-                                            <p class="text-secondary mb-0">
-                                                <img src="<?= $row['foto']; ?>" style="width: 6rem; height: 6rem; object-fit: cover;">
-                                            </p>
-                                        </td>
                                         <td class="text-center">
                                             <p class="text-secondary mb-0"><?= $row['nip']; ?></p>
                                         </td>
@@ -45,6 +49,19 @@
                                         </td>
                                         <td class="text-center">
                                             <p class="text-secondary mb-0"><?= $row['jabatan']; ?></p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-secondary mb-0">
+                                                <?php if ($row['status'] == 1) : ?>
+                                                    Admin
+                                                <?php elseif ($row['status'] == 2) : ?>
+                                                    Petugas
+                                                <?php elseif ($row['status'] == 3) : ?>
+                                                    Pegawai
+                                                <?php elseif ($row['status'] == 4) : ?>
+                                                    Kepala Balai
+                                                <?php endif; ?>
+                                            </p>
                                         </td>
                                         <td class="small-td">
                                             <a href="?h=detail_pegawai&id=<?= $row['id'] ?>" class="btn btn-sm btn-info text-white m-0">Lihat</a>
