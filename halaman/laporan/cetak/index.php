@@ -39,6 +39,8 @@
         include_once('halaman/aset_hilang.php');
     elseif ($_GET['h'] === 'aset_masuk')
         include_once('halaman/aset_masuk.php');
+    elseif ($_GET['h'] === 'peminjaman_aset')
+        include_once('halaman/peminjaman_aset.php');
     ?>
     <footer class="d-flex justify-content-end px-5">
         <div class="text-center">

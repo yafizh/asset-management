@@ -126,6 +126,7 @@ if (!isset($_SESSION['user'])) {
                 $page = 'halaman/laporan/tampil/pemeliharaan_aset.php';
                 $active = "laporan_pemeliharaan_aset";
             } elseif ($_GET['h'] === 'laporan_peminjaman_aset') {
+                $navbar = "Laporan Peminjaman Aset";
                 $page = 'halaman/laporan/tampil/peminjaman_aset.php';
                 $active = "laporan_peminjaman_aset";
             } elseif ($_GET['h'] === 'laporan_grafik_peminjaman_aset') {
