@@ -71,8 +71,8 @@
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                            <h6 class="text-white text-capitalize m-0">Laporan Aset Rusak</h6>
-                            <form action="halaman/laporan/cetak/index.php?h=aset_rusak" method="POST" target="_blank">
+                            <h6 class="text-white text-capitalize m-0">Laporan Penambahan Aset</h6>
+                            <form action="halaman/laporan/cetak/index.php?h=aset_masuk" method="POST" target="_blank">
                                 <input type="text" hidden name="dari_tanggal" value="<?= $_POST['dari_tanggal'] ?? ''; ?>">
                                 <input type="text" hidden name="sampai_tanggal" value="<?= $_POST['sampai_tanggal'] ?? ''; ?>">
                                 <input type="text" hidden name="jenis_aset" value="<?= $_POST['jenis_aset'] ?? ''; ?>">
@@ -101,7 +101,7 @@
                                     ah.tanggal,
                                     ah.jumlah 
                                 FROM 
-                                    aset_rusak ah  
+                                    aset_masuk ah  
                                 INNER JOIN 
                                     aset a
                                 ON 

@@ -1,8 +1,8 @@
-<h4 class="text-center my-3">Laporan Aset Rusak</h4>
+<h4 class="text-center my-3">Laporan Penambahan Aset</h4>
 <section class="mb-3 px-3">
     <strong>
         <span style="width: 150px; display: inline-block;">Filter Tanggal</span>
-        <span>: Tanggal Rusak</span>
+        <span>: Tanggal Penambahan Aset</span>
     </strong>
     <br>
     <span style="width: 150px; display: inline-block;">Dari Tanggal</span>
@@ -44,7 +44,7 @@
             ah.jumlah, 
             ah.tanggal  
         FROM 
-            aset_rusak ah  
+            aset_masuk ah  
         INNER JOIN 
             aset a
         ON 

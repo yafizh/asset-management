@@ -104,16 +104,22 @@ if (!isset($_SESSION['user'])) {
 <body class="g-sidenav-show bg-gray-200">
     <?php
     // Route for Admin and Petugas
-    if ($_SESSION['user']['status'] == 1 || $_SESSION['user']['status'] == 2) {
+    if ($_SESSION['user']['status'] == 1 || $_SESSION['user']['status'] == 2 || $_SESSION['user']['status'] == 4) {
         if (isset($_GET['h'])) {
             // Laporan
             if ($_GET['h'] === 'laporan_pegawai') {
                 $page = 'halaman/laporan/tampil/pegawai.php';
                 $active = "laporan_pegawai";
+            } elseif ($_GET['h'] === 'laporan_aset_masuk') {
+                $navbar = "Laporan Penambahan Aset";
+                $page = 'halaman/laporan/tampil/aset_masuk.php';
+                $active = "laporan_aset_masuk";
             } elseif ($_GET['h'] === 'laporan_aset_rusak') {
+                $navbar = "Laporan Aset Rusak";
                 $page = 'halaman/laporan/tampil/aset_rusak.php';
                 $active = "laporan_aset_rusak";
             } elseif ($_GET['h'] === 'laporan_aset_hilang') {
+                $navbar = "Laporan Penambahan Hilang";
                 $page = 'halaman/laporan/tampil/aset_hilang.php';
                 $active = "laporan_aset_hilang";
             } elseif ($_GET['h'] === 'laporan_pemeliharaan_aset') {
@@ -197,6 +203,7 @@ if (!isset($_SESSION['user'])) {
             if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak'])) {
                 $navbar = "Aset Rusak";
                 $active = 'aset_rusak';
+                $navbar = "Aset Rusak";
             }
 
             if ($_GET['h'] === 'aset_rusak') $page = 'halaman/aset_rusak/index.php';
@@ -207,6 +214,7 @@ if (!isset($_SESSION['user'])) {
             if (in_array($_GET['h'], ['aset_hilang', 'tambah_aset_hilang', 'hapus_aset_hilang'])) {
                 $navbar = "Aset Hilang";
                 $active = 'aset_hilang';
+                $navbar = "Aset Hilang";
             }
 
             if ($_GET['h'] === 'aset_hilang') $page = 'halaman/aset_hilang/index.php';
@@ -217,6 +225,7 @@ if (!isset($_SESSION['user'])) {
             if (in_array($_GET['h'], ['aset_masuk', 'tambah_aset_masuk', 'hapus_aset_masuk'])) {
                 $navbar = "Penambahan Aset";
                 $active = 'aset_masuk';
+                $navbar = "Penambahan Aset";
             }
 
             if ($_GET['h'] === 'aset_masuk') $page = 'halaman/aset_masuk/index.php';
@@ -259,8 +268,23 @@ if (!isset($_SESSION['user'])) {
             if ($_GET['h'] === 'pengajuan_pengembalian_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/index.php';
             elseif ($_GET['h'] === 'detail_pengajuan_pengembalian_aset') $page = 'halaman/kelola_peminjaman_aset/pengajuan_pengembalian_aset/detail.php';
         } else {
-            $active = 'dashboard';
-            $page = 'halaman/dashboard/index.php';
+            if ($_SESSION['user']['status'] == 1) {
+                $navbar = "Jenis Aset";
+                $active = "pegawai";
+                $page = 'halaman/pegawai/index.php';
+            }
+            if ($_SESSION['user']['status'] == 2) {
+                $navbar = "Jenis Aset";
+                $active = "aset";
+                $page = 'halaman/jenis_aset/index.php';
+            }
+            if ($_SESSION['user']['status'] == 4) {
+                $page = 'halaman/laporan/tampil/aset.php';
+                $active = "laporan_aset";
+                $navbar = "Laporan Aset";
+            }
+            // $active = 'dashboard';
+            // $page = 'halaman/dashboard/index.php';
         }
     }
 
@@ -274,7 +298,7 @@ if (!isset($_SESSION['user'])) {
                 $jenis_aset = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_GET['id_jenis_aset'])->fetch_assoc();
                 $navbar = "<a href='?h=jenis_aset'>Jenis Aset</a> \\ <span class='text-muted'>" . $jenis_aset['nama'] . "</span>";
                 $page = "halaman/kategori_aset/index.php";
-            }else if ($_GET['h'] === 'aset') {
+            } else if ($_GET['h'] === 'aset') {
                 $jenis_aset = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_GET['id_jenis_aset'])->fetch_assoc();
                 $kategori_aset = $mysqli->query("SELECT * FROM kategori_aset WHERE id=" . $_GET['id_kategori_aset'])->fetch_assoc();
                 $navbar = "<a href='?h=jenis_aset'>Jenis Aset</a> \\ <span class='text-muted'>" . $jenis_aset['nama'] . "</span> \\ <a href='?h=kategori_aset&id_jenis_aset=" . $jenis_aset['id'] . "'>Ketegori Aset</a> \\ <span class='text-muted'>" . $kategori_aset['nama'] . "</span>";
@@ -297,7 +321,7 @@ if (!isset($_SESSION['user'])) {
             } elseif ($_GET['h'] === 'detail_riwayat_pengembalian_aset') {
                 $navbar = "Detail Peminjaman Aset";
                 $page = "halaman/riwayat_pengembalian_aset/detail.php";
-            }  else {
+            } else {
                 $navbar = "Jenis Aset";
                 $page = 'halaman/jenis_aset/index.php';
             }
@@ -308,10 +332,9 @@ if (!isset($_SESSION['user'])) {
     }
     ?>
     <?php
-    if ($_SESSION['user']['status'] == 1 || $_SESSION['user']['status'] == 2) include_once('komponen/sidebar.php'); ?>
+    if ($_SESSION['user']['status'] == 1 || $_SESSION['user']['status'] == 2 || $_SESSION['user']['status'] == 4) include_once('komponen/sidebar.php'); ?>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        <?php if ($_SESSION['user']['status'] == 1) include_once('komponen/navbar.php'); ?>
-        <?php if ($_SESSION['user']['status'] == 3) include_once('komponen/navbar.php'); ?>
+        <?php include_once('komponen/navbar.php'); ?>
         <div class="container-fluid py-4">
             <?php
             include_once('helper/date.php');
