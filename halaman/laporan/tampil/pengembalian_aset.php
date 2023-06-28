@@ -38,8 +38,8 @@
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                            <h6 class="text-white text-capitalize m-0">Laporan Peminjaman Aset</h6>
-                            <form action="halaman/laporan/cetak/index.php?h=peminjaman_aset" method="POST" target="_blank">
+                            <h6 class="text-white text-capitalize m-0">Laporan Pengembalian Aset</h6>
+                            <form action="halaman/laporan/cetak/index.php?h=pengembalian_aset" method="POST" target="_blank">
                                 <input type="text" hidden name="dari_tanggal" value="<?= $_POST['dari_tanggal'] ?? ''; ?>">
                                 <input type="text" hidden name="sampai_tanggal" value="<?= $_POST['sampai_tanggal'] ?? ''; ?>">
                                 <input type="text" hidden name="id_pengguna" value="<?= $_POST['id_pengguna'] ?? ''; ?>">
@@ -66,10 +66,14 @@
                                     pegawai.nip nip_pegawai,
                                     pegawai.nama nama_pegawai,
                                     a.nama nama_aset, 
-                                    DATE(pa.tanggal_waktu_pengajuan) tanggal,
+                                    DATE(pa1.tanggal_waktu_pengajuan) tanggal,
                                     pa.jumlah 
                                 FROM 
+                                    pengembalian_aset pa1 
+                                INNER JOIN 
                                     peminjaman_aset pa   
+                                ON 
+                                    pa.id=pa1.id_peminjaman_aset 
                                 INNER JOIN 
                                     aset a
                                 ON 
@@ -84,15 +88,15 @@
                                     pegawai.id_pengguna=pengguna.id 
                                 WHERE 
                                     (
-                                        DATE(pa.tanggal_waktu_pengajuan) >= '" . $_POST['dari_tanggal'] . "' 
+                                        DATE(pa1.tanggal_waktu_pengajuan) >= '" . $_POST['dari_tanggal'] . "' 
                                         AND 
-                                        DATE(pa.tanggal_waktu_pengajuan) <= '" . $_POST['sampai_tanggal'] . "' 
+                                        DATE(pa1.tanggal_waktu_pengajuan) <= '" . $_POST['sampai_tanggal'] . "' 
                                     ) ";
 
                                 if (!empty($_POST['id_pengguna'] ?? ''))
-                                    $q .= " AND pa.id_user_verifikator = " . $_POST['id_pengguna'];
+                                    $q .= " AND pa1.id_user_verifikator = " . $_POST['id_pengguna'];
 
-                                $q .= " ORDER BY pa.tanggal_waktu_pengajuan DESC";
+                                $q .= " ORDER BY pa1.tanggal_waktu_pengajuan DESC";
 
                                 $result = $mysqli->query($q);
                                 $no = 1;

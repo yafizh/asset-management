@@ -1,8 +1,8 @@
-<h4 class="text-center my-3">Laporan Peminjaman Aset</h4>
+<h4 class="text-center my-3">Laporan Pengembalian Aset</h4>
 <section class="mb-3 px-3">
     <strong>
         <span style="width: 250px; display: inline-block;">Filter Tanggal</span>
-        <span>: Tanggal Peminjaman Aset</span>
+        <span>: Tanggal Pengembalian Aset</span>
     </strong>
     <br>
     <span style="width: 250px; display: inline-block;">Dari Tanggal</span>
@@ -40,10 +40,14 @@
             pegawai.nip nip_pegawai,
             pegawai.nama nama_pegawai,
             a.nama nama_aset, 
-            DATE(pa.tanggal_waktu_pengajuan) tanggal,
+            DATE(pa1.tanggal_waktu_pengajuan) tanggal,
             pa.jumlah 
         FROM 
+            pengembalian_aset pa1 
+        INNER JOIN 
             peminjaman_aset pa   
+        ON 
+            pa.id=pa1.id_peminjaman_aset 
         INNER JOIN 
             aset a
         ON 
@@ -58,15 +62,15 @@
             pegawai.id_pengguna=pengguna.id 
         WHERE 
             (
-                DATE(pa.tanggal_waktu_pengajuan) >= '" . $_POST['dari_tanggal'] . "' 
+                DATE(pa1.tanggal_waktu_pengajuan) >= '" . $_POST['dari_tanggal'] . "' 
                 AND 
-                DATE(pa.tanggal_waktu_pengajuan) <= '" . $_POST['sampai_tanggal'] . "' 
+                DATE(pa1.tanggal_waktu_pengajuan) <= '" . $_POST['sampai_tanggal'] . "' 
             ) ";
 
         if (!empty($_POST['id_pengguna'] ?? ''))
-            $q .= " AND pa.id_user_verifikator = " . $_POST['id_pengguna'];
+            $q .= " AND pa1.id_user_verifikator = " . $_POST['id_pengguna'];
 
-        $q .= " ORDER BY pa.tanggal_waktu_pengajuan DESC";
+        $q .= " ORDER BY pa1.tanggal_waktu_pengajuan DESC";
 
         $result = $mysqli->query($q);
         $no = 1;
