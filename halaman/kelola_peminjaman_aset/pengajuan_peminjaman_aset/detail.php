@@ -9,7 +9,8 @@ $q = "
         DATE(pa.tanggal_waktu_pengajuan) tanggal_pengajuan,
         pa.id,  
         pa.jumlah,  
-        pa.alasan  
+        pa.alasan,
+        pa.status 
     FROM 
         aset a 
     INNER JOIN 

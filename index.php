@@ -108,6 +108,7 @@ if (!isset($_SESSION['user'])) {
         if (isset($_GET['h'])) {
             // Laporan
             if ($_GET['h'] === 'laporan_pegawai') {
+                $navbar = "Laporan Pegawai";
                 $page = 'halaman/laporan/tampil/pegawai.php';
                 $active = "laporan_pegawai";
             } elseif ($_GET['h'] === 'laporan_aset_masuk') {
@@ -134,6 +135,7 @@ if (!isset($_SESSION['user'])) {
                 $page = 'halaman/laporan/tampil/pengembalian_aset.php';
                 $active = "laporan_pengembalian_aset";
             } elseif ($_GET['h'] === 'laporan_grafik_peminjaman_aset') {
+                $navbar = "Laporan Grafik Peminjaman Aset";
                 $page = 'halaman/laporan/tampil/grafik_peminjaman_aset.php';
                 $active = "laporan_grafik_peminjaman_aset";
             } elseif ($_GET['h'] === 'laporan_jumlah_aset') {

@@ -1,6 +1,6 @@
 <div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-3">
+    <div class="row justify-content-center">
+        <div class="col-8">
             <div class="card my-4">
                 <form action="" method="POST">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -18,87 +18,102 @@
                 </form>
             </div>
         </div>
-        <div class="col-9">
-            <div class="card my-4">
-                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Laporan Grafik Peminjaman Aset Bulan <strong><?= BULAN_DALAM_INDONESIA[explode('-', $_POST['bulan'] ?? Date('Y-m'))[1] - 1] ?></strong></h6>
-                        <a target="_blank" href="?halaman/cetak/aset.php?bulan=<?= $_POST['bulan'] ?? Date('Y-m'); ?>" class="btn btn-dark m-0">Cetak</a>
+        <?php if (isset($_POST['bulan'])) : ?>
+            <div class="col-12">
+                <div class="card my-4">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                            <h6 class="text-white text-capitalize m-0">Laporan Grafik Peminjaman Aset Bulan <strong><?= BULAN_DALAM_INDONESIA[explode('-', $_POST['bulan'] ?? Date('Y-m'))[1] - 1] ?></strong></h6>
+                            <form action="halaman/laporan/cetak/index.php?h=grafik_peminjaman_aset" method="POST" target="_blank">
+                                <input type="text" hidden name="bulan" value="<?= $_POST['bulan']; ?>">
+                                <button type="submit" class="btn btn-dark m-0">Cetak</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body pb-3">
-                    <?php
-                    $q = "
+                    <div class="card-body pb-3">
+                        <?php
+                        $q = "
                         SELECT
                             COUNT(id) AS jumlah,
-                            DAY(timestamp_pengajuan_ditentukan) AS tanggal
+                            DAY(tanggal_waktu_pengajuan) AS tanggal
                         FROM
                             peminjaman_aset
                         WHERE
-                            YEAR(timestamp_pengajuan_ditentukan) = '" . explode("-", $_POST['bulan'] ?? Date('Y-m'))[0] . "'
+                            YEAR(tanggal_waktu_pengajuan) = '" . explode("-", $_POST['bulan'])[0] . "'
                             AND
-                            MONTH(timestamp_pengajuan_ditentukan) = '" . explode("-", $_POST['bulan'] ?? Date('Y-m'))[1] . "' 
+                            MONTH(tanggal_waktu_pengajuan) = '" . explode("-", $_POST['bulan'])[1] . "' 
                             AND 
-                            ( status = 3 OR status = 6 ) 
+                            status=3
                         GROUP BY 
-                            tanggal 
+                            tanggal_waktu_pengajuan 
                     ";
-                    $result = $mysqli->query($q);
-                    $no = 1;
-                    ?>
-                    <canvas id="myChart"></canvas>
+                        $result = $mysqli->query($q)->fetch_all(MYSQLI_ASSOC);
+                        $no = 1;
+                        ?>
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
+        <?php if (isset($_POST['bulan'])) : ?>
+            <script>
+                let chart_data = [];
+                let chart_label = [];
+                const lastDay = new Date(<?= json_encode(explode("-", $_POST['bulan'])[0]); ?>, <?= json_encode(explode("-", $_POST['bulan'])[0]); ?>, 0);
+                const database = <?= json_encode($result); ?>;
+                for (let i = 0; i < lastDay.getDate(); i++) {
+                    chart_label.push(i + 1);
+                    let a = true;
+                    database.forEach(element => {
+                        if (element.tanggal == (i + 1)) {
+                            chart_data.push(element.jumlah);
+                            a = false;
+                        }
+                    });
+                    if (a) {
+                        chart_data.push(0);
+                    }
+                    continue;
+                }
+
+                const data = {
+                    labels: chart_label,
+                    datasets: [{
+                        label: 'Tanggal ',
+                        backgroundColor: '#66BB6A',
+                        borderColor: '#66BB6A',
+                        data: chart_data,
+                    }]
+                };
+
+                const config = {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                },
+                                beginAtZero: true
+                            },
+                        },
+                        plugins: {
+                            legend: false
+                        }
+                    },
+                };
+
+                const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                );
+            </script>
+        <?php endif; ?>
     </div>
 </div>
-<script>
-    let chart_data = [];
-    let chart_label = [];
-    var date = new Date();
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    const database = <?= json_encode(["jumlah" => 1, "tanggal" => 2]); ?>;
-    for (let i = 0; i < lastDay.getDate(); i++) {
-        chart_label.push(i + 1);
-        chart_data.push(database.tanggal == (i + 1) ? database.jumlah : 0);
-        continue;
-    }
-
-    const data = {
-        labels: chart_label,
-        datasets: [{
-            label: 'Tanggal ',
-            backgroundColor: '#66BB6A',
-            borderColor: '#66BB6A',
-            data: chart_data,
-        }]
-    };
-
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    grid: {
-                        display: false
-                    },
-                    beginAtZero: true
-                },
-            },
-            plugins: {
-                legend: false
-            }
-        },
-    };
-
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
-</script>
