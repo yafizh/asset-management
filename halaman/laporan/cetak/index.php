@@ -43,6 +43,8 @@
         include_once('halaman/peminjaman_aset.php');
     elseif ($_GET['h'] === 'pengembalian_aset')
         include_once('halaman/pengembalian_aset.php');
+    elseif ($_GET['h'] === 'pegawai')
+        include_once('halaman/pegawai.php');
     ?>
     <footer class="d-flex justify-content-end px-5">
         <div class="text-center">
