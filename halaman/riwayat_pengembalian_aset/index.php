@@ -77,7 +77,7 @@
                                             </p>
                                         </td>
                                         <td class="small-td">
-                                            <a href="?h=detail_riwayat_peminjaman_aset&id=<?= $row['id'] ?>" class="btn btn-sm btn-info text-white m-0">Lihat</a>
+                                            <a href="?h=detail_riwayat_pengembalian_aset&id=<?= $row['id'] ?>" class="btn btn-sm btn-info text-white m-0">Lihat</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>

@@ -286,9 +286,9 @@ if (!isset($_SESSION['user'])) {
                 $page = 'halaman/jenis_aset/index.php';
             }
             if ($_SESSION['user']['status'] == 4) {
-                $page = 'halaman/laporan/tampil/aset.php';
-                $active = "laporan_aset";
-                $navbar = "Laporan Aset";
+                $page = 'halaman/laporan/tampil/aset_masuk.php';
+                $active = "laporan_aset_masuk";
+                $navbar = "Laporan Aset Masuk";
             }
             // $active = 'dashboard';
             // $page = 'halaman/dashboard/index.php';
@@ -326,7 +326,7 @@ if (!isset($_SESSION['user'])) {
                 $navbar = "Data Pengembalian Aset";
                 $page = "halaman/riwayat_pengembalian_aset/index.php";
             } elseif ($_GET['h'] === 'detail_riwayat_pengembalian_aset') {
-                $navbar = "Detail Peminjaman Aset";
+                $navbar = "Detail Pengembalian Aset";
                 $page = "halaman/riwayat_pengembalian_aset/detail.php";
             } else {
                 $navbar = "Jenis Aset";

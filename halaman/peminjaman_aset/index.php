@@ -23,10 +23,10 @@
                             $q = "
                                 SELECT 
                                     a.*,
-                                    (SELECT COUNT(*) FROM aset_masuk ar WHERE ar.id_aset=a.id) masuk,
-                                    (SELECT COUNT(*) FROM aset_rusak ar WHERE ar.id_aset=a.id) rusak,
-                                    (SELECT COUNT(*) FROM aset_hilang ah WHERE ah.id_aset=a.id) hilang,
-                                    (SELECT COUNT(*) FROM peminjaman_aset pa WHERE pa.id_aset=a.id AND pa.status != 2 AND pa.id NOT IN (SELECT id_peminjaman_aset FROM pengembalian_aset WHERE pengembalian_aset.id_peminjaman_aset=pa.id)) peminjaman
+                                    (SELECT SUM(jumlah) FROM aset_masuk ar WHERE ar.id_aset=a.id) masuk,
+                                    (SELECT SUM(jumlah) FROM aset_rusak ar WHERE ar.id_aset=a.id) rusak,
+                                    (SELECT SUM(jumlah) FROM aset_hilang ah WHERE ah.id_aset=a.id) hilang,
+                                    (SELECT SUM(jumlah) FROM peminjaman_aset pa WHERE pa.id_aset=a.id AND pa.status != 2 AND pa.id NOT IN (SELECT id_peminjaman_aset FROM pengembalian_aset WHERE pengembalian_aset.id_peminjaman_aset=pa.id)) peminjaman
                                 FROM 
                                     aset a
                                 WHERE 

@@ -4,7 +4,7 @@
         <span style="width: 80px; display: block;">Filter</span>
     </strong>
     <span style="width: 80px; display: inline-block;">Bulan</span>
-    <span>: <?= BULAN_DALAM_INDONESIA[intval(explode('-', $_POST['bulan'])[1])]; ?> <?= explode('-', $_POST['bulan'])[0]; ?></span>
+    <span>: <?= BULAN_DALAM_INDONESIA[intval(explode('-', $_POST['bulan'])[1] - 1)]; ?> <?= explode('-', $_POST['bulan'])[0]; ?></span>
 </section>
 <main class="px-3">
     <?php

@@ -79,7 +79,7 @@
                 const data = {
                     labels: chart_label,
                     datasets: [{
-                        label: 'Tanggal ',
+                        label: 'Peminjaman ',
                         backgroundColor: '#66BB6A',
                         borderColor: '#66BB6A',
                         data: chart_data,

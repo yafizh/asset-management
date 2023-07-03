@@ -92,8 +92,7 @@ if (isset($_POST['submit'])) {
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
-                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Balai Pengkajian Teknologi Pertanian</h4>
-                  <h4 class="text-white font-weight-bolder text-center mb-0">Kalimantan Selatan</h4>
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Aplikasi Pengelola Ketersediaan dan Peminjaman Aset pada Balai Pengkajian Teknologi Pertanian Kalimantan Selatan</h4>
                 </div>
               </div>
               <div class="card-body">
