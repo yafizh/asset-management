@@ -27,25 +27,30 @@ if (isset($_POST['submit'])) {
     try {
         $mysqli->begin_transaction();
 
-        $q = "
-        INSERT INTO aset_rusak (
-            id_pengguna, 
-            id_aset, 
-            tanggal, 
-            jumlah, 
-            keterangan 
-        ) VALUES (
-            " . $_SESSION['user']['id'] . ",
-            '$id',
-            '$tanggal',
-            '$jumlah',
-            '$keterangan'
-        )";
-        $mysqli->query($q);
+        $jumlah_aset_sekarang = $mysqli->query("SELECT jumlah FROM aset WHERE id=" . $_GET['id'])->fetch_assoc();
+        if ($jumlah > $jumlah_aset_sekarang) {
+            echo "<script>alert('Tidak dapat melebihi jumlah aset sekarang!')</script>";
+        } else {
+            $q = "
+                INSERT INTO aset_rusak (
+                    id_pengguna, 
+                    id_aset, 
+                    tanggal, 
+                    jumlah, 
+                    keterangan 
+                ) VALUES (
+                    " . $_SESSION['user']['id'] . ",
+                    '$id',
+                    '$tanggal',
+                    '$jumlah',
+                    '$keterangan'
+                )";
+            $mysqli->query($q);
 
-        $mysqli->commit();
-        echo "<script>alert('Pelaporan Aset Rusak Berhasil!')</script>";
-        echo "<script>location.href = '?h=aset&id_jenis_aset=" . $_GET['id_jenis_aset'] . "&id_kategori_aset=" . $_GET['id_kategori_aset'] . "';</script>";
+            $mysqli->commit();
+            echo "<script>alert('Pelaporan Aset Rusak Berhasil!')</script>";
+            echo "<script>location.href = '?h=aset&id_jenis_aset=" . $_GET['id_jenis_aset'] . "&id_kategori_aset=" . $_GET['id_kategori_aset'] . "';</script>";
+        }
     } catch (\Throwable $e) {
         echo "<script>alert('Pelaporan Aset Rusak Gagal!')</script>";
         $mysqli->rollback();

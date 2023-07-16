@@ -25,29 +25,34 @@ if (isset($_POST['submit'])) {
     $jumlah = $mysqli->real_escape_string($_POST['jumlah']);
     $alasan_peminjaman = $mysqli->real_escape_string($_POST['alasan_peminjaman']);
 
-    $q = "
-    INSERT INTO peminjaman_aset (
-        id_user_peminjam,
-        id_aset,
-        alasan,
-        tanggal_waktu_pengajuan,
-        jumlah,
-        status 
-    ) VALUES (
-        '" . $_SESSION['user']['id'] . "',
-        '" . $data['id'] . "',
-        '$alasan_peminjaman',
-        '" . Date('Y-m-d H:i:s') . "',
-        '$jumlah',
-        '1'
-    )";
-
-    if ($mysqli->query($q)) {
-        echo "<script>alert('Pengajuan Peminjaman Aset Berhasil!')</script>";
-        echo "<script>location.href = '?h=riwayat_peminjaman_aset';</script>";
+    $jumlah_aset_sekarang = $mysqli->query("SELECT jumlah FROM aset WHERE id=" . $_GET['id'])->fetch_assoc();
+    if ($jumlah > $jumlah_aset_sekarang) {
+        echo "<script>alert('Tidak dapat melebihi jumlah aset sekarang!')</script>";
     } else {
-        echo "<script>alert('Pengajuan Peminjaman Aset Gagal!')</script>";
-        die($mysqli->error);
+        $q = "
+            INSERT INTO peminjaman_aset (
+                id_user_peminjam,
+                id_aset,
+                alasan,
+                tanggal_waktu_pengajuan,
+                jumlah,
+                status 
+            ) VALUES (
+                '" . $_SESSION['user']['id'] . "',
+                '" . $data['id'] . "',
+                '$alasan_peminjaman',
+                '" . Date('Y-m-d H:i:s') . "',
+                '$jumlah',
+                '1'
+            )";
+
+        if ($mysqli->query($q)) {
+            echo "<script>alert('Pengajuan Peminjaman Aset Berhasil!')</script>";
+            echo "<script>location.href = '?h=riwayat_peminjaman_aset';</script>";
+        } else {
+            echo "<script>alert('Pengajuan Peminjaman Aset Gagal!')</script>";
+            die($mysqli->error);
+        }
     }
 }
 ?>
