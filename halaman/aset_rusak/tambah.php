@@ -23,6 +23,7 @@ if (isset($_POST['submit'])) {
     $tanggal = $mysqli->real_escape_string($_POST['tanggal']);
     $jumlah = $mysqli->real_escape_string($_POST['jumlah']);
     $keterangan = $mysqli->real_escape_string($_POST['keterangan']);
+    $status = $mysqli->real_escape_string($_POST['status']);
 
     try {
         $mysqli->begin_transaction();
@@ -37,12 +38,14 @@ if (isset($_POST['submit'])) {
                     id_aset, 
                     tanggal, 
                     jumlah, 
+                    status, 
                     keterangan 
                 ) VALUES (
                     " . $_SESSION['user']['id'] . ",
                     '$id',
                     '$tanggal',
                     '$jumlah',
+                    '$status',
                     '$keterangan'
                 )";
             $mysqli->query($q);
@@ -80,6 +83,13 @@ if (isset($_POST['submit'])) {
                         <div class="mb-3">
                             <label for="jumlah" class="form-label">Jumlah</label>
                             <input type="text" class="form-control p-2" value="1" min="1" required name="jumlah" id="jumlah">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Kondisi Rusak</label>
+                            <select name="status" id="status" class="form-control" required>
+                                <option value="1">Rusak Biasa</option>
+                                <option value="2">Rusak Parah (Dimusnahkan)</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="keterangan" class="form-label">Keterangan</label>

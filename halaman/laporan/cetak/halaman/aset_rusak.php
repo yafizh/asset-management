@@ -24,6 +24,15 @@
     ?>
     <span style="width: 150px; display: inline-block;">Kategori Aset</span>
     <span>: <?= $data['nama']; ?></span>
+    <br>
+    <span style="width: 150px; display: inline-block;">Kondisi Rusak</span>
+    <span>:
+        <?php if ($_POST['status'] == 1) : ?>
+            Rusak Biasa
+        <?php elseif ($_POST['status'] == 2) : ?>
+            Rusak Parah (Dimusnahkan)
+        <?php endif; ?>
+    </span>
 </section>
 <main class="px-3">
     <table class="table table-striped table-bordered">

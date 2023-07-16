@@ -31,7 +31,6 @@ if (isset($_POST['submit'])) {
         if ($jumlah > $jumlah_aset_sekarang) {
             echo "<script>alert('Tidak dapat melebihi jumlah aset sekarang!')</script>";
         } else {
-
             $q = "
                 INSERT INTO aset_hilang (
                     id_pengguna, 

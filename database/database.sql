@@ -69,6 +69,7 @@ CREATE TABLE `manajemen_aset`.`aset_rusak` (
     tanggal DATE,
     jumlah INT UNSIGNED,
     keterangan TEXT,
+    status UNSIGNED TINYINT,
     PRIMARY KEY(id),
     FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE,
     FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE

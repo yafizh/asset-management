@@ -35,6 +35,14 @@
                                 <option value="" selected disabled>Pilih Kategori Aset</option>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="status">Kondisi Rusak</label>
+                            <select name="status" id="status" class="form-control" required>
+                                <option value="" selected disabled>Pilih Kondisi Rusak</option>
+                                <option value="1" <?= ($_POST['status'] ?? '') == 1 ? 'selected' : '' ?>>Rusak Biasa</option>
+                                <option value="2" <?= ($_POST['status'] ?? '') == 2 ? 'selected' : '' ?>>Rusak Parah (Dimusnahkan)</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -77,6 +85,7 @@
                                 <input type="text" hidden name="sampai_tanggal" value="<?= $_POST['sampai_tanggal'] ?? ''; ?>">
                                 <input type="text" hidden name="jenis_aset" value="<?= $_POST['jenis_aset'] ?? ''; ?>">
                                 <input type="text" hidden name="kategori_aset" value="<?= $_POST['kategori_aset'] ?? ''; ?>">
+                                <input type="text" hidden name="status" value="<?= $_POST['status'] ?? ''; ?>">
                                 <button type="submit" class="btn btn-dark m-0">Cetak</button>
                             </form>
                         </div>
@@ -99,6 +108,7 @@
                                     pegawai.nama nama_pegawai,
                                     a.nama nama_aset, 
                                     ah.tanggal,
+                                    ah.status,
                                     ah.jumlah 
                                 FROM 
                                     aset_rusak ah  
@@ -122,6 +132,8 @@
                                     ) 
                                     AND 
                                     a.id_kategori_aset='" . $_POST['kategori_aset'] . "' 
+                                    AND 
+                                    ah.status=" . $_POST['status'] . "
                                 ORDER BY 
                                     ah.tanggal DESC 
                                 ";
