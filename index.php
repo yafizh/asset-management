@@ -144,6 +144,9 @@ if (!isset($_SESSION['user'])) {
             } elseif ($_GET['h'] === 'laporan_aset') {
                 $page = 'halaman/laporan/tampil/aset.php';
                 $active = "laporan_aset";
+            } elseif ($_GET['h'] === 'laporan_kondisi_aset') {
+                $page = 'halaman/laporan/tampil/kondisi_aset.php';
+                $active = "laporan_kondisi_aset";
             }
 
             // Ganti Password

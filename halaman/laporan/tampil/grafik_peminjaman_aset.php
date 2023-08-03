@@ -82,7 +82,8 @@
                         label: 'Peminjaman ',
                         backgroundColor: '#66BB6A',
                         borderColor: '#66BB6A',
-                        data: chart_data,
+                        // data: chart_data,
+                        data: [1, 2, 3]
                     }]
                 };
 
@@ -94,9 +95,17 @@
                             x: {
                                 grid: {
                                     display: false
-                                }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Tanggal Bulan <?= BULAN_DALAM_INDONESIA[explode('-', $_POST['bulan'] ?? Date('Y-m'))[1] - 1] ?>'
+                                },
                             },
                             y: {
+                                title: {
+                                    display: true,
+                                    text: 'Jumlah Peminjaman'
+                                },
                                 grid: {
                                     display: false
                                 },
@@ -104,7 +113,11 @@
                             },
                         },
                         plugins: {
-                            legend: false
+                            legend: true,
+                            title: {
+                                display: true,
+                                text: 'Grafik Peminjaman Aset Bulan <?= BULAN_DALAM_INDONESIA[explode('-', $_POST['bulan'] ?? Date('Y-m'))[1] - 1] ?>'
+                            }
                         }
                     },
                 };

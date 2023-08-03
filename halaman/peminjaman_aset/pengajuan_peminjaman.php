@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
     $jumlah = $mysqli->real_escape_string($_POST['jumlah']);
     $alasan_peminjaman = $mysqli->real_escape_string($_POST['alasan_peminjaman']);
 
-    $jumlah_aset_sekarang = $mysqli->query("SELECT jumlah FROM aset WHERE id=" . $_GET['id'])->fetch_assoc();
+    $jumlah_aset_sekarang = $mysqli->query("SELECT jumlah FROM aset WHERE id=" . $_GET['id'])->fetch_assoc()['jumlah'];
     if ($jumlah > $jumlah_aset_sekarang) {
         echo "<script>alert('Tidak dapat melebihi jumlah aset sekarang!')</script>";
     } else {

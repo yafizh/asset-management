@@ -175,11 +175,11 @@
                 </a>
             </li> -->
             <li class="nav-item mb-5">
-                <a class="nav-link <?= $active === 'laporan_pegawai' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=laporan_pegawai">
+                <a class="nav-link <?= $active === 'laporan_kondisi_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=laporan_kondisi_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">today</i>
                     </div>
-                    <span class="nav-link-text ms-1">Pegawai</span>
+                    <span class="nav-link-text ms-1">Kondisi Aset</span>
                 </a>
             </li>
         </ul>
