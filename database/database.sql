@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS `manajemen_aset`;
+
 CREATE DATABASE `manajemen_aset`;
+
 USE `manajemen_aset`;
 
 CREATE TABLE `manajemen_aset`.`jenis_aset`(
@@ -13,7 +15,7 @@ CREATE TABLE `manajemen_aset`.`kategori_aset`(
     id_jenis_aset BIGINT UNSIGNED,
     nama VARCHAR(255),
     PRIMARY KEY(id),
-    FOREIGN KEY (id_jenis_aset) REFERENCES jenis_aset (id) ON DELETE CASCADE 
+    FOREIGN KEY (id_jenis_aset) REFERENCES jenis_aset (id) ON DELETE CASCADE
 );
 
 CREATE TABLE `manajemen_aset`.`pengguna`(
@@ -38,7 +40,7 @@ CREATE TABLE `manajemen_aset`.`pegawai`(
     ijazah_pendidikan_terakhir VARCHAR(255),
     foto VARCHAR(255),
     PRIMARY KEY(id),
-    FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE 
+    FOREIGN KEY (id_pengguna) REFERENCES pengguna (id) ON DELETE CASCADE
 );
 
 CREATE TABLE `manajemen_aset`.`aset`(
@@ -47,7 +49,16 @@ CREATE TABLE `manajemen_aset`.`aset`(
     nama VARCHAR(255),
     jumlah INT UNSIGNED,
     PRIMARY KEY(id),
-    FOREIGN KEY (id_kategori_aset) REFERENCES kategori_aset (id) ON DELETE CASCADE 
+    FOREIGN KEY (id_kategori_aset) REFERENCES kategori_aset (id) ON DELETE CASCADE
+);
+
+CREATE TABLE `manajemen_aset`.`detail_aset` (
+    id BIGINT UNSIGNED AUTO_INCREMENT,
+    id_aset BIGINT UNSIGNED,
+    kolom VARCHAR(255),
+    nilai VARCHAR(255),
+    PRIMARY KEY(id),
+    FOREIGN KEY (id_aset) REFERENCES aset (id) ON DELETE CASCADE 
 );
 
 CREATE TABLE `manajemen_aset`.`aset_masuk` (
@@ -108,7 +119,7 @@ CREATE TABLE `manajemen_aset`.`peminjaman_aset`(
     tanggal_waktu_verifikasi TIMESTAMP NULL DEFAULT NULL,
     keterangan_verifikasi TEXT,
     jumlah INT UNSIGNED,
-    status TINYINT UNSIGNED, 
+    status TINYINT UNSIGNED,
     PRIMARY KEY(id),
     FOREIGN KEY (id_user_peminjam) REFERENCES pengguna (id) ON DELETE CASCADE,
     FOREIGN KEY (id_user_verifikator) REFERENCES pengguna (id) ON DELETE CASCADE,
@@ -124,7 +135,7 @@ CREATE TABLE `manajemen_aset`.`pengembalian_aset`(
     tanggal_waktu_pengajuan TIMESTAMP NULL DEFAULT NULL,
     tanggal_waktu_verifikasi TIMESTAMP NULL DEFAULT NULL,
     keterangan_verifikasi TEXT,
-    status TINYINT UNSIGNED, 
+    status TINYINT UNSIGNED,
     PRIMARY KEY(id),
     FOREIGN KEY (id_peminjaman_aset) REFERENCES peminjaman_aset (id) ON DELETE CASCADE,
     FOREIGN KEY (id_user_verifikator) REFERENCES pengguna (id) ON DELETE CASCADE,

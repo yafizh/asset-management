@@ -19,13 +19,25 @@ if (isset($_GET['id'])) {
         a.id=" . $_GET['id'];
     $result = $mysqli->query($q);
     $data = $result->fetch_assoc();
+    $data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_GET['id'])->fetch_all(MYSQLI_ASSOC);
 }
 
 if (isset($_POST['submit'])) {
     $jumlah = $mysqli->real_escape_string($_POST['jumlah']);
     $alasan_peminjaman = $mysqli->real_escape_string($_POST['alasan_peminjaman']);
 
-    $jumlah_aset_sekarang = $mysqli->query("SELECT jumlah FROM aset WHERE id=" . $_GET['id'])->fetch_assoc()['jumlah'];
+    $q = "
+    SELECT 
+    (
+        (SELECT IFNULL(SUM(jumlah),0) FROM aset_masuk WHERE id_aset=".$_GET['id'].")
+        -
+        (SELECT IFNULL(SUM(jumlah),0) FROM aset_rusak WHERE id_aset=".$_GET['id'].")
+        -
+        (SELECT IFNULL(SUM(jumlah),0) FROM aset_hilang WHERE id_aset=".$_GET['id'].")
+    ) AS jumlah 
+";
+
+$jumlah_aset_sekarang = $mysqli->query($q)->fetch_assoc()['jumlah'];
     if ($jumlah > $jumlah_aset_sekarang) {
         echo "<script>alert('Tidak dapat melebihi jumlah aset sekarang!')</script>";
     } else {
@@ -58,7 +70,7 @@ if (isset($_POST['submit'])) {
 ?>
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-6">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
@@ -68,27 +80,50 @@ if (isset($_POST['submit'])) {
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Jenis Aset</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['jenis_aset']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Kategori Aset</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['nama']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Detail</label>
+                                <?php foreach ($data['detail'] as $key => $value) : ?>
+                                    <div class="row ps-1 mb-2">
+                                        <div class="col-auto" style="width: 120px;"><?= $value['kolom']; ?></div>
+                                        <div class="col-8">: <?= $value['nilai']; ?></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                        <h6 class="text-white text-capitalize m-0">Peminjaman</h6>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
                             <form action="" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label">Jenis Aset</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['jenis_aset']; ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Kategori Aset</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset']; ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['nama']; ?>">
-                                </div>
-                                <hr>
                                 <div class="mb-3">
                                     <label class="form-label">Tanggal Peminjaman</label>
                                     <input type="text" class="form-control" value="<?= tanggalIndonesiaString(Date("Y-m-d")); ?>" disabled>
                                 </div>
                                 <div class="mb-3">
                                     <label for="jumlah" class="form-label">Jumlah Yang Dipinjam</label>
-                                    <input type="text" class="form-control" name="jumlah" id="jumlah" required>
+                                    <input type="number" min="1" class="form-control" name="jumlah" id="jumlah" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="alasan_peminjaman" class="form-label">Alasan Peminjaman</label>

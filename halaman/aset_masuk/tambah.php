@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="mb-3">
                             <label for="jumlah" class="form-label">Jumlah</label>
-                            <input type="text" class="form-control p-2" value="1" min="1" required name="jumlah" id="jumlah">
+                            <input type="number" class="form-control p-2" value="1" min="1" required name="jumlah" id="jumlah">
                         </div>
                         <div class="mb-3">
                             <label for="keterangan" class="form-label">Keterangan</label>

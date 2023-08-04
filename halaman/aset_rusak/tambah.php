@@ -28,7 +28,19 @@ if (isset($_POST['submit'])) {
     try {
         $mysqli->begin_transaction();
 
-        $jumlah_aset_sekarang = $mysqli->query("SELECT jumlah FROM aset WHERE id=" . $_GET['id'])->fetch_assoc()['jumlah'];
+        $q = "
+            SELECT 
+            (
+                (SELECT IFNULL(SUM(jumlah),0) FROM aset_masuk WHERE id_aset=".$_GET['id'].")
+                -
+                (SELECT IFNULL(SUM(jumlah),0) FROM aset_rusak WHERE id_aset=".$_GET['id'].")
+                -
+                (SELECT IFNULL(SUM(jumlah),0) FROM aset_hilang WHERE id_aset=".$_GET['id'].")
+            ) AS jumlah 
+        ";
+
+        $jumlah_aset_sekarang = $mysqli->query($q)->fetch_assoc()['jumlah'];
+
         if ($jumlah > $jumlah_aset_sekarang) {
             echo "<script>alert('Tidak dapat melebihi jumlah aset sekarang!')</script>";
         } else {
@@ -57,6 +69,7 @@ if (isset($_POST['submit'])) {
     } catch (\Throwable $e) {
         echo "<script>alert('Pelaporan Aset Rusak Gagal!')</script>";
         $mysqli->rollback();
+        var_dump($e);
         throw $e;
     }
 }
@@ -82,7 +95,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="mb-3">
                             <label for="jumlah" class="form-label">Jumlah</label>
-                            <input type="text" class="form-control p-2" value="1" min="1" required name="jumlah" id="jumlah">
+                            <input type="number" class="form-control p-2" value="1" min="1" required name="jumlah" id="jumlah">
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Kondisi Rusak</label>

@@ -198,7 +198,7 @@ if (!isset($_SESSION['user'])) {
             // Aset
             if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'hapus_aset', 'detail_aset', 'aset_per_kategori_aset'])) $active = 'aset';
 
-            if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset'])) {
+            if (in_array($_GET['h'], ['aset', 'tambah_aset', 'edit_aset', 'detail_aset'])) {
                 $jenis_aset = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_GET['id_jenis_aset'])->fetch_assoc();
                 $kategori_aset = $mysqli->query("SELECT * FROM kategori_aset WHERE id=" . $_GET['id_kategori_aset'])->fetch_assoc();
                 $navbar = "<a href='?h=jenis_aset'>Jenis Aset</a> \\ <span class='text-muted'>" . $jenis_aset['nama'] . "</span> \\ <a href='?h=kategori_aset&id_jenis_aset=" . $jenis_aset['id'] . "'>Ketegori Aset</a> \\ <span class='text-muted'>" . $kategori_aset['nama'] . "</span>";
@@ -208,6 +208,7 @@ if (!isset($_SESSION['user'])) {
             elseif ($_GET['h'] === 'tambah_aset') $page = 'halaman/aset/tambah.php';
             elseif ($_GET['h'] === 'edit_aset') $page = 'halaman/aset/edit.php';
             elseif ($_GET['h'] === 'hapus_aset') $page = 'halaman/aset/hapus.php';
+            elseif ($_GET['h'] === 'detail_aset') $page = 'halaman/aset/detail_aset.php';
 
             // Aset Rusak
             if (in_array($_GET['h'], ['aset_rusak', 'tambah_aset_rusak', 'hapus_aset_rusak'])) {

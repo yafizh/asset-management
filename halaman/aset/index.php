@@ -71,6 +71,7 @@
                                             </a>
                                         </td>
                                         <td class="small-td">
+                                            <a href="?h=detail_aset&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm btn-info text-white m-0">Detail</a>
                                             <a href="?h=edit_aset&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm btn-warning text-white m-0">Edit</a>
                                             <a href="?h=hapus_aset&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm btn-danger text-white m-0" onclick="return confirm('Yakin?')">Hapus</a>
                                         </td>
