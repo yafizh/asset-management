@@ -36,8 +36,8 @@ INSERT INTO `manajemen_aset`.`pegawai` (
 INSERT INTO `manajemen_aset`.`jenis_aset` (
     nama
 ) VALUES 
+('Aset Bergerak'),
 ('Aset Tidak Bergerak'),
-('Aset Bergerak');
 
 INSERT INTO `manajemen_aset`.`kategori_aset` (
     id_jenis_aset,
