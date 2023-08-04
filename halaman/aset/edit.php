@@ -41,6 +41,8 @@ if (isset($_POST['submit'])) {
         WHERE 
             id=" . $data['id'];
 
+        $mysqli->query($q);
+        
         $mysqli->query("DELETE FROM detail_aset WHERE id_aset=" . $data['id']);
         foreach ($detail as $kolom => $nilai) {
             $q = "
