@@ -36,18 +36,21 @@ INSERT INTO `manajemen_aset`.`pegawai` (
 INSERT INTO `manajemen_aset`.`jenis_aset` (
     nama
 ) VALUES 
-('Aset Bergerak'),
 ('Aset Tidak Bergerak'),
+('Aset Bergerak');
 
 INSERT INTO `manajemen_aset`.`kategori_aset` (
     id_jenis_aset,
     nama
 ) VALUES 
-(1, 'Kamera'),
-(1, 'Kursi'),
-(1, 'Meja'),
-(1, 'Motor'),
-(1, 'Mobil');
+(1, 'Tanah'),
+(1, 'Bangunan'),
+(2, 'Perlengkapan Olahraga'),
+(2, 'Elektronik'),
+(2, 'Kamera'),
+(2, 'Kursi'),
+(2, 'Meja'),
+(2, 'Kendaraan');
 
 INSERT INTO `manajemen_aset`.`aset`(
     id,
