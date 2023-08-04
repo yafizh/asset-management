@@ -17,7 +17,7 @@
                                 </tr>
                             </thead>
                             <?php
-                            $result = $mysqli->query("SELECT * FROM kategori_aset");
+                            $result = $mysqli->query("SELECT * FROM kategori_aset WHERE id_jenis_aset=".$_GET['id_jenis_aset']);
                             $no = 1;
                             ?>
                             <tbody>
