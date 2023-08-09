@@ -22,8 +22,8 @@
                         <div class="mb-3">
                             <?php $result = $mysqli->query("SELECT * FROM jenis_aset"); ?>
                             <label for="jenis_aset">Jenis Aset</label>
-                            <select name="jenis_aset" id="jenis_aset" class="form-control" required>
-                                <option value="" selected disabled>Pilih Jenis Aset</option>
+                            <select name="jenis_aset" id="jenis_aset" class="form-control">
+                                <option value="" selected>Semua Jenis Aset</option>
                                 <?php while ($row = $result->fetch_assoc()) : ?>
                                     <option value="<?= $row['id']; ?>" <?= (($_POST['jenis_aset'] ?? '') == $row['id'] ? 'selected' : '') ?>><?= $row['nama']; ?></option>
                                 <?php endwhile; ?>
@@ -31,8 +31,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="kategori_aset">Kategori Aset</label>
-                            <select name="kategori_aset" id="kategori_aset" class="form-control" required>
-                                <option value="" selected disabled>Pilih Kategori Aset</option>
+                            <select name="kategori_aset" id="kategori_aset" class="form-control">
+                                <option value="" selected>Semua Kategori Aset</option>
                             </select>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
             const id_kategori_aset = JSON.parse('<?= json_encode($_POST['kategori_aset'] ?? 0); ?>');
             const kategori_aset = JSON.parse('<?= json_encode($kategori_aset); ?>');
             document.getElementById('jenis_aset').addEventListener('change', function() {
-                document.getElementById('kategori_aset').innerHTML = '<option value="" selected disabled>Pilih Kategori Aset</option>';
+                document.getElementById('kategori_aset').innerHTML = '<option value="" selected>Pilih Kategori Aset</option>';
                 kategori_aset[this.value].forEach(element => {
                     document.getElementById('kategori_aset').insertAdjacentHTML('beforeend', `
                         <option ${id_kategori_aset == element.id ? 'selected' : ''} value="${element.id}">${element.nama}</option>
@@ -107,6 +107,10 @@
                                 ON 
                                     a.id=ah.id_aset 
                                 INNER JOIN 
+                                    kategori_aset ka 
+                                ON 
+                                    ka.id=a.id_kategori_aset 
+                                INNER JOIN 
                                     pengguna 
                                 ON 
                                     pengguna.id=ah.id_pengguna 
@@ -120,11 +124,17 @@
                                         AND 
                                         ah.tanggal <= '" . $_POST['sampai_tanggal'] . "' 
                                     ) 
-                                    AND 
-                                    a.id_kategori_aset='" . $_POST['kategori_aset'] . "' 
-                                ORDER BY 
-                                    ah.tanggal DESC 
                                 ";
+
+                                if (!empty($_POST['jenis_aset'] ?? '')) {
+                                    $q .= " AND ka.id_jenis_aset='" . $_POST['jenis_aset'] . "'";
+                                }
+
+                                if (!empty($_POST['kategori_aset'] ?? '')) {
+                                    $q .= " AND a.id_kategori_aset='" . $_POST['kategori_aset'] . "'";
+                                }
+
+                                $q .= " ORDER BY ah.tanggal DESC";
 
                                 $result = $mysqli->query($q);
                                 $no = 1;

@@ -12,18 +12,22 @@
     <span>: <?= tanggalIndonesia($_POST['sampai_tanggal']); ?></span>
     <br>
     <?php
-    $result = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_POST['jenis_aset']);
-    $data = $result->fetch_assoc();
+    if (!empty($_POST['jenis_aset'] ?? '')) {
+        $result = $mysqli->query("SELECT * FROM jenis_aset WHERE id=" . $_POST['jenis_aset']);
+        $data = $result->fetch_assoc();
+    }
     ?>
     <span style="width: 150px; display: inline-block;">Jenis Aset</span>
-    <span>: <?= $data['nama']; ?></span>
+    <span>: <?= !empty($_POST['jenis_aset'] ?? '') ? $data['nama'] : 'Semua Jenis Aset'; ?></span>
     <br>
     <?php
-    $result = $mysqli->query("SELECT * FROM kategori_aset WHERE id=" . $_POST['kategori_aset']);
-    $data = $result->fetch_assoc();
+    if (!empty($_POST['kategori_aset'] ?? '')) {
+        $result = $mysqli->query("SELECT * FROM kategori_aset WHERE id=" . $_POST['kategori_aset']);
+        $data = $result->fetch_assoc();
+    }
     ?>
     <span style="width: 150px; display: inline-block;">Kategori Aset</span>
-    <span>: <?= $data['nama']; ?></span>
+    <span>: <?= !empty($_POST['kategori_aset'] ?? '') ? $data['nama'] : 'Semua Kategori Aset'; ?></span>
 </section>
 <main class="px-3">
     <table class="table table-striped table-bordered">
@@ -50,6 +54,10 @@
         ON 
             a.id=ah.id_aset 
         INNER JOIN 
+            kategori_aset ka 
+        ON 
+            ka.id=a.id_kategori_aset 
+        INNER JOIN 
             pengguna 
         ON 
             pengguna.id=ah.id_pengguna 
@@ -63,11 +71,17 @@
                 AND 
                 ah.tanggal <= '" . $_POST['sampai_tanggal'] . "' 
             ) 
-            AND 
-            a.id_kategori_aset='" . $_POST['kategori_aset'] . "' 
-        ORDER BY 
-            ah.tanggal DESC 
         ";
+
+        if (!empty($_POST['jenis_aset'] ?? '')) {
+            $q .= " AND ka.id_jenis_aset='" . $_POST['jenis_aset'] . "'";
+        }
+
+        if (!empty($_POST['kategori_aset'] ?? '')) {
+            $q .= " AND a.id_kategori_aset='" . $_POST['kategori_aset'] . "'";
+        }
+
+        $q .= " ORDER BY ah.tanggal DESC";
 
         $result = $mysqli->query($q);
         $no = 1;
