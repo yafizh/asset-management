@@ -92,6 +92,7 @@ if (isset($_POST['submit'])) {
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+                  <img src="../../assets/img/favicon.png" style="width: 6rem; margin: 0 auto; display: block;">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Aplikasi Pengelola Ketersediaan dan Peminjaman Aset pada Balai Pengkajian Teknologi Pertanian Kalimantan Selatan</h4>
                 </div>
               </div>

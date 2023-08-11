@@ -18,6 +18,7 @@
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Nama</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Rusak</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Hilang</th>
+                                    <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Baik</th>
                                     <th class="text-uppercase text-center text-secondary text-xs font-weight-bolder opacity-7">Total</th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -55,7 +56,7 @@
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                        <a href="?h=tambah_aset_hilang&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-danger text-white">
+                                            <a href="?h=tambah_aset_hilang&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-danger text-white">
                                                 <span class="badge badge-sm bg-gradient-danger p-2">
                                                     <?= $row['hilang'] ?? 0; ?>
                                                 </span>
@@ -63,9 +64,14 @@
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                        <a href="?h=tambah_aset_masuk&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-info text-white">
+                                            <span class="badge badge-sm bg-gradient-success p-2">
+                                                <?= $row['jumlah'] + $row['masuk'] - $row['rusak'] - $row['hilang'] ?>
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="?h=tambah_aset_masuk&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-info text-white">
                                                 <span class="badge badge-sm bg-gradient-info p-2">
-                                                    <?= $row['jumlah'] + $row['masuk'] - $row['rusak'] - $row['hilang'] ?>
+                                                    <?= $row['jumlah'] + $row['masuk'] + $row['rusak'] + $row['hilang'] ?>
                                                 </span>
                                                 Tambah
                                             </a>

@@ -16,6 +16,8 @@ $query = "
 $result = $mysqli->query($query)->fetch_assoc();
 if (isset($_POST['submit'])) {
     $nama = $mysqli->real_escape_string($_POST['nama']);
+    $lokasi = $mysqli->real_escape_string($_POST['lokasi']);
+    $tanggal = $mysqli->real_escape_string($_POST['tanggal']);
     $detail = [];
     for ($i = 0; $i < count($_POST['detail']); $i += 2) {
         $key = $mysqli->real_escape_string($_POST['detail'][$i]);
@@ -32,10 +34,14 @@ if (isset($_POST['submit'])) {
         INSERT INTO aset (
             id_kategori_aset, 
             nama,
+            lokasi,
+            tanggal,
             jumlah 
         ) VALUES (
             '" . $_GET['id_kategori_aset'] . "', 
             '$nama',
+            '$lokasi',
+            '$tanggal',
             0
         )";
         $mysqli->query($q);
@@ -88,6 +94,14 @@ if (isset($_POST['submit'])) {
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control p-2" name="nama" id="nama" autocomplete="off" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lokasi" class="form-label">Lokasi</label>
+                            <input type="text" class="form-control p-2" name="lokasi" id="lokasi" autocomplete="off" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tanggal" class="form-label">Tanggal</label>
+                            <input type="date" class="form-control p-2" name="tanggal" id="tanggal" autocomplete="off" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Detail</label>

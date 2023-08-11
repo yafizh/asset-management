@@ -45,6 +45,14 @@ $data['detail'] = $mysqli->query("SELECT * FROM detail_aset WHERE id_aset=" . $_
                                 <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
                             </div>
                             <div class="mb-3">
+                                <label class="form-label">Lokasi</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['lokasi'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesia($data['tanggal']) ?>">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label">Detail</label>
                                 <?php foreach ($data['detail'] as $key => $value) : ?>
                                     <div class="row ps-1 mb-2">

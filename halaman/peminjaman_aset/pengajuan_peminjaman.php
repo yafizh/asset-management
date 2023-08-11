@@ -29,15 +29,15 @@ if (isset($_POST['submit'])) {
     $q = "
     SELECT 
     (
-        (SELECT IFNULL(SUM(jumlah),0) FROM aset_masuk WHERE id_aset=".$_GET['id'].")
+        (SELECT IFNULL(SUM(jumlah),0) FROM aset_masuk WHERE id_aset=" . $_GET['id'] . ")
         -
-        (SELECT IFNULL(SUM(jumlah),0) FROM aset_rusak WHERE id_aset=".$_GET['id'].")
+        (SELECT IFNULL(SUM(jumlah),0) FROM aset_rusak WHERE id_aset=" . $_GET['id'] . ")
         -
-        (SELECT IFNULL(SUM(jumlah),0) FROM aset_hilang WHERE id_aset=".$_GET['id'].")
+        (SELECT IFNULL(SUM(jumlah),0) FROM aset_hilang WHERE id_aset=" . $_GET['id'] . ")
     ) AS jumlah 
 ";
 
-$jumlah_aset_sekarang = $mysqli->query($q)->fetch_assoc()['jumlah'];
+    $jumlah_aset_sekarang = $mysqli->query($q)->fetch_assoc()['jumlah'];
     if ($jumlah > $jumlah_aset_sekarang) {
         echo "<script>alert('Tidak dapat melebihi jumlah aset sekarang!')</script>";
     } else {
@@ -91,6 +91,10 @@ $jumlah_aset_sekarang = $mysqli->query($q)->fetch_assoc()['jumlah'];
                             <div class="mb-3">
                                 <label class="form-label">Nama</label>
                                 <input type="text" class="form-control p-2" disabled value="<?= $data['nama']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Lokasi</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['lokasi']; ?>">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Detail</label>

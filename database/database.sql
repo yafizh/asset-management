@@ -47,7 +47,9 @@ CREATE TABLE `manajemen_aset`.`aset`(
     id BIGINT UNSIGNED AUTO_INCREMENT,
     id_kategori_aset BIGINT UNSIGNED,
     nama VARCHAR(255),
+    lokasi VARCHAR(255),
     jumlah INT UNSIGNED,
+    tanggal DATE,
     PRIMARY KEY(id),
     FOREIGN KEY (id_kategori_aset) REFERENCES kategori_aset (id) ON DELETE CASCADE
 );

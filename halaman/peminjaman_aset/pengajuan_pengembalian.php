@@ -69,6 +69,10 @@ if (isset($_POST['submit'])) {
                                     <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">Lokasi</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['lokasi']; ?>">
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label">Detail</label>
                                     <?php foreach ($data['detail'] as $key => $value) : ?>
                                         <div class="row ps-1 mb-2">
