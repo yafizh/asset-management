@@ -147,6 +147,9 @@ if (!isset($_SESSION['user'])) {
             } elseif ($_GET['h'] === 'laporan_kondisi_aset') {
                 $page = 'halaman/laporan/tampil/kondisi_aset.php';
                 $active = "laporan_kondisi_aset";
+            } elseif ($_GET['h'] === 'laporan_aset') {
+                $page = 'halaman/laporan/tampil/aset.php';
+                $active = "laporan_aset";
             }
 
             // Ganti Password
@@ -290,9 +293,9 @@ if (!isset($_SESSION['user'])) {
                 $page = 'halaman/jenis_aset/index.php';
             }
             if ($_SESSION['user']['status'] == 4) {
-                $page = 'halaman/laporan/tampil/aset_masuk.php';
-                $active = "laporan_aset_masuk";
-                $navbar = "Laporan Aset Masuk";
+                $page = 'halaman/laporan/tampil/aset.php';
+                $active = "laporan_aset";
+                $navbar = "Laporan Aset";
             }
             // $active = 'dashboard';
             // $page = 'halaman/dashboard/index.php';

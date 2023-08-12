@@ -119,6 +119,14 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-8">Laporan</h6>
             </li>
             <li class="nav-item">
+                <a class="nav-link <?= $active === 'laporan_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=laporan_aset">
+                    <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">today</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Aset</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link <?= $active === 'laporan_aset_masuk' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=laporan_aset_masuk">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">today</i>
@@ -150,7 +158,7 @@
                     <span class="nav-link-text ms-1">Peminjaman Aset</span>
                 </a>
             </li>
-                 <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link <?= $active === 'laporan_pengembalian_aset' ? 'active bg-gradient-success text-white' : 'text-dark'; ?>" href="?h=laporan_pengembalian_aset">
                     <div class="text-dark text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">today</i>
