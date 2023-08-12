@@ -122,6 +122,7 @@ CREATE TABLE `manajemen_aset`.`peminjaman_aset`(
     tanggal_waktu_verifikasi TIMESTAMP NULL DEFAULT NULL,
     keterangan_verifikasi TEXT,
     jumlah INT UNSIGNED,
+    berita_acara VARCHAR(255),
     status TINYINT UNSIGNED,
     PRIMARY KEY(id),
     FOREIGN KEY (id_user_peminjam) REFERENCES pengguna (id) ON DELETE CASCADE,

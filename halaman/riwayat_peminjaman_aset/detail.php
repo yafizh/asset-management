@@ -10,6 +10,7 @@ $q = "
         (SELECT id FROM pengembalian_aset WHERE id_peminjaman_aset=pa.id AND status=3) telah_dikembalikan,
         pa.alasan,
         pa.jumlah,
+        pa.berita_acara,
         pegawai.nama verifikator,
         pa.status
     FROM 
@@ -91,6 +92,11 @@ $data = $result->fetch_assoc();
                                 <div class="mb-3">
                                     <label class="form-label">Keterangan</label>
                                     <textarea class="form-control p-2" rows="5" disabled><?= $data['keterangan_verifikasi'] ?></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Berita Acara</label>
+                                    <br>
+                                    <a href="<?= $data['berita_acara']; ?>" target="_blank" class="ps-1">PDF</a>
                                 </div>
                             <?php endif; ?>
                             <div class="d-flex justify-content-between">

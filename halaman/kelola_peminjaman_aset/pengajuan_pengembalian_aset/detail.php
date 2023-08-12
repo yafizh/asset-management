@@ -4,6 +4,8 @@ $q = "
         ka.nama kategori_aset,
         a.nama,
         pegawai.nip,
+        pegawai.jabatan,
+        pegawai.pangkat_golongan,
         pegawai.nama nama_pegawai,
         DATE(pa1.tanggal_waktu_pengajuan) tanggal_pengajuan,
         pa.id id_peminjaman_aset,  
@@ -73,7 +75,7 @@ if (isset($_POST['submit'])) {
 ?>
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-6">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
@@ -96,15 +98,6 @@ if (isset($_POST['submit'])) {
                                     <label class="form-label">Jumlah</label>
                                     <input type="text" class="form-control p-2" disabled value="<?= $data['jumlah'] ?>">
                                 </div>
-                                <hr>
-                                <div class="mb-3">
-                                    <label class="form-label">NIP Peminjam</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['nip']; ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nama Peminjam</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['nama_pegawai']; ?>">
-                                </div>
                                 <div class="mb-3">
                                     <label class="form-label">Tanggal Pengajuan</label>
                                     <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesiaString($data['tanggal_pengajuan']); ?>">
@@ -112,6 +105,39 @@ if (isset($_POST['submit'])) {
                                 <div class="mb-3">
                                     <label class="form-label">Alasan Pengajuan</label>
                                     <textarea class="form-control p-2" disabled><?= $data['alasan']; ?></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                        <h6 class="text-white text-capitalize m-0">Detail Peminjam</h6>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <form action="" method="POST">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label class="form-label">NIP</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['nip']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nama</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['nama_pegawai']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Jabatan</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['jabatan']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Pangkat/Golongan</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['pangkat_golongan']; ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="keterangan" class="form-label">Keterangan Penerimaan/Penolakan</label>

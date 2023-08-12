@@ -6,6 +6,8 @@ $q = "
         a.nama,
         pegawai.nip,
         pegawai.nama nama_pegawai,
+        pegawai.jabatan,
+        pegawai.pangkat_golongan,
         DATE(pa.tanggal_waktu_pengajuan) tanggal_pengajuan,
         pa.id,  
         pa.jumlah,  
@@ -35,9 +37,30 @@ $q = "
     ";
 $result = $mysqli->query($q);
 $data = $result->fetch_assoc();
+$data2 = $mysqli->query('SELECT * FROM peminjaman_aset WHERE id=' . $_GET['id'])->fetch_assoc();
 if (isset($_POST['submit'])) {
     $keterangan = $mysqli->real_escape_string($_POST['keterangan']);
     $status = $_POST['submit'] === 'terima' ? 3 : 2;
+
+    $berita_acara = $_FILES["berita_acara"];
+
+    $upload_berita_acara = true;
+    if ($berita_acara['error'] != 4) {
+        $target_dir = "uploads/berita_acara/";
+        $imageFileType = strtolower(pathinfo($berita_acara['name'], PATHINFO_EXTENSION));
+        $berita_acara_upload = $target_dir . Date("YmdHis") . '.' . $imageFileType;
+
+        if ($imageFileType != "pdf") {
+            echo "<script>alert('Hanya menerima file dengan format .pdf!')</script>";
+            $upload_berita_acara = false;
+        }
+
+        if ($upload_berita_acara) {
+            if (!is_dir($target_dir)) mkdir($target_dir, 0700, true);
+            if (!move_uploaded_file($berita_acara["tmp_name"], $berita_acara_upload))
+                echo "<script>alert('Gagal meng-upload file!')</script>";
+        }
+    } else $berita_acara_upload = '';
 
     try {
         $mysqli->begin_transaction();
@@ -49,7 +72,8 @@ if (isset($_POST['submit'])) {
                 id_user_verifikator='" . $_SESSION['user']['id'] . "', 
                 tanggal_waktu_verifikasi='" . Date('Y-m-d H:i:s') . "', 
                 keterangan_verifikasi='$keterangan', 
-                status='$status'
+                status='$status',
+                berita_acara='$berita_acara_upload'
             WHERE 
                 id=" . $data['id'] . "
         ";
@@ -71,50 +95,88 @@ if (isset($_POST['submit'])) {
 ?>
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-6">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
-                        <h6 class="text-white text-capitalize m-0">Detail Pengajuan Peminjaman Aset</h6>
+                        <h6 class="text-white text-capitalize m-0">Detail Aset</h6>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <form action="" method="POST">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Kategori Aset</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal Pengajuan</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesiaString($data['tanggal_pengajuan']); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Jumlah Yang Dipinjam</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['jumlah']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Alasan Peminjaman</label>
+                                <textarea class="form-control p-2" disabled><?= $data['alasan']; ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card my-4">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-success shadow-success border-radius-lg p-3 d-flex justify-content-between align-items-center">
+                        <h6 class="text-white text-capitalize m-0">Detail Peminjam</h6>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <form action="" method="POST" enctype="multipart/form-data">
                             <div class="col-12">
                                 <div class="mb-3">
-                                    <label class="form-label">Kategori Aset</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['kategori_aset'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['nama'] ?>">
-                                </div>
-                                <hr>
-                                <div class="mb-3">
-                                    <label class="form-label">NIP Peminjam</label>
+                                    <label class="form-label">NIP</label>
                                     <input type="text" class="form-control p-2" disabled value="<?= $data['nip']; ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Nama Peminjam</label>
+                                    <label class="form-label">Nama</label>
                                     <input type="text" class="form-control p-2" disabled value="<?= $data['nama_pegawai']; ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Tanggal Pengajuan</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesiaString($data['tanggal_pengajuan']); ?>">
+                                    <label class="form-label">Jabatan</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['jabatan']; ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Jumlah Yang Dipinjam</label>
-                                    <input type="text" class="form-control p-2" disabled value="<?= $data['jumlah']; ?>">
+                                    <label class="form-label">Pangkat/Golongan</label>
+                                    <input type="text" class="form-control p-2" disabled value="<?= $data['pangkat_golongan']; ?>">
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Alasan Peminjaman</label>
-                                    <textarea class="form-control p-2" disabled><?= $data['alasan']; ?></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="keterangan" class="form-label">Keterangan Penerimaan/Penolakan</label>
-                                    <textarea class="form-control p-2" name="keterangan" id="keterangan" required></textarea>
-                                </div>
+                                <?php if ($data['status'] == 1) : ?>
+                                    <div class="mb-3">
+                                        <label for="keterangan" class="form-label">Keterangan Penerimaan/Penolakan</label>
+                                        <textarea class="form-control p-2" name="keterangan" id="keterangan" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="berita_acara" class="form-label">Berita Acara</label>
+                                        <input type="file" class="form-control" name="berita_acara" id="berita_acara">
+                                    </div>
+                                <?php else : ?>
+                                    <div class="mb-3">
+                                        <label class="form-label">Keterangan Penerimaan/Penolakan</label>
+                                        <textarea class="form-control p-2" disabled><?= $data2['keterangan_verifikasi'] ?></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="berita_acara" class="form-label">Berita Acara</label>
+                                        <br>
+                                        <a href="<?= $data2['berita_acara']; ?>" target="_blank" class="ps-1">PDF</a>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="d-flex justify-content-between flex-wrap">
                                     <div class="d-flex align-items-center flex-grow-1">
                                         <a href="?h=pengajuan_peminjaman_aset" class="btn btn-secondary">Kembali</a>

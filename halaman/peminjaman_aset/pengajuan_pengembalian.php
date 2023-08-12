@@ -4,7 +4,8 @@ $q = "
         ka.nama kategori_aset,
         pa.id,
         pa.jumlah,
-        a.nama
+        a.nama,
+        a.lokasi
     FROM 
         peminjaman_aset pa  
     INNER JOIN 
