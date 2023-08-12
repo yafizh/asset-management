@@ -79,6 +79,10 @@ $data = $result->fetch_assoc();
                                 <input type="text" class="form-control p-2" disabled value="<?= $data['jabatan'] ?>">
                             </div>
                             <div class="mb-3">
+                                <label class="form-label">Pangkat/Golongan</label>
+                                <input type="text" class="form-control p-2" disabled value="<?= $data['pangkat_golongan'] ?>">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label">TMT</label>
                                 <input type="text" class="form-control p-2" disabled value="<?= tanggalIndonesia($data['tanggal_lahir']); ?>">
                             </div>

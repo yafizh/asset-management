@@ -34,6 +34,7 @@ CREATE TABLE `manajemen_aset`.`pegawai`(
     tanggal_lahir DATE,
     tempat_lahir VARCHAR(255),
     jabatan VARCHAR(255),
+    pangkat_golongan VARCHAR(255),
     tmt DATE,
     sk_tmt VARCHAR(255),
     pendidikan_terakhir VARCHAR(20),

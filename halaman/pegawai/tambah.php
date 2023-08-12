@@ -6,6 +6,7 @@ if (isset($_POST['submit'])) {
     $tanggal_lahir = $mysqli->real_escape_string($_POST['tanggal_lahir']);
     $tempat_lahir = $mysqli->real_escape_string($_POST['tempat_lahir']);
     $jabatan = $mysqli->real_escape_string($_POST['jabatan']);
+    $pangkat_golongan = $mysqli->real_escape_string($_POST['pangkat_golongan']);
     $tmt = $mysqli->real_escape_string($_POST['tmt']);
     $pendidikan_terakhir = $mysqli->real_escape_string($_POST['pendidikan_terakhir']);
 
@@ -97,6 +98,7 @@ if (isset($_POST['submit'])) {
                 tanggal_lahir, 
                 tempat_lahir, 
                 jabatan, 
+                pangkat_golongan, 
                 tmt, 
                 sk_tmt, 
                 pendidikan_terakhir, 
@@ -109,6 +111,7 @@ if (isset($_POST['submit'])) {
                 '$tanggal_lahir', 
                 '$tempat_lahir', 
                 '$jabatan',
+                '$pangkat_golongan',
                 '$tmt',
                 '$sk_tmt_upload',
                 '$pendidikan_terakhir',
@@ -169,6 +172,12 @@ if (isset($_POST['submit'])) {
                             <label for="jabatan" class="form-label">Jabatan</label>
                             <div class="input-group input-group-outline">
                                 <input type="text" class="form-control" name="jabatan" id="jabatan" autocomplete="off" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pangkat_golongan" class="form-label">Pangkat/Golongan</label>
+                            <div class="input-group input-group-outline">
+                                <input type="text" class="form-control" name="pangkat_golongan" id="pangkat_golongan" autocomplete="off" required>
                             </div>
                         </div>
                         <div class="mb-3">
