@@ -51,19 +51,3 @@ INSERT INTO `manajemen_aset`.`kategori_aset` (
 (2, 'Kursi'),
 (2, 'Meja'),
 (2, 'Kendaraan');
-
-INSERT INTO `manajemen_aset`.`aset`(
-    id,
-    id_kategori_aset,
-    nama,
-    jumlah 
-) VALUES 
-(1, 1, 'Sony', 0),
-(2, 1, 'Sahitel ', 0),
-(3, 1, 'Canon', 0),
-(4, 4, 'Beat', 0),
-(5, 4, 'Vario', 0),
-(6, 4, 'NMAX', 0),
-(7, 5, 'Avanza', 0),
-(8, 5, 'BMW', 0),
-(9, 5, 'Brio', 0);
