@@ -62,34 +62,36 @@ if (isset($_POST['submit'])) {
         }
     } else $berita_acara_upload = '';
 
-    try {
-        $mysqli->begin_transaction();
+    if ($upload_berita_acara) {
+        try {
+            $mysqli->begin_transaction();
 
-        $q = "
-            UPDATE 
-                peminjaman_aset 
-            SET 
-                id_user_verifikator='" . $_SESSION['user']['id'] . "', 
-                tanggal_waktu_verifikasi='" . Date('Y-m-d H:i:s') . "', 
-                keterangan_verifikasi='$keterangan', 
-                status='$status',
-                berita_acara='$berita_acara_upload'
-            WHERE 
-                id=" . $data['id'] . "
-        ";
+            $q = "
+                UPDATE 
+                    peminjaman_aset 
+                SET 
+                    id_user_verifikator='" . $_SESSION['user']['id'] . "', 
+                    tanggal_waktu_verifikasi='" . Date('Y-m-d H:i:s') . "', 
+                    keterangan_verifikasi='$keterangan', 
+                    status='$status',
+                    berita_acara='$berita_acara_upload'
+                WHERE 
+                    id=" . $data['id'] . "
+            ";
 
-        $mysqli->query($q);
+            $mysqli->query($q);
 
-        $mysqli->commit();
-        if ($_POST['submit'] === 'terima')
-            echo "<script>alert('Pengajuan Berhasil Diterima!')</script>";
-        else
-            echo "<script>alert('Pengajuan Berhasil Ditolak!')</script>";
-        echo "<script>location.href = '?h=pengajuan_peminjaman_aset';</script>";
-    } catch (\Throwable $e) {
-        echo "<script>alert('Gagal!')</script>";
-        $mysqli->rollback();
-        throw $e;
+            $mysqli->commit();
+            if ($_POST['submit'] === 'terima')
+                echo "<script>alert('Pengajuan Berhasil Diterima!')</script>";
+            else
+                echo "<script>alert('Pengajuan Berhasil Ditolak!')</script>";
+            echo "<script>location.href = '?h=pengajuan_peminjaman_aset';</script>";
+        } catch (\Throwable $e) {
+            echo "<script>alert('Gagal!')</script>";
+            $mysqli->rollback();
+            throw $e;
+        }
     }
 }
 ?>
