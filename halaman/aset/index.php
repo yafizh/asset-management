@@ -71,7 +71,7 @@
                                         <td class="text-center">
                                             <a href="?h=tambah_aset_masuk&id=<?= $row['id'] ?>&id_jenis_aset=<?= $_GET['id_jenis_aset'] ?>&id_kategori_aset=<?= $_GET['id_kategori_aset'] ?>" class="btn btn-sm m-0 btn-info text-white">
                                                 <span class="badge badge-sm bg-gradient-info p-2">
-                                                    <?= $row['jumlah'] + $row['masuk'] + $row['rusak'] + $row['hilang'] ?>
+                                                    <?= $row['masuk'] ?>
                                                 </span>
                                                 Tambah
                                             </a>
