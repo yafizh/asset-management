@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
 
@@ -10,6 +11,10 @@
         .small-td {
             width: 1%;
             white-space: nowrap;
+        }
+
+        div {
+            -webkit-print-color-adjust: exact;
         }
     </style>
 </head>
@@ -50,13 +55,26 @@
     elseif ($_GET['h'] === 'kondisi_aset')
         include_once('halaman/kondisi_aset.php');
     ?>
-    <footer class="d-flex justify-content-end px-5">
-        <div class="text-center">
-            <h6>Banjarbaru, <?= tanggalIndonesia(Date("Y-m-d")); ?></h6>
-            <br><br><br><br><br>
-            <h6>ADMIN</h6>
-        </div>
-    </footer>
+
+    <?php if ($_SESSION['user']['status'] == 1) : ?>
+        <footer class="d-flex justify-content-end px-5">
+            <div class="text-center">
+                <h6>Banjarbaru, <?= tanggalIndonesia(Date("Y-m-d")); ?></h6>
+                <br><br><br><br><br>
+                <h6>ADMIN</h6>
+            </div>
+        </footer>
+    <?php else : ?>
+        <footer class="d-flex justify-content-end px-5">
+            <div class="text-center">
+                <h6>Banjarbaru, <?= tanggalIndonesia(Date("Y-m-d")); ?></h6>
+                <br><br><br><br><br>
+                <h6><?= $_SESSION['user']['nama']; ?></h6>
+                <div style="width: 100%; background-color: black; height: .1rem;"></div>
+                <h6><?= $_SESSION['user']['nip']; ?></h6>
+            </div>
+        </footer>
+    <?php endif; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         window.print();
