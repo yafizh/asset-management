@@ -2,7 +2,8 @@
   <img src="assets/img/favicon.png" width="100" alt="Logo">
 </p>
 
-# Asset Management System (BPTP KALSEL)
+# Office Asset & Inventory Management System (BPTP KALSEL)
+> A comprehensive web-based solution for tracking office assets, managing conditions, and streamlining employee lending workflows.
 
 ## 📌 Introduction
 The **Asset Management System** is a web-based application designed to streamline the management of office assets at **BPTP KALSEL** (Balai Pengkajian Teknologi Pertanian Kalimantan Selatan). It serves as a comprehensive solution for tracking asset conditions, managing maintenance schedules, and facilitating the lending and returning process for employees.
